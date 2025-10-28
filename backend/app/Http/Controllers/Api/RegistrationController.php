@@ -33,7 +33,8 @@ class RegistrationController extends Controller
 
             // 3. Pemicu Notifikasi WA (Fase 5)
             // Di sini nanti kita akan memanggil Job Queue untuk mengirim notifikasi WA
-
+            \App\Jobs\SendWhatsAppNotification::dispatch($registration);
+            
             return response()->json([
                 'message' => 'Registration result saved successfully.',
                 'registration_id' => $registration->id,

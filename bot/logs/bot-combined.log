@@ -109,3 +109,274 @@
 2025-10-28 21:51:55 [INFO]: [INFO] Browser terbuka 5 detik sebelum ditutup...
 2025-10-28 21:52:01 [INFO]: [BOT] Browser closed.
 2025-10-28 21:52:01 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-28 22:24:50 [INFO]: [BOT] Navigating to Mockup URL: file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html
+2025-10-28 22:24:50 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:24:50 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:24:52 [INFO]: [INPUT] Typing NIK: 3175030810780008
+2025-10-28 22:24:52 [INFO]: [INPUT] Typing Name: Syiful Bahri
+2025-10-28 22:24:53 [INFO]: [INPUT] Typing Phone: 087865369021
+2025-10-28 22:24:54 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:24:55 [INFO]: [INPUT] Setting date: 2025-11-01
+2025-10-28 22:24:55 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:24:56 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:24:59 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:24:59 [INFO]: [INFO] Browser terbuka 5 detik sebelum ditutup...
+2025-10-28 22:25:04 [INFO]: [BOT] Browser closed.
+2025-10-28 22:25:05 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-28 22:35:48 [INFO]: [CLI] Reading user data from: users.json
+2025-10-28 22:35:48 [INFO]: [CLI] Found 3 users. Starting sequential processing...
+2025-10-28 22:35:48 [INFO]: 
+--- Starting Job 1/3 ---
+2025-10-28 22:35:48 [INFO]: [JOB] Starting job for NIK: 3175030810780008
+2025-10-28 22:35:50 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:35:50 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:35:51 [INFO]: [INPUT] Typing NIK: 3175030810780008
+2025-10-28 22:35:52 [INFO]: [INPUT] Typing Name: Syiful Bahri
+2025-10-28 22:35:53 [INFO]: [INPUT] Typing Phone: 087865369021
+2025-10-28 22:35:53 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:35:54 [INFO]: [INPUT] Setting date: 2025-11-01
+2025-10-28 22:35:55 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:35:56 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:35:59 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:35:59 [INFO]: [JOB] Browser closed for NIK: 3175030810780008
+2025-10-28 22:36:00 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-28 22:36:00 [ERROR]: Status API: 422
+2025-10-28 22:36:00 [ERROR]: Validation Errors:
+2025-10-28 22:36:00 [INFO]: [JOB] Finished job for NIK: 3175030810780008
+2025-10-28 22:36:06 [INFO]: 
+--- Starting Job 2/3 ---
+2025-10-28 22:36:06 [INFO]: [JOB] Starting job for NIK: 3175030810780009
+2025-10-28 22:36:07 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:36:07 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:36:09 [INFO]: [INPUT] Typing NIK: 3175030810780009
+2025-10-28 22:36:09 [INFO]: [INPUT] Typing Name: Ahmad Yani
+2025-10-28 22:36:10 [INFO]: [INPUT] Typing Phone: 081211112222
+2025-10-28 22:36:10 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:36:11 [INFO]: [INPUT] Setting date: 2025-11-01
+2025-10-28 22:36:12 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:36:13 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:36:16 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:36:16 [INFO]: [JOB] Browser closed for NIK: 3175030810780009
+2025-10-28 22:36:16 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-28 22:36:16 [INFO]: [JOB] Finished job for NIK: 3175030810780009
+2025-10-28 22:36:22 [INFO]: 
+--- Starting Job 3/3 ---
+2025-10-28 22:36:22 [INFO]: [JOB] Starting job for NIK: 3175030810780010
+2025-10-28 22:36:23 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:36:23 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:36:25 [INFO]: [INPUT] Typing NIK: 3175030810780010
+2025-10-28 22:36:26 [INFO]: [INPUT] Typing Name: Siti Aminah
+2025-10-28 22:36:26 [INFO]: [INPUT] Typing Phone: 085733334444
+2025-10-28 22:36:27 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:36:28 [INFO]: [INPUT] Setting date: 2025-11-01
+2025-10-28 22:36:29 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:36:29 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:36:31 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:36:32 [INFO]: [JOB] Browser closed for NIK: 3175030810780010
+2025-10-28 22:36:32 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-28 22:36:32 [INFO]: [JOB] Finished job for NIK: 3175030810780010
+2025-10-28 22:36:40 [INFO]: [CLI] All user jobs completed.
+2025-10-28 22:47:28 [INFO]: 
+--- MODE INPUT MANUAL ---
+2025-10-28 22:48:12 [INFO]: [MANUAL] Starting job for NIK: 3175030203870007
+2025-10-28 22:48:12 [INFO]: [JOB] Starting job for NIK: 3175030203870007
+2025-10-28 22:48:17 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:48:17 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:48:18 [INFO]: [INPUT] Typing NIK: 3175030203870007
+2025-10-28 22:48:18 [INFO]: [INPUT] Typing Name: anto
+2025-10-28 22:48:19 [INFO]: [INPUT] Typing Phone: 85695810460)
+2025-10-28 22:48:20 [INFO]: [INPUT] Selecting branch: butik
+2025-10-28 22:48:21 [INFO]: [INPUT] Setting date: 2025-11-11
+2025-10-28 22:48:21 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:48:23 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:48:25 [INFO]: [RESULT] Message on screen: Sistem antrian dibuka. Silakan isi form.
+2025-10-28 22:48:26 [INFO]: [JOB] Browser closed for NIK: 3175030203870007
+2025-10-28 22:48:28 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-28 22:48:28 [INFO]: [JOB] Finished job for NIK: 3175030203870007
+2025-10-28 22:49:50 [INFO]: [CLI] Reading user data from: users.json
+2025-10-28 22:49:50 [INFO]: [CLI] Found 3 users. Starting sequential processing...
+2025-10-28 22:49:50 [INFO]: 
+--- Starting Job 1/3 ---
+2025-10-28 22:49:50 [INFO]: [JOB] Starting job for NIK: 3175030810780008
+2025-10-28 22:49:53 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:49:53 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:49:54 [INFO]: [INPUT] Typing NIK: 3175030810780008
+2025-10-28 22:49:55 [INFO]: [INPUT] Typing Name: Syiful Bahri
+2025-10-28 22:49:55 [INFO]: [INPUT] Typing Phone: 087865369021
+2025-10-28 22:49:56 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:49:57 [INFO]: [INPUT] Setting date: 2025-11-01
+2025-10-28 22:49:58 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:49:59 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:50:01 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:50:02 [INFO]: [JOB] Browser closed for NIK: 3175030810780008
+2025-10-28 22:50:02 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-28 22:50:02 [INFO]: [JOB] Finished job for NIK: 3175030810780008
+2025-10-28 22:50:09 [INFO]: 
+--- Starting Job 2/3 ---
+2025-10-28 22:50:09 [INFO]: [JOB] Starting job for NIK: 3175030810780009
+2025-10-28 22:50:10 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:50:10 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:50:12 [INFO]: [INPUT] Typing NIK: 3175030810780009
+2025-10-28 22:50:13 [INFO]: [INPUT] Typing Name: Ahmad Yani
+2025-10-28 22:50:13 [INFO]: [INPUT] Typing Phone: 081211112222
+2025-10-28 22:50:14 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:50:15 [INFO]: [INPUT] Setting date: 2025-11-01
+2025-10-28 22:50:15 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:50:16 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:50:19 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:50:19 [INFO]: [JOB] Browser closed for NIK: 3175030810780009
+2025-10-28 22:50:19 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-28 22:50:19 [INFO]: [JOB] Finished job for NIK: 3175030810780009
+2025-10-28 22:50:26 [INFO]: 
+--- Starting Job 3/3 ---
+2025-10-28 22:50:26 [INFO]: [JOB] Starting job for NIK: 3175030810780010
+2025-10-28 22:50:27 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:50:27 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:50:28 [INFO]: [INPUT] Typing NIK: 3175030810780010
+2025-10-28 22:50:29 [INFO]: [INPUT] Typing Name: Siti Aminah
+2025-10-28 22:50:30 [INFO]: [INPUT] Typing Phone: 085733334444
+2025-10-28 22:50:30 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:50:31 [INFO]: [INPUT] Setting date: 2025-11-01
+2025-10-28 22:50:32 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:50:32 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:50:35 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:50:35 [INFO]: [JOB] Browser closed for NIK: 3175030810780010
+2025-10-28 22:50:35 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-28 22:50:35 [INFO]: [JOB] Finished job for NIK: 3175030810780010
+2025-10-28 22:50:44 [INFO]: [CLI] All user jobs completed.
+2025-10-28 22:53:08 [INFO]: 
+====================================
+2025-10-28 22:53:08 [INFO]:        ANTAM BOT WAR - MENU
+2025-10-28 22:53:08 [INFO]: ====================================
+2025-10-28 22:53:08 [INFO]: 1. Input Manual (1 NIK)
+2025-10-28 22:53:08 [INFO]: 2. Input File JSON (Multi NIK)
+2025-10-28 22:53:08 [INFO]: 3. Input File CSV (Multi NIK) - Belum Tersedia
+2025-10-28 22:53:08 [INFO]: 4. Keluar
+2025-10-28 22:53:08 [INFO]: ------------------------------------
+2025-10-28 22:53:17 [INFO]: [EXIT] Program dihentikan.
+2025-10-28 22:53:20 [INFO]: 
+====================================
+2025-10-28 22:53:20 [INFO]:        ANTAM BOT WAR - MENU
+2025-10-28 22:53:20 [INFO]: ====================================
+2025-10-28 22:53:20 [INFO]: 1. Input Manual (1 NIK)
+2025-10-28 22:53:20 [INFO]: 2. Input File JSON (Multi NIK)
+2025-10-28 22:53:20 [INFO]: 3. Input File CSV (Multi NIK) - Belum Tersedia
+2025-10-28 22:53:20 [INFO]: 4. Keluar
+2025-10-28 22:53:20 [INFO]: ------------------------------------
+2025-10-28 22:53:29 [INFO]: [CLI] Reading user data from: users.json
+2025-10-28 22:53:29 [INFO]: [CLI] Found 3 users. Starting sequential processing...
+2025-10-28 22:53:29 [INFO]: 
+--- Starting Job 1/3 ---
+2025-10-28 22:53:29 [INFO]: [JOB] Starting job for NIK: 3175030810780008
+2025-10-28 22:53:32 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:53:32 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:53:33 [INFO]: [INPUT] Typing NIK: 3175030810780008
+2025-10-28 22:53:33 [INFO]: [INPUT] Typing Name: Syiful Bahri
+2025-10-28 22:53:34 [INFO]: [INPUT] Typing Phone: 087865369021
+2025-10-28 22:53:35 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:53:35 [INFO]: [INPUT] Setting date: 2025-11-01
+2025-10-28 22:53:36 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:53:37 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:53:40 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:53:40 [INFO]: [JOB] Browser closed for NIK: 3175030810780008
+2025-10-28 22:53:40 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-28 22:53:40 [ERROR]: Status API: 422
+2025-10-28 22:53:40 [ERROR]: Validation Errors:
+2025-10-28 22:53:40 [INFO]: [JOB] Finished job for NIK: 3175030810780008
+2025-10-28 22:53:50 [INFO]: 
+--- Starting Job 2/3 ---
+2025-10-28 22:53:50 [INFO]: [JOB] Starting job for NIK: 3175030810780009
+2025-10-28 22:53:51 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:53:51 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:53:53 [INFO]: [INPUT] Typing NIK: 3175030810780009
+2025-10-28 22:53:54 [INFO]: [INPUT] Typing Name: Ahmad Yani
+2025-10-28 22:53:54 [INFO]: [INPUT] Typing Phone: 081211112222
+2025-10-28 22:53:55 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:53:56 [INFO]: [INPUT] Setting date: 2025-11-01
+2025-10-28 22:53:57 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:53:58 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:54:00 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:54:00 [INFO]: [JOB] Browser closed for NIK: 3175030810780009
+2025-10-28 22:54:00 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-28 22:54:00 [ERROR]: Status API: 422
+2025-10-28 22:54:00 [ERROR]: Validation Errors:
+2025-10-28 22:54:00 [INFO]: [JOB] Finished job for NIK: 3175030810780009
+2025-10-28 22:54:08 [INFO]: 
+--- Starting Job 3/3 ---
+2025-10-28 22:54:08 [INFO]: [JOB] Starting job for NIK: 3175030810780010
+2025-10-28 22:54:09 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:54:09 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:54:11 [INFO]: [INPUT] Typing NIK: 3175030810780010
+2025-10-28 22:54:11 [INFO]: [INPUT] Typing Name: Siti Aminah
+2025-10-28 22:54:12 [INFO]: [INPUT] Typing Phone: 085733334444
+2025-10-28 22:54:13 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:54:14 [INFO]: [INPUT] Setting date: 2025-11-01
+2025-10-28 22:54:14 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:54:15 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:54:18 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:54:18 [INFO]: [JOB] Browser closed for NIK: 3175030810780010
+2025-10-28 22:54:18 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-28 22:54:18 [ERROR]: Status API: 422
+2025-10-28 22:54:18 [ERROR]: Validation Errors:
+2025-10-28 22:54:18 [INFO]: [JOB] Finished job for NIK: 3175030810780010
+2025-10-28 22:54:27 [INFO]: [CLI] All user jobs completed.
+2025-10-28 22:57:21 [INFO]: 
+====================================
+2025-10-28 22:57:22 [INFO]:        ANTAM BOT WAR - MENU
+2025-10-28 22:57:22 [INFO]: ====================================
+2025-10-28 22:57:22 [INFO]: 1. Input Manual (1 NIK)
+2025-10-28 22:57:22 [INFO]: 2. Input File JSON (Multi NIK)
+2025-10-28 22:57:22 [INFO]: 3. Input File CSV (Multi NIK) - Belum Tersedia
+2025-10-28 22:57:22 [INFO]: 4. Keluar
+2025-10-28 22:57:22 [INFO]: ------------------------------------
+2025-10-28 22:57:31 [INFO]: [CLI] Reading user data from CSV: users.csv
+2025-10-28 22:57:31 [INFO]: [CLI] Successfully parsed 3 records from CSV.
+2025-10-28 22:57:31 [INFO]: 
+--- Starting Job 1/3 ---
+2025-10-28 22:57:31 [INFO]: [JOB] Starting job for NIK: 3175030810780011
+2025-10-28 22:57:32 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:57:32 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:57:33 [INFO]: [INPUT] Typing NIK: 3175030810780011
+2025-10-28 22:57:34 [INFO]: [INPUT] Typing Name: Bambang Setiawan
+2025-10-28 22:57:35 [INFO]: [INPUT] Typing Phone: 081122334455
+2025-10-28 22:57:36 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:57:37 [INFO]: [INPUT] Setting date: 2025-11-03
+2025-10-28 22:57:37 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:57:38 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:57:40 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:57:41 [INFO]: [JOB] Browser closed for NIK: 3175030810780011
+2025-10-28 22:57:41 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-28 22:57:41 [INFO]: [JOB] Finished job for NIK: 3175030810780011
+2025-10-28 22:57:46 [INFO]: 
+--- Starting Job 2/3 ---
+2025-10-28 22:57:46 [INFO]: [JOB] Starting job for NIK: 3175030810780012
+2025-10-28 22:57:47 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:57:47 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:57:49 [INFO]: [INPUT] Typing NIK: 3175030810780012
+2025-10-28 22:57:49 [INFO]: [INPUT] Typing Name: Dewi Sartika
+2025-10-28 22:57:50 [INFO]: [INPUT] Typing Phone: 087788990011
+2025-10-28 22:57:50 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:57:51 [INFO]: [INPUT] Setting date: 2025-11-03
+2025-10-28 22:57:52 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:57:53 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:57:55 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:57:56 [INFO]: [JOB] Browser closed for NIK: 3175030810780012
+2025-10-28 22:57:56 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-28 22:57:56 [INFO]: [JOB] Finished job for NIK: 3175030810780012
+2025-10-28 22:58:02 [INFO]: 
+--- Starting Job 3/3 ---
+2025-10-28 22:58:02 [INFO]: [JOB] Starting job for NIK: 3175030810780013
+2025-10-28 22:58:03 [INFO]: [FORM] Starting form automation...
+2025-10-28 22:58:03 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-28 22:58:05 [INFO]: [INPUT] Typing NIK: 3175030810780013
+2025-10-28 22:58:05 [INFO]: [INPUT] Typing Name: Joko Widodo
+2025-10-28 22:58:06 [INFO]: [INPUT] Typing Phone: 089988776655
+2025-10-28 22:58:07 [INFO]: [INPUT] Selecting branch: BUTIK EMAS SARINAH
+2025-10-28 22:58:08 [INFO]: [INPUT] Setting date: 2025-11-03
+2025-10-28 22:58:08 [INFO]: [BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...
+2025-10-28 22:58:09 [INFO]: [FORM] Clicking submit button...
+2025-10-28 22:58:12 [INFO]: [RESULT] Message on screen: Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001
+2025-10-28 22:58:12 [INFO]: [JOB] Browser closed for NIK: 3175030810780013
+2025-10-28 22:58:12 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-28 22:58:12 [INFO]: [JOB] Finished job for NIK: 3175030810780013
+2025-10-28 22:58:18 [INFO]: [CLI] All CSV user jobs completed.

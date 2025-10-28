@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Syiful Bahri",
+    "nik": "3175030810780008",
+    "phone_number": "087865369021",
+    "branch": "BUTIK EMAS SARINAH",
+    "branch_selector": "SARINAH"
+  },
+  {
+    "name": "Ahmad Yani",
+    "nik": "3175030810780009",
+    "phone_number": "081211112222",
+    "branch": "BUTIK EMAS SARINAH",
+    "branch_selector": "SARINAH"
+  },
+  {
+    "name": "Siti Aminah",
+    "nik": "3175030810780010",
+    "phone_number": "085733334444",
+    "branch": "BUTIK EMAS SARINAH",
+    "branch_selector": "SARINAH"
+  }
+]

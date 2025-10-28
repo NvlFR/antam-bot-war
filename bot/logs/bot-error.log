@@ -17,3 +17,15 @@
 2025-10-28 21:45:37 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
 2025-10-28 21:45:37 [ERROR]: Status API: 422
 2025-10-28 21:45:37 [ERROR]: Validation Errors:
+2025-10-28 22:36:00 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-28 22:36:00 [ERROR]: Status API: 422
+2025-10-28 22:36:00 [ERROR]: Validation Errors:
+2025-10-28 22:53:40 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-28 22:53:40 [ERROR]: Status API: 422
+2025-10-28 22:53:40 [ERROR]: Validation Errors:
+2025-10-28 22:54:00 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-28 22:54:00 [ERROR]: Status API: 422
+2025-10-28 22:54:00 [ERROR]: Validation Errors:
+2025-10-28 22:54:18 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-28 22:54:18 [ERROR]: Status API: 422
+2025-10-28 22:54:18 [ERROR]: Validation Errors:

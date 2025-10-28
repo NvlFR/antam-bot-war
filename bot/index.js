@@ -1,197 +1,28 @@
-// // antam-bot-war/bot/index.js
+// antam-bot-war/bot/index.js (FINAL VERSION for Multi-NIK)
 
-// const puppeteer = require("puppeteer-extra");
-// const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-// const axios = require("axios");
-// // Import Winston atau Logger lain jika sudah diinstal
-// // const logger = require('./logger');
-
-// // --- KONFIGURASI ---
-// const LARAVEL_API_URL = "http://127.0.0.1:8000/api";
-// const SAVE_RESULT_ENDPOINT = `${LARAVEL_API_URL}/bot/save-result`;
-// const ANTAM_URL = "https://butik.antam.com/antrian-online/"; // Ganti dengan URL antrian yang benar
-// const USER_DATA = {
-//   name: "Budi Santoso",
-//   nik: "1234567890123456", // Ganti dengan NIK yang unik untuk testing!
-//   phone_number: "081234567890",
-//   branch_name: "BUTIK EMAS SARINAH", // Sesuaikan dengan nilai di form Antam
-//   branch_selector: '#branch option[value="SARINAH"]', // Selector untuk option di dropdown
-//   purchase_date: "2025-11-01",
-//   // ... data lain (misalnya email, dll)
-// };
-
-// // Tambahkan plugin stealth ke Puppeteer
-// puppeteer.use(StealthPlugin());
-
-// /**
-//  * Fungsi utama untuk menjalankan war antrian.
-//  */
-// async function runAntamWar() {
-//   let browser;
-//   let registrationResult = {
-//     status: "FAILED",
-//     ticket_number: null,
-//     raw_response: null,
-//     war_time: new Date().toISOString().slice(0, 19).replace("T", " "),
-//   };
-
-//   try {
-//     // Luncurkan browser dengan opsi human-like
-//     browser = await puppeteer.launch({
-//       headless: true, // Ubah ke false jika ingin melihat visual (debug)
-//       args: [
-//         "--no-sandbox",
-//         "--disable-setuid-sandbox",
-//         // Tambahkan argumen lain untuk menghindari deteksi
-//       ],
-//     });
-
-//     const page = await browser.newPage();
-
-//     // Atur viewport standar manusia
-//     await page.setViewport({ width: 1366, height: 768 });
-
-//     logger.info(`[BOT] Navigating to Antam Queue URL...`);
-//     await page.goto(ANTAM_URL, {
-//       waitUntil: "domcontentloaded",
-//       timeout: 30000,
-//     });
-
-//     // --- MASUK KE FASE 3.2: OTOMASI PENGISIAN FORM ---
-//     await handleFormFilling(page, USER_DATA);
-
-//     // Setelah form terisi dan disubmit, ambil hasilnya
-//     registrationResult.status = "SUCCESS"; // Perlu logika deteksi sukses/gagal yang lebih baik
-//     registrationResult.ticket_number = "DUMMY-TICKET-2025"; // Ambil nomor tiket dari halaman
-//   } catch (error) {
-//     logger.error(`[CRITICAL ERROR] Bot execution failed: ${error.message}`);
-//     // Ambil screenshot saat error untuk debugging
-//     // await page.screenshot({ path: `logs/error-${Date.now()}.png` });
-//     registrationResult.status = "FAILED";
-//     registrationResult.raw_response = { error: error.message };
-//   } finally {
-//     if (browser) {
-//       await browser.close();
-//       logger.info("[BOT] Browser closed.");
-//     }
-
-//     // Kirim hasil akhir ke Laravel
-//     await sendRegistrationResult({ ...USER_DATA, ...registrationResult });
-
-//     // ... (Tambahkan fungsi sendRegistrationResult di bawah handleFormFilling)
-
-//     // --- FUNGSI API KE LARAVEL (sama seperti sebelumnya) ---
-//     async function sendRegistrationResult(data) {
-//       // ... (kode axios untuk POST ke SAVE_RESULT_ENDPOINT)
-
-//       // Contoh sederhana:
-//       try {
-//         const response = await axios.post(SAVE_RESULT_ENDPOINT, data);
-//         logger.info(
-//           "[SUCCESS] Result sent to Laravel:",
-//           response.data.registration_id
-//         );
-//       } catch (error) {
-//         logger.error("[FATAL] Failed to send result to Laravel.");
-//       }
-//     }
-
-//     // --- JALANKAN BOT ---
-//     runAntamWar();
-//   }
-// }
-
-// // --- UTILITY FUNGSI UNTUK PERILAKU MANUSIA ---
-
-// /**
-//  * Menghasilkan delay acak antara min (ms) dan max (ms)
-//  */
-// const randomDelay = (min, max) => {
-//     const delay = Math.floor(Math.random() * (max - min + 1)) + min;
-//     return new Promise(resolve => setTimeout(resolve, delay));
-// };
-
-// /**
-//  * Fungsi inti untuk mengisi form
-//  */
-// async function handleFormFilling(page, data) {
-//     logger.info('[FORM] Starting form automation...');
-
-//     // 1. SCROLL ALAMI (Simulasi pengguna membaca halaman)
-//     logger.info('[BEHAVIOUR] Simulating initial scroll...');
-//     await page.evaluate(() => {
-//         window.scrollBy(0, 500 + Math.floor(Math.random() * 200));
-//     });
-//     await randomDelay(1000, 2000); // Tunggu sebentar
-
-//     // 2. MENGISI INPUT DENGAN DELAY ALAMI
-
-//     // Mengisi NIK
-//     logger.info(`[INPUT] Typing NIK: ${data.nik}`);
-//     await page.type('#nik', data.nik, { delay: randomDelay(50, 150) });
-//     await randomDelay(300, 700); // Jeda setelah input penting
-
-//     // Mengisi Nama
-//     logger.info(`[INPUT] Typing Name: ${data.name}`);
-//     await page.type('#nama', data.name, { delay: randomDelay(50, 150) });
-//     await randomDelay(300, 700);
-
-//     // Mengisi Nomor HP
-//     logger.info(`[INPUT] Typing Phone: ${data.phone_number}`);
-//     await page.type('#no_hp', data.phone_number, { delay: randomDelay(50, 150) });
-//     await randomDelay(300, 700);
-
-//     // 3. MEMILIH DROPDOWN (Cabang)
-//     logger.info(`[INPUT] Selecting branch: ${data.branch_name}`);
-//     await page.select('#cabang_id', data.branch_selector); // Sesuaikan ID elemen form
-//     await randomDelay(500, 1000);
-
-//     // 4. MENGKLIK TANGGAL (Jika ada kalender, ini harus diatasi)
-//     // Untuk saat ini, kita anggap sudah ada elemen input tanggal
-//     logger.info(`[INPUT] Selecting date: ${data.purchase_date}`);
-//     await page.type('#tanggal_pembelian', data.purchase_date); // Sesuaikan ID elemen form
-//     await randomDelay(500, 1000);
-
-//     // --- LOKASI CAPTCHA V3 DENGAN INTERAKSI DUMMY (Fase 3.5) ---
-//     // Sebelum submit, lakukan interaksi tambahan untuk skor CAPTCHA tinggi
-//     logger.info('[BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...');
-//     await page.mouse.move(100, 100);
-//     await randomDelay(100, 300);
-//     await page.mouse.move(500 + Math.random() * 200, 500 + Math.random() * 200);
-//     await randomDelay(500, 1000);
-
-//     // 5. SUBMIT FORM
-//     logger.info('[FORM] Submitting the form...');
-//     await page.click('#submit_button_id'); // KRITIS: Ganti dengan ID/Selector tombol submit yang benar
-
-//     // Tunggu navigasi halaman atau munculnya elemen hasil
-//     await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 15000 }).catch(() => {
-//         logger.info('[WARNING] Navigation timeout, checking current page for result...');
-//     });
-
-//     // Setelah ini, harus ada logika untuk mendeteksi pesan sukses/gagal dan mengambil nomor tiket.
-// }
-
-// antam-bot-war/bot/index.js
-// antam-bot-war/bot/index.js
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const axios = require("axios");
 const path = require("path");
-const logger = require("./logger"); // Pastikan file logger.js sudah ada
+const fs = require("fs"); // Tambahkan fs untuk membaca file
+const yargs = require("yargs/yargs"); // Tambahkan yargs untuk CLI
+const csv = require("csv-parser");
+const { hideBin } = require("yargs/helpers");
+const prompt = require("prompt-sync")({ sigint: true });
+const logger = require("./logger");
 
-// --- KONFIGURASI ---
+// --- KONFIGURASI UMUM ---
 const MOCKUP_FILE = path.join(__dirname, "mockup_form.html");
 const ANTAM_URL = `file://${MOCKUP_FILE}`;
 const LARAVEL_API_URL = "http://127.0.0.1:8000/api";
 const SAVE_RESULT_ENDPOINT = `${LARAVEL_API_URL}/bot/save-result`;
 
-const USER_DATA = {
-  name: "Syiful Bahri",
-  nik: "3175030810780008", // UBAH ke NIK UNIK untuk uji coba
-  phone_number: "087865369021",
-  // UBAH: Gunakan 'branch' sesuai harapan Laravel Controller
-  branch: "BUTIK EMAS SARINAH",
+// --- DATA DUMMY TEMPLATE (Akan ditimpa oleh data file) ---
+const USER_DATA_TEMPLATE = {
+  name: "Budi Santoso",
+  nik: "1234567890123000", // Akan diganti
+  phone_number: "081234567890",
+  branch: "BUTIK EMAS SARINAH", // KRITIS: Harus 'branch'
   branch_selector: "SARINAH",
   purchase_date: "2025-11-01",
 };
@@ -199,7 +30,7 @@ const USER_DATA = {
 // Tambahkan plugin stealth ke Puppeteer
 puppeteer.use(StealthPlugin());
 
-// --- UTILITY FUNGSI UNTUK PERILAKU MANUSIA ---
+// --- UTILITY FUNGSI ---
 const randomDelay = (min, max) => {
   const delay = Math.floor(Math.random() * (max - min + 1)) + min;
   return new Promise((resolve) => setTimeout(resolve, delay));
@@ -210,6 +41,7 @@ async function handleFormFilling(page, data) {
   logger.info("[FORM] Starting form automation...");
 
   // 1. SCROLL ALAMI
+  // ... (kode handleFormFilling tetap sama seperti sebelumnya)
   logger.info("[BEHAVIOUR] Simulating initial scroll...");
   await page.evaluate(() => {
     window.scrollBy(0, 500 + Math.floor(Math.random() * 200));
@@ -229,12 +61,12 @@ async function handleFormFilling(page, data) {
   await page.type("#no_hp", data.phone_number, { delay: randomDelay(50, 150) });
   await randomDelay(300, 700);
 
-  // 3. MEMILIH DROPDOWN (Cabang #cabang_id)
-  logger.info(`[INPUT] Selecting branch: ${data.branch}`);
+  // 3. MEMILIH DROPDOWN
+  logger.info(`[INPUT] Selecting branch: ${data.branch}`); // KRITIS: Gunakan data.branch
   await page.select("#cabang_id", data.branch_selector);
   await randomDelay(500, 1000);
 
-  // 4. MENGISI TANGGAL (#tanggal_pembelian)
+  // 4. MENGISI TANGGAL
   logger.info(`[INPUT] Setting date: ${data.purchase_date}`);
   await page.evaluate((date) => {
     document.getElementById("tanggal_pembelian").value = date;
@@ -251,8 +83,7 @@ async function handleFormFilling(page, data) {
   // 6. SUBMIT FORM
   logger.info("[FORM] Clicking submit button...");
   await page.click("#submit_button_id");
-
-  await randomDelay(2000, 3000); // Tunggu hasil simulasi
+  await randomDelay(2000, 3000);
 
   // 7. DETEKSI HASIL (Simulasi)
   const successMessage = await page.$eval(
@@ -271,71 +102,6 @@ async function handleFormFilling(page, data) {
   }
 }
 
-// --- FUNGSI UTAMA BOT ENGINE ---
-async function runAntamWar() {
-  let browser;
-  let registrationResult = {
-    status: "FAILED",
-    ticket_number: null,
-    raw_response: {}, // Diinisialisasi sebagai objek kosong
-    war_time: new Date().toISOString().slice(0, 19).replace("T", " "), // Format YYYY-MM-DD HH:MM:SS
-  };
-
-  try {
-    browser = await puppeteer.launch({
-      headless: false, // Untuk melihat visualisasi
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--window-size=1000,800",
-      ],
-    });
-
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1000, height: 800 });
-
-    logger.info(`[BOT] Navigating to Mockup URL: ${ANTAM_URL}`);
-    await page.goto(ANTAM_URL, {
-      waitUntil: "domcontentloaded",
-      timeout: 30000,
-    });
-
-    // Jalankan pengisian form
-    const resultFromForm = await handleFormFilling(page, USER_DATA);
-
-    // Ambil konten halaman saat sukses untuk raw_response
-    const finalPageContent = await page.content(); 
-    
-    // Gabungkan hasil dari form filling
-    registrationResult = {
-      ...registrationResult,
-      ...resultFromForm,
-      raw_response: { // Timpa raw_response saat sukses
-        success_page_content: finalPageContent.substring(0, 500)
-      }
-    };
-    
-  } catch (error) {
-    logger.error(`[CRITICAL ERROR] Bot execution failed: ${error.message}`);
-    // --- IMPLEMENTASI SCREENSHOT OTOMATIS (Fase 4.3) ---
-    // (Tambahkan logika path screenshot di sini jika diinginkan)
-
-    registrationResult.status = "FAILED";
-    registrationResult.raw_response = { error: error.message };
-  } finally {
-    logger.info("[INFO] Browser terbuka 5 detik sebelum ditutup...");
-    await randomDelay(5000, 5000);
-
-    if (browser) {
-      await browser.close();
-      logger.info("[BOT] Browser closed.");
-    }
-
-    // Kirim hasil akhir ke Laravel
-    await sendRegistrationResult({ ...USER_DATA, ...registrationResult });
-  }
-}
-
 // --- FUNGSI API KE LARAVEL ---
 async function sendRegistrationResult(data) {
   try {
@@ -345,15 +111,22 @@ async function sendRegistrationResult(data) {
       response.data.registration_id
     );
   } catch (error) {
-    logger.error("[FATAL] Failed to send result to Laravel. Check DB/Validation.");
+    logger.error(
+      "[FATAL] Failed to send result to Laravel. Check DB/Validation."
+    );
 
     if (error.response) {
       logger.error(`Status API: ${error.response.status}`);
-      // KRITIS: Menampilkan detail 'errors' dari response 422 Laravel
       if (error.response.data && error.response.data.errors) {
-        logger.error('Validation Errors:', JSON.stringify(error.response.data.errors, null, 2));
+        logger.error(
+          "Validation Errors:",
+          JSON.stringify(error.response.data.errors, null, 2)
+        );
       } else {
-        logger.error('API Error Response:', JSON.stringify(error.response.data, null, 2));
+        logger.error(
+          "API Error Response:",
+          JSON.stringify(error.response.data, null, 2)
+        );
       }
     } else {
       logger.error(`Error details: ${error.message}`);
@@ -361,4 +134,232 @@ async function sendRegistrationResult(data) {
   }
 }
 
-runAntamWar();
+// --- FUNGSI UTAMA BOT ENGINE PER NIK ---
+async function runAntamWar(userData) {
+  let browser;
+  let registrationResult = {
+    status: "FAILED",
+    ticket_number: null,
+    raw_response: {},
+    war_time: new Date().toISOString().slice(0, 19).replace("T", " "),
+  };
+
+  logger.info(`[JOB] Starting job for NIK: ${userData.nik}`);
+
+  try {
+    browser = await puppeteer.launch({
+      headless: true, // Kembali ke headless: true untuk efisiensi war
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1366, height: 768 });
+
+    await page.goto(ANTAM_URL, {
+      waitUntil: "domcontentloaded",
+      timeout: 30000,
+    });
+
+    const resultFromForm = await handleFormFilling(page, userData);
+
+    const finalPageContent = await page.content();
+
+    registrationResult = {
+      ...registrationResult,
+      ...resultFromForm,
+      raw_response: {
+        success_page_content: finalPageContent.substring(0, 500),
+      },
+    };
+  } catch (error) {
+    logger.error(
+      `[CRITICAL ERROR] Bot execution failed for NIK ${userData.nik}: ${error.message}`
+    );
+    registrationResult.status = "FAILED";
+    registrationResult.raw_response = { error: error.message };
+  } finally {
+    if (browser) {
+      await browser.close();
+      logger.info(`[JOB] Browser closed for NIK: ${userData.nik}`);
+    }
+
+    // Kirim hasil akhir ke Laravel
+    await sendRegistrationResult({ ...userData, ...registrationResult });
+    logger.info(`[JOB] Finished job for NIK: ${userData.nik}`);
+  }
+}
+
+async function processManualInput() {
+  logger.info("\n--- MODE INPUT MANUAL ---");
+
+  const name = prompt("Masukkan Nama: ");
+  const nik = prompt("Masukkan NIK (16 digit): ");
+  const phone_number = prompt("Masukkan No. HP (08xx): ");
+  const branch = prompt("Masukkan Nama Cabang (ex: BUTIK EMAS SARINAH): ");
+  const branch_selector = prompt("Masukkan Selector Cabang (ex: SARINAH): ");
+
+  // Asumsi tanggal tetap 2025-11-01 atau bisa ditanyakan juga
+  const purchase_date =
+    prompt("Masukkan Tanggal Pembelian (YYYY-MM-DD, default 2025-11-01): ") ||
+    "2025-11-01";
+
+  const userData = {
+    ...USER_DATA_TEMPLATE,
+    name,
+    nik,
+    phone_number,
+    branch,
+    branch_selector,
+    purchase_date,
+  };
+
+  logger.info(`[MANUAL] Starting job for NIK: ${userData.nik}`);
+  await runAntamWar(userData); // Jalankan job satu per satu
+}
+
+// --- FUNGSI PROSES UTAMA (Multi-NIK) ---
+async function processUserData(dataFilePath) {
+  logger.info(`[CLI] Reading user data from: ${dataFilePath}`);
+
+  // 1. Baca dan Parse File
+  let rawData;
+  try {
+    rawData = fs.readFileSync(dataFilePath);
+  } catch (e) {
+    logger.error(`[FATAL] Could not read data file: ${e.message}`);
+    return;
+  }
+
+  let userList;
+  try {
+    userList = JSON.parse(rawData);
+  } catch (e) {
+    logger.error(`[FATAL] Failed to parse JSON data: ${e.message}`);
+    return;
+  }
+
+  if (!Array.isArray(userList) || userList.length === 0) {
+    logger.error("[FATAL] Data file must contain a non-empty array of users.");
+    return;
+  }
+
+  logger.info(
+    `[CLI] Found ${userList.length} users. Starting sequential processing...`
+  );
+
+  // 2. Proses Setiap NIK Secara Berurutan (Sequential)
+  // Mode sequential lebih aman agar tidak membanjiri sistem dengan terlalu banyak browser
+  for (const [index, userEntry] of userList.entries()) {
+    // Gabungkan data template dengan data user spesifik
+    const userData = {
+      ...USER_DATA_TEMPLATE,
+      ...userEntry,
+    };
+
+    logger.info(`\n--- Starting Job ${index + 1}/${userList.length} ---`);
+    await runAntamWar(userData);
+
+    // Jeda antar job (untuk menghindari deteksi bot dan membiarkan sistem bernapas)
+    await randomDelay(5000, 10000);
+  }
+
+  logger.info("[CLI] All user jobs completed.");
+}
+
+// antam-bot-war/bot/index.js (GANTI BAGIAN EKSEKUSI UTAMA)
+
+// --- FUNGSI PROSES INPUT CSV (Baru) ---
+// antam-bot-war/bot/index.js (Ganti fungsi processCSVData)
+
+// --- FUNGSI PROSES INPUT CSV ---
+async function processCSVData(dataFilePath) {
+    logger.info(`[CLI] Reading user data from CSV: ${dataFilePath}`);
+    
+    const userList = await new Promise((resolve, reject) => {
+        const results = [];
+        
+        // Cek apakah file ada sebelum mencoba membacanya
+        if (!fs.existsSync(dataFilePath)) {
+            logger.error(`[FATAL] File not found: ${dataFilePath}`);
+            return resolve([]);
+        }
+
+        fs.createReadStream(dataFilePath)
+            .pipe(csv())
+            .on('data', (data) => {
+                // Tambahkan data template untuk memastikan field seperti 'war_time' ada
+                const userData = {
+                    ...USER_DATA_TEMPLATE,
+                    ...data,
+                };
+                results.push(userData);
+            })
+            .on('end', () => {
+                logger.info(`[CLI] Successfully parsed ${results.length} records from CSV.`);
+                resolve(results);
+            })
+            .on('error', (err) => {
+                logger.error(`[FATAL] Error reading CSV file: ${err.message}`);
+                reject(err);
+            });
+    });
+
+    if (!Array.isArray(userList) || userList.length === 0) {
+        logger.error("[FATAL] CSV file is empty or could not be processed.");
+        return;
+    }
+
+    // Lanjutkan ke proses bot (Kita akan menggunakan logika sequential/paralel dari processUserData)
+    // Gunakan kembali logika loop dari processUserData, tetapi hanya untuk menjalankan bot
+    const userListLength = userList.length;
+    
+    for (const [index, userEntry] of userList.entries()) {
+        logger.info(`\n--- Starting Job ${index + 1}/${userListLength} ---`);
+        await runAntamWar(userEntry);
+
+        // Jeda antar job (untuk menghindari deteksi bot dan membiarkan sistem bernapas)
+        await randomDelay(5000, 10000); 
+    }
+
+    logger.info("[CLI] All CSV user jobs completed.");
+}
+
+// ... (Fungsi displayMainMenu di bagian bawah sudah otomatis memanggil fungsi ini saat opsi 3 dipilih)
+
+// --- FUNGSI MENU UTAMA INTERAKTIF ---
+function displayMainMenu() {
+    logger.info("\n====================================");
+    logger.info("       ANTAM BOT WAR - MENU");
+    logger.info("====================================");
+    logger.info("1. Input Manual (1 NIK)");
+    logger.info("2. Input File JSON (Multi NIK)");
+    logger.info("3. Input File CSV (Multi NIK) - Belum Tersedia");
+    logger.info("4. Keluar");
+    logger.info("------------------------------------");
+
+    const choice = prompt("Pilih mode (1/2/3/4): ");
+
+    switch (choice.trim()) {
+        case '1':
+            processManualInput();
+            break;
+        case '2':
+            const jsonPath = prompt("Masukkan Path File JSON (ex: users.json): ");
+            processUserData(jsonPath.trim());
+            break;
+        case '3':
+            const csvPath = prompt("Masukkan Path File CSV (ex: users.csv): ");
+            processCSVData(csvPath.trim());
+            break;
+        case '4':
+            logger.info("[EXIT] Program dihentikan.");
+            return;
+        default:
+            logger.error("[ERROR] Pilihan tidak valid. Silakan coba lagi.");
+            displayMainMenu();
+    }
+}
+
+// --- EKSEKUSI UTAMA ---
+// Kita tidak lagi menggunakan Yargs commands, hanya menjalankan fungsi menu utama.
+displayMainMenu();
