@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Mockup Antrian Antam</title>
+</head>
+<body>
+    <h1>Form Antrian Butik Antam Mockup</h1>
+    
+    <div id="status_message" style="color: blue;">Sistem antrian dibuka. Silakan isi form.</div>
+
+    <form id="antrianForm">
+        <label for="nik">NIK (ID: nik)</label><br>
+        <input type="text" id="nik" name="nik" placeholder="Masukkan NIK 16 digit" required><br><br>
+
+        <label for="nama">Nama Lengkap (ID: nama)</label><br>
+        <input type="text" id="nama" name="nama" required><br><br>
+
+        <label for="no_hp">Nomor HP (ID: no_hp)</label><br>
+        <input type="text" id="no_hp" name="no_hp" required><br><br>
+
+        <label for="cabang_id">Pilih Cabang (ID: cabang_id)</label><br>
+        <select id="cabang_id" name="cabang_id" required>
+            <option value="">-- Pilih --</option>
+            <option value="SARINAH">BUTIK EMAS SARINAH</option>
+            <option value="JAKSEL">BUTIK EMAS JAKARTA SELATAN</option>
+            </select><br><br>
+
+        <label for="tanggal_pembelian">Tanggal Pembelian (ID: tanggal_pembelian)</label><br>
+        <input type="date" id="tanggal_pembelian" name="tanggal_pembelian" value="2025-11-01" required><br><br>
+
+        <div id="captcha_area">Simulasi CAPTCHA v3 (Skor tinggi akan didapat dari Behaviour Engine)</div><br>
+
+        <button type="submit" id="submit_button_id">Daftar Antrian (ID: submit_button_id)</button>
+    </form>
+    
+    <script>
+        document.getElementById('antrianForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            document.getElementById('status_message').style.color = 'green';
+            document.getElementById('status_message').innerHTML = 'Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001';
+            // Form submission logic would go here
+        });
+    </script>
+</body>
+</html>
