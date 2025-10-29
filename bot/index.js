@@ -1,28 +1,30 @@
-// antam-bot-war/bot/index.js (FINAL VERSION for Multi-NIK)
+// antam-bot-war/bot/index.js (FINAL VERSION - STABIL & INTERAKTIF)
 
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const axios = require("axios");
 const path = require("path");
-const fs = require("fs"); // Tambahkan fs untuk membaca file
-const yargs = require("yargs/yargs"); // Tambahkan yargs untuk CLI
+const fs = require("fs");
+const yargs = require("yargs/yargs");
 const csv = require("csv-parser");
 const { hideBin } = require("yargs/helpers");
 const prompt = require("prompt-sync")({ sigint: true });
 const logger = require("./logger");
+const Table = require("cli-table3"); // Untuk menampilkan tabel status
 
 // --- KONFIGURASI UMUM ---
 const MOCKUP_FILE = path.join(__dirname, "mockup_form.html");
-const ANTAM_URL = `file://${MOCKUP_FILE}`;
+const ANTAM_URL = `file://${MOCKUP_FILE}`; // Digunakan untuk debug/dev
 const LARAVEL_API_URL = "http://127.0.0.1:8000/api";
 const SAVE_RESULT_ENDPOINT = `${LARAVEL_API_URL}/bot/save-result`;
+const LIST_REGISTRATIONS_ENDPOINT = `${LARAVEL_API_URL}/bot/list-registrations`;
 
-// --- DATA DUMMY TEMPLATE (Akan ditimpa oleh data file) ---
+// --- DATA DUMMY TEMPLATE ---
 const USER_DATA_TEMPLATE = {
   name: "Budi Santoso",
-  nik: "1234567890123000", // Akan diganti
+  nik: "1234567890123000",
   phone_number: "081234567890",
-  branch: "BUTIK EMAS SARINAH", // KRITIS: Harus 'branch'
+  branch: "BUTIK EMAS SARINAH",
   branch_selector: "SARINAH",
   purchase_date: "2025-11-01",
 };
@@ -36,56 +38,63 @@ const randomDelay = (min, max) => {
   return new Promise((resolve) => setTimeout(resolve, delay));
 };
 
-// --- FUNGSI INTI OTOMASI FORM ---
+// --- FUNGSI INTI OTOMASI FORM (DIADAPTASI KE FORM SERPONG) ---
 async function handleFormFilling(page, data) {
   logger.info("[FORM] Starting form automation...");
 
   // 1. SCROLL ALAMI
-  // ... (kode handleFormFilling tetap sama seperti sebelumnya)
   logger.info("[BEHAVIOUR] Simulating initial scroll...");
   await page.evaluate(() => {
     window.scrollBy(0, 500 + Math.floor(Math.random() * 200));
   });
   await randomDelay(1000, 2000);
 
-  // 2. MENGISI INPUT DENGAN DELAY ALAMI
-  logger.info(`[INPUT] Typing NIK: ${data.nik}`);
-  await page.type("#nik", data.nik, { delay: randomDelay(50, 150) });
-  await randomDelay(300, 700);
-
+  // 2. MENGISI INPUT UTAMA
   logger.info(`[INPUT] Typing Name: ${data.name}`);
+  // Asumsi ID input Nama KTP di form dummy adalah #nama
   await page.type("#nama", data.name, { delay: randomDelay(50, 150) });
   await randomDelay(300, 700);
 
+  logger.info(`[INPUT] Typing NIK: ${data.nik}`);
+  // Asumsi ID input Nomor KTP di form dummy adalah #nik
+  await page.type("#nik", data.nik, { delay: randomDelay(50, 150) });
+  await randomDelay(300, 700);
+
   logger.info(`[INPUT] Typing Phone: ${data.phone_number}`);
+  // Asumsi ID input Nomor HP di form dummy adalah #no_hp
   await page.type("#no_hp", data.phone_number, { delay: randomDelay(50, 150) });
   await randomDelay(300, 700);
 
-  // 3. MEMILIH DROPDOWN
-  logger.info(`[INPUT] Selecting branch: ${data.branch}`); // KRITIS: Gunakan data.branch
-  await page.select("#cabang_id", data.branch_selector);
+  // 3. MENGKLIK CHECKBOX PERSETUJUAN
+  logger.info("[INPUT] Clicking KTP agreement checkbox...");
+  // ID dari HTML dummy (berdasarkan screenshot)
+  await page.click("#ktp_agreement");
+  await randomDelay(500, 800);
+
+  logger.info("[INPUT] Clicking Stock/Trade agreement checkbox...");
+  // ID dari HTML dummy
+  await page.click("#stock_agreement");
   await randomDelay(500, 1000);
 
-  // 4. MENGISI TANGGAL
-  logger.info(`[INPUT] Setting date: ${data.purchase_date}`);
-  await page.evaluate((date) => {
-    document.getElementById("tanggal_pembelian").value = date;
-  }, data.purchase_date);
-  await randomDelay(500, 1000);
+  // 4. MEMBACA DAN MENGISI CAPTCHA TEKS
+  logger.info("[CAPTCHA] Reading static Captcha text...");
+  // Captcha text diambil dari elemen dengan ID #captcha_text
+  const captchaText = await page.$eval("#captcha_text", (el) => el.textContent);
+  logger.info(`[CAPTCHA] Text found: ${captchaText}`);
 
-  // 5. INTERAKSI CAPTCHA v3 DUMMY
-  logger.info("[BEHAVIOUR] Mouse movement simulation for CAPTCHA v3...");
-  await page.mouse.move(100, 100);
-  await randomDelay(100, 300);
-  await page.mouse.move(600, 700);
-  await randomDelay(500, 1000);
+  logger.info("[CAPTCHA] Typing Captcha answer...");
+  // Jawaban diketik ke elemen input dengan ID #captcha_input
+  await page.type("#captcha_input", captchaText, {
+    delay: randomDelay(100, 250),
+  });
+  await randomDelay(1000, 2000);
 
-  // 6. SUBMIT FORM
+  // 5. SUBMIT FORM
   logger.info("[FORM] Clicking submit button...");
   await page.click("#submit_button_id");
   await randomDelay(2000, 3000);
 
-  // 7. DETEKSI HASIL (Simulasi)
+  // 6. DETEKSI HASIL (Simulasi)
   const successMessage = await page.$eval(
     "#status_message",
     (el) => el.textContent
@@ -104,6 +113,7 @@ async function handleFormFilling(page, data) {
 
 // --- FUNGSI API KE LARAVEL ---
 async function sendRegistrationResult(data) {
+  // Fungsi tetap sama: mengirim hasil ke API Laravel
   try {
     const response = await axios.post(SAVE_RESULT_ENDPOINT, data);
     logger.info(
@@ -148,8 +158,10 @@ async function runAntamWar(userData) {
 
   try {
     browser = await puppeteer.launch({
-      headless: true, // Kembali ke headless: true untuk efisiensi war
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      // PENTING: Ubah 'false' ke 'true' ketika ingin menjalankan WAR tanpa tampilan (Headless Mode)
+      headless: false,
+      args: ["--no-sandbox", "--disable-setuid-sandbox", "--start-maximized"],
+      defaultViewport: null,
     });
 
     const page = await browser.newPage();
@@ -189,12 +201,34 @@ async function runAntamWar(userData) {
   }
 }
 
+// --- FUNGSI INPUT MANUAL DENGAN VALIDASI ---
 async function processManualInput() {
   logger.info("\n--- MODE INPUT MANUAL ---");
 
   const name = prompt("Masukkan Nama: ");
-  const nik = prompt("Masukkan NIK (16 digit): ");
-  const phone_number = prompt("Masukkan No. HP (08xx): ");
+
+  // --- NIK VALIDATION LOOP ---
+  let nik;
+  do {
+    nik = prompt("Masukkan NIK (16 digit): ");
+    if (nik.trim().length !== 16 || isNaN(nik.trim())) {
+      logger.error(
+        "[VALIDASI] NIK harus tepat 16 digit dan berupa angka. Coba lagi."
+      );
+    }
+  } while (nik.trim().length !== 16 || isNaN(nik.trim()));
+
+  // --- PHONE VALIDATION LOOP ---
+  let phone_number;
+  do {
+    phone_number = prompt("Masukkan No. HP (diawali 08xx): ");
+    if (!phone_number.trim().startsWith("08") || isNaN(phone_number.trim())) {
+      logger.error(
+        "[VALIDASI] Nomor HP harus diawali '08' dan berupa angka. Coba lagi."
+      );
+    }
+  } while (!phone_number.trim().startsWith("08") || isNaN(phone_number.trim()));
+
   const branch = prompt("Masukkan Nama Cabang (ex: BUTIK EMAS SARINAH): ");
   const branch_selector = prompt("Masukkan Selector Cabang (ex: SARINAH): ");
 
@@ -206,18 +240,18 @@ async function processManualInput() {
   const userData = {
     ...USER_DATA_TEMPLATE,
     name,
-    nik,
-    phone_number,
+    nik: nik.trim(),
+    phone_number: phone_number.trim(),
     branch,
     branch_selector,
     purchase_date,
   };
 
   logger.info(`[MANUAL] Starting job for NIK: ${userData.nik}`);
-  await runAntamWar(userData); // Jalankan job satu per satu
+  await runAntamWar(userData);
 }
 
-// --- FUNGSI PROSES UTAMA (Multi-NIK) ---
+// --- FUNGSI PROSES UTAMA (Multi-NIK JSON) ---
 async function processUserData(dataFilePath) {
   logger.info(`[CLI] Reading user data from: ${dataFilePath}`);
 
@@ -248,9 +282,7 @@ async function processUserData(dataFilePath) {
   );
 
   // 2. Proses Setiap NIK Secara Berurutan (Sequential)
-  // Mode sequential lebih aman agar tidak membanjiri sistem dengan terlalu banyak browser
   for (const [index, userEntry] of userList.entries()) {
-    // Gabungkan data template dengan data user spesifik
     const userData = {
       ...USER_DATA_TEMPLATE,
       ...userEntry,
@@ -259,107 +291,151 @@ async function processUserData(dataFilePath) {
     logger.info(`\n--- Starting Job ${index + 1}/${userList.length} ---`);
     await runAntamWar(userData);
 
-    // Jeda antar job (untuk menghindari deteksi bot dan membiarkan sistem bernapas)
+    // Jeda antar job
     await randomDelay(5000, 10000);
   }
 
   logger.info("[CLI] All user jobs completed.");
 }
 
-// antam-bot-war/bot/index.js (GANTI BAGIAN EKSEKUSI UTAMA)
-
-// --- FUNGSI PROSES INPUT CSV (Baru) ---
-// antam-bot-war/bot/index.js (Ganti fungsi processCSVData)
-
 // --- FUNGSI PROSES INPUT CSV ---
 async function processCSVData(dataFilePath) {
-    logger.info(`[CLI] Reading user data from CSV: ${dataFilePath}`);
-    
-    const userList = await new Promise((resolve, reject) => {
-        const results = [];
-        
-        // Cek apakah file ada sebelum mencoba membacanya
-        if (!fs.existsSync(dataFilePath)) {
-            logger.error(`[FATAL] File not found: ${dataFilePath}`);
-            return resolve([]);
-        }
+  logger.info(`[CLI] Reading user data from CSV: ${dataFilePath}`);
 
-        fs.createReadStream(dataFilePath)
-            .pipe(csv())
-            .on('data', (data) => {
-                // Tambahkan data template untuk memastikan field seperti 'war_time' ada
-                const userData = {
-                    ...USER_DATA_TEMPLATE,
-                    ...data,
-                };
-                results.push(userData);
-            })
-            .on('end', () => {
-                logger.info(`[CLI] Successfully parsed ${results.length} records from CSV.`);
-                resolve(results);
-            })
-            .on('error', (err) => {
-                logger.error(`[FATAL] Error reading CSV file: ${err.message}`);
-                reject(err);
-            });
-    });
+  const userList = await new Promise((resolve, reject) => {
+    const results = [];
 
-    if (!Array.isArray(userList) || userList.length === 0) {
-        logger.error("[FATAL] CSV file is empty or could not be processed.");
-        return;
+    if (!fs.existsSync(dataFilePath)) {
+      logger.error(`[FATAL] File not found: ${dataFilePath}`);
+      return resolve([]);
     }
 
-    // Lanjutkan ke proses bot (Kita akan menggunakan logika sequential/paralel dari processUserData)
-    // Gunakan kembali logika loop dari processUserData, tetapi hanya untuk menjalankan bot
-    const userListLength = userList.length;
-    
-    for (const [index, userEntry] of userList.entries()) {
-        logger.info(`\n--- Starting Job ${index + 1}/${userListLength} ---`);
-        await runAntamWar(userEntry);
+    fs.createReadStream(dataFilePath)
+      .pipe(csv())
+      .on("data", (data) => {
+        const userData = {
+          ...USER_DATA_TEMPLATE,
+          ...data,
+        };
+        results.push(userData);
+      })
+      .on("end", () => {
+        logger.info(
+          `[CLI] Successfully parsed ${results.length} records from CSV.`
+        );
+        resolve(results);
+      })
+      .on("error", (err) => {
+        logger.error(`[FATAL] Error reading CSV file: ${err.message}`);
+        reject(err);
+      });
+  });
 
-        // Jeda antar job (untuk menghindari deteksi bot dan membiarkan sistem bernapas)
-        await randomDelay(5000, 10000); 
-    }
+  if (!Array.isArray(userList) || userList.length === 0) {
+    logger.error("[FATAL] CSV file is empty or could not be processed.");
+    return;
+  }
 
-    logger.info("[CLI] All CSV user jobs completed.");
+  const userListLength = userList.length;
+
+  for (const [index, userEntry] of userList.entries()) {
+    logger.info(`\n--- Starting Job ${index + 1}/${userListLength} ---`);
+    await runAntamWar(userEntry);
+
+    await randomDelay(5000, 10000);
+  }
+
+  logger.info("[CLI] All CSV user jobs completed.");
 }
 
-// ... (Fungsi displayMainMenu di bagian bawah sudah otomatis memanggil fungsi ini saat opsi 3 dipilih)
+// --- FUNGSI MENAMPILKAN STATUS PENDAFTARAN ---
+async function displayStatus() {
+  logger.info("\n--- STATUS PENDAFTARAN ---");
 
-// --- FUNGSI MENU UTAMA INTERAKTIF ---
-function displayMainMenu() {
+  try {
+    const response = await axios.get(LIST_REGISTRATIONS_ENDPOINT);
+    const data = response.data.data;
+
+    if (data.length === 0) {
+      logger.info("Database pendaftaran masih kosong.");
+      return;
+    }
+
+    const table = new Table({
+      head: ["Waktu Daftar", "NIK", "Nama", "Cabang", "Status", "No. Tiket"],
+      colWidths: [20, 18, 15, 18, 10, 12],
+    });
+
+    data.forEach((item) => {
+      const statusText = item.status === "SUCCESS" ? "BERHASIL ✅" : "GAGAL ❌";
+      const ticketText = item.ticket_number || "-";
+
+      table.push([
+        item.created_at.substring(5, 16).replace("T", " "),
+        item.nik,
+        item.name.substring(0, 14),
+        item.branch.substring(13, item.branch.length),
+        statusText,
+        ticketText,
+      ]);
+    });
+
+    console.log(table.toString());
+  } catch (error) {
+    logger.error(
+      "[FATAL] Gagal mengambil data dari Laravel API. Pastikan 'php artisan serve' berjalan."
+    );
+    if (error.response) {
+      logger.error(`Status API: ${error.response.status}`);
+    } else {
+      logger.error(`Error details: ${error.message}`);
+    }
+  }
+}
+
+// --- FUNGSI MENU UTAMA INTERAKTIF (Revisi Total untuk Stabilitas) ---
+async function displayMainMenu() {
+  let continueLoop = true;
+  while (continueLoop) {
     logger.info("\n====================================");
     logger.info("       ANTAM BOT WAR - MENU");
     logger.info("====================================");
     logger.info("1. Input Manual (1 NIK)");
     logger.info("2. Input File JSON (Multi NIK)");
-    logger.info("3. Input File CSV (Multi NIK) - Belum Tersedia");
-    logger.info("4. Keluar");
+    logger.info("3. Input File CSV (Multi NIK)");
+    logger.info("4. TAMPILKAN STATUS REGISTRASI");
+    logger.info("5. Keluar");
     logger.info("------------------------------------");
 
-    const choice = prompt("Pilih mode (1/2/3/4): ");
+    const choice = prompt("Pilih mode (1/2/3/4/5): ");
 
     switch (choice.trim()) {
-        case '1':
-            processManualInput();
-            break;
-        case '2':
-            const jsonPath = prompt("Masukkan Path File JSON (ex: users.json): ");
-            processUserData(jsonPath.trim());
-            break;
-        case '3':
-            const csvPath = prompt("Masukkan Path File CSV (ex: users.csv): ");
-            processCSVData(csvPath.trim());
-            break;
-        case '4':
-            logger.info("[EXIT] Program dihentikan.");
-            return;
-        default:
-            logger.error("[ERROR] Pilihan tidak valid. Silakan coba lagi.");
-            displayMainMenu();
+      case "1":
+        await processManualInput();
+        break;
+      case "2":
+        const jsonPath = prompt("Masukkan Path File JSON (ex: users.json): ");
+        await processUserData(jsonPath.trim());
+        break;
+      case "3":
+        const csvPath = prompt("Masukkan Path File CSV (ex: users.csv): ");
+        await processCSVData(csvPath.trim());
+        break;
+      case "4":
+        await displayStatus();
+        break;
+      case "5":
+        logger.info("[EXIT] Program dihentikan.");
+        continueLoop = false;
+        break;
+      default:
+        logger.error("[ERROR] Pilihan tidak valid. Silakan coba lagi.");
     }
+    // Jeda kecil sebelum kembali ke loop
+    if (continueLoop) {
+      await randomDelay(1000, 1000);
+    }
+  }
 }
-
 // --- EKSEKUSI UTAMA ---
-// Kita tidak lagi menggunakan Yargs commands, hanya menjalankan fungsi menu utama.
 displayMainMenu();

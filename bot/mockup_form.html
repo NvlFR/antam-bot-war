@@ -2,44 +2,75 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Mockup Antrian Antam</title>
+    <title>Mockup Antrian Antam - FINAL</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        input[type="text"], input[type="date"], select { padding: 10px; margin-bottom: 10px; width: 100%; box-sizing: border-box; }
+        .checkbox-container { margin-bottom: 15px; }
+        .checkbox-container input[type="checkbox"] { margin-right: 10px; }
+        .captcha-box { 
+            border: 1px solid #ccc; 
+            padding: 15px; 
+            margin-bottom: 20px; 
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
-    <h1>Form Antrian Butik Antam Mockup</h1>
+    <h1>Form Antrian Butik Antam Mockup (Final)</h1>
     
-    <div id="status_message" style="color: blue;">Sistem antrian dibuka. Silakan isi form.</div>
+    <div id="status_message" style="color: blue; font-weight: bold;">Sistem antrian dibuka. Silakan isi form.</div>
 
     <form id="antrianForm">
-        <label for="nik">NIK (ID: nik)</label><br>
+        
+        <label for="nama">Nama Lengkap KTP (ID: nama)</label><br>
+        <input type="text" id="nama" name="nama" placeholder="Masukkan Nama Sesuai KTP" required><br><br>
+
+        <label for="nik">Nomor KTP (ID: nik)</label><br>
         <input type="text" id="nik" name="nik" placeholder="Masukkan NIK 16 digit" required><br><br>
 
-        <label for="nama">Nama Lengkap (ID: nama)</label><br>
-        <input type="text" id="nama" name="nama" required><br><br>
-
         <label for="no_hp">Nomor HP (ID: no_hp)</label><br>
-        <input type="text" id="no_hp" name="no_hp" required><br><br>
+        <input type="text" id="no_hp" name="no_hp" placeholder="08xx" required><br><br>
+        
+        <div class="checkbox-container">
+            <input type="checkbox" id="ktp_agreement" name="ktp_agreement" value="yes" required>
+            <label for="ktp_agreement" style="font-size: 0.9em;"> Memahami bahwa saat transaksi WAJIB menunjukkan KTP fisik asli...</label>
+        </div>
 
-        <label for="cabang_id">Pilih Cabang (ID: cabang_id)</label><br>
-        <select id="cabang_id" name="cabang_id" required>
-            <option value="">-- Pilih --</option>
-            <option value="SARINAH">BUTIK EMAS SARINAH</option>
-            <option value="JAKSEL">BUTIK EMAS JAKARTA SELATAN</option>
-            </select><br><br>
+        <div class="checkbox-container">
+            <input type="checkbox" id="stock_agreement" name="stock_agreement" value="yes" required>
+            <label for="stock_agreement" style="font-size: 0.9em;"> 1. Memahami bahwa sewaktu-waktu stok produk tidak tersedia... 2. Transaksi bukan untuk tujuan perdagangan.</label>
+        </div>
 
-        <label for="tanggal_pembelian">Tanggal Pembelian (ID: tanggal_pembelian)</label><br>
-        <input type="date" id="tanggal_pembelian" name="tanggal_pembelian" value="2025-11-01" required><br><br>
-
-        <div id="captcha_area">Simulasi CAPTCHA v3 (Skor tinggi akan didapat dari Behaviour Engine)</div><br>
-
-        <button type="submit" id="submit_button_id">Daftar Antrian (ID: submit_button_id)</button>
+        <div class="captcha-box">
+            <p style="margin: 0 0 10px 0;">Masukkan teks berikut:</p>
+            <span id="captcha_text" style="font-size: 1.5em; font-weight: bold; background-color: #e0e0e0; padding: 5px 10px; display: inline-block; border-radius: 4px;">iEApKxRD</span>
+            
+            <input type="text" id="captcha_input" name="captcha_input" placeholder="Isi Captcha di sini" required style="margin-top: 10px;">
+        </div>
+        
+        <button id="submit_button_id" type="submit" style="padding: 15px 30px; background-color: #007bff; color: white; border: none; cursor: pointer; font-size: 1.1em;">Daftar Antrian</button>
     </form>
     
     <script>
+        // Logika sederhana untuk simulasi hasil Antam
         document.getElementById('antrianForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            document.getElementById('status_message').style.color = 'green';
-            document.getElementById('status_message').innerHTML = 'Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-001';
-            // Form submission logic would go here
+            
+            // Simulasikan validasi Captcha
+            const input = document.getElementById('captcha_input').value;
+            const text = document.getElementById('captcha_text').textContent;
+
+            if (input !== text) {
+                document.getElementById('status_message').style.color = 'red';
+                document.getElementById('status_message').innerHTML = 'GAGAL: Captcha salah. Coba lagi.';
+                // Ubah teks captcha agar bot/user bisa mencoba lagi
+                document.getElementById('captcha_text').textContent = 'ERROR' + Math.floor(Math.random() * 100);
+            } else {
+                // Simulasi Sukses
+                document.getElementById('status_message').style.color = 'green';
+                document.getElementById('status_message').innerHTML = 'Pendaftaran berhasil! Nomor Tiket: ANTM-MOCKUP-' + Math.floor(Math.random() * 999);
+            }
         });
     </script>
 </body>

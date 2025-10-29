@@ -9,6 +9,25 @@ use Illuminate\Support\Facades\Log;
 
 class RegistrationController extends Controller
 {
+
+    public function index()
+    {
+        $registrations = Registration::orderBy('created_at', 'desc')->get([
+            'nik',
+            'name',
+            'phone_number',
+            'branch',
+            'purchase_date',
+            'status', // status: SUCCESS, FAILED
+            'ticket_number', // ANTM-MOCKUP-001 atau null
+            'created_at',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $registrations
+        ]);
+    }
     /**
      * Menerima hasil pendaftaran dari Bot Engine (Node.js)
      */

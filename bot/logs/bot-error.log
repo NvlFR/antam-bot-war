@@ -29,3 +29,26 @@
 2025-10-28 22:54:18 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
 2025-10-28 22:54:18 [ERROR]: Status API: 422
 2025-10-28 22:54:18 [ERROR]: Validation Errors:
+2025-10-28 23:06:46 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-28 23:06:46 [ERROR]: Status API: 422
+2025-10-28 23:06:46 [ERROR]: Validation Errors:
+2025-10-28 23:07:03 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-28 23:07:03 [ERROR]: Status API: 422
+2025-10-28 23:07:03 [ERROR]: Validation Errors:
+2025-10-28 23:07:22 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-28 23:07:22 [ERROR]: Status API: 422
+2025-10-28 23:07:22 [ERROR]: Validation Errors:
+2025-10-28 23:29:33 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780008: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-28 23:30:25 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780009: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-29 00:01:05 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780008: No element found for selector: #ktp_agreement
+2025-10-29 00:01:05 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-29 00:01:05 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
+2025-10-29 00:01:19 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780009: No element found for selector: #ktp_agreement
+2025-10-29 00:01:19 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-29 00:01:19 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
+2025-10-29 00:01:35 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780010: No element found for selector: #ktp_agreement
+2025-10-29 00:01:35 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-29 00:01:35 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
+2025-10-29 00:03:33 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780008: No element found for selector: #ktp_agreement
+2025-10-29 00:03:47 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780009: No element found for selector: #ktp_agreement
+2025-10-29 00:04:00 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780010: No element found for selector: #ktp_agreement

@@ -18,3 +18,4 @@ Route::post('/bot/test-connection', function (Request $request) {
 });
 
 Route::post('/bot/save-result', [RegistrationController::class, 'store']);
+Route::get('/bot/list-registrations', [RegistrationController::class, 'index']);
