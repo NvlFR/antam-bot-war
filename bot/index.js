@@ -1,4 +1,4 @@
-// antam-bot-war/bot/index.js (FINAL VERSION - STABIL & INTERAKTIF)
+// antam-bot-war/bot/index.js (VERSI LIVE BUTIK GRAHA DIPTA - STABIL DENGAN RETRY)
 
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
@@ -14,20 +14,27 @@ const Table = require("cli-table3"); // Untuk menampilkan tabel status
 
 // --- KONFIGURASI UMUM ---
 const MOCKUP_FILE = path.join(__dirname, "mockup_form.html");
-const ANTAM_URL = `file://${MOCKUP_FILE}`; // Digunakan untuk debug/dev
+
+// !!! GANTI URL KE BUTIK ANTAM YANG AKAN DILAKUKAN WAR !!!
+// Saat ini diatur ke Graha Dipta, ganti ke Serpong jika ingin uji coba form aktif
+const ANTAM_URL = "https://antrigrahadipta.com/";
+// const ANTAM_URL = "https://antributikserpong.com/";
+
 const LARAVEL_API_URL = "http://127.0.0.1:8000/api";
 const SAVE_RESULT_ENDPOINT = `${LARAVEL_API_URL}/bot/save-result`;
 const LIST_REGISTRATIONS_ENDPOINT = `${LARAVEL_API_URL}/bot/list-registrations`;
 
 // --- DATA DUMMY TEMPLATE ---
 const USER_DATA_TEMPLATE = {
-  name: "Budi Santoso",
-  nik: "1234567890123000",
-  phone_number: "081234567890",
-  branch: "BUTIK EMAS SARINAH",
-  branch_selector: "SARINAH",
-  purchase_date: "2025-11-01",
+  name: "Anto Santoso",
+  nik: "3175030203870007",
+  phone_number: "085695810460",
+  branch: "BUTIK EMAS GRAHA CIPTA", // Ganti nama cabang
+  branch_selector: "GRAHA CIPTA",
+  purchase_date: "2025-10-29",
 };
+
+const MAX_RETRIES = 5; // Maksimal percobaan ulang jika gagal memuat halaman/form
 
 // Tambahkan plugin stealth ke Puppeteer
 puppeteer.use(StealthPlugin());
@@ -38,7 +45,7 @@ const randomDelay = (min, max) => {
   return new Promise((resolve) => setTimeout(resolve, delay));
 };
 
-// --- FUNGSI INTI OTOMASI FORM (DIADAPTASI KE FORM SERPONG) ---
+// --- FUNGSI INTI OTOMASI FORM (DIADAPTASI KE FORM GRAHA DIPTA/SERPONG) ---
 async function handleFormFilling(page, data) {
   logger.info("[FORM] Starting form automation...");
 
@@ -51,39 +58,36 @@ async function handleFormFilling(page, data) {
 
   // 2. MENGISI INPUT UTAMA
   logger.info(`[INPUT] Typing Name: ${data.name}`);
-  // Asumsi ID input Nama KTP di form dummy adalah #nama
-  await page.type("#nama", data.name, { delay: randomDelay(50, 150) });
+  await page.type("#name", data.name, { delay: randomDelay(50, 150) });
   await randomDelay(300, 700);
 
   logger.info(`[INPUT] Typing NIK: ${data.nik}`);
-  // Asumsi ID input Nomor KTP di form dummy adalah #nik
-  await page.type("#nik", data.nik, { delay: randomDelay(50, 150) });
+  await page.type("#ktp", data.nik, { delay: randomDelay(50, 150) });
   await randomDelay(300, 700);
 
   logger.info(`[INPUT] Typing Phone: ${data.phone_number}`);
-  // Asumsi ID input Nomor HP di form dummy adalah #no_hp
-  await page.type("#no_hp", data.phone_number, { delay: randomDelay(50, 150) });
+  await page.type("#phone_number", data.phone_number, {
+    delay: randomDelay(50, 150),
+  });
   await randomDelay(300, 700);
 
   // 3. MENGKLIK CHECKBOX PERSETUJUAN
-  logger.info("[INPUT] Clicking KTP agreement checkbox...");
-  // ID dari HTML dummy (berdasarkan screenshot)
-  await page.click("#ktp_agreement");
+  logger.info("[INPUT] Clicking KTP agreement checkbox (#check)...");
+  await page.click("#check");
   await randomDelay(500, 800);
 
-  logger.info("[INPUT] Clicking Stock/Trade agreement checkbox...");
-  // ID dari HTML dummy
-  await page.click("#stock_agreement");
+  logger.info("[INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...");
+  await page.click("#check_2");
   await randomDelay(500, 1000);
 
   // 4. MEMBACA DAN MENGISI CAPTCHA TEKS
   logger.info("[CAPTCHA] Reading static Captcha text...");
-  // Captcha text diambil dari elemen dengan ID #captcha_text
-  const captchaText = await page.$eval("#captcha_text", (el) => el.textContent);
+  const captchaText = await page.$eval("#captcha-box", (el) =>
+    el.textContent.trim()
+  );
   logger.info(`[CAPTCHA] Text found: ${captchaText}`);
 
   logger.info("[CAPTCHA] Typing Captcha answer...");
-  // Jawaban diketik ke elemen input dengan ID #captcha_input
   await page.type("#captcha_input", captchaText, {
     delay: randomDelay(100, 250),
   });
@@ -91,29 +95,55 @@ async function handleFormFilling(page, data) {
 
   // 5. SUBMIT FORM
   logger.info("[FORM] Clicking submit button...");
-  await page.click("#submit_button_id");
+  await page.click('button[type="submit"]'); // Tetap gunakan selector umum ini
   await randomDelay(2000, 3000);
 
-  // 6. DETEKSI HASIL (Simulasi)
-  const successMessage = await page.$eval(
-    "#status_message",
-    (el) => el.textContent
-  );
-  logger.info(`[RESULT] Message on screen: ${successMessage}`);
+  // 6. DETEKSI HASIL
+  const successIndicatorSelector = 'h4:has-text("Nomor Antrian Anda")';
 
-  if (successMessage.includes("berhasil")) {
+  const successIndicator = await page.evaluate((selector) => {
+    const elements = Array.from(document.querySelectorAll("h4"));
+    const successEl = elements.find((el) =>
+      el.textContent.includes("Nomor Antrian Anda")
+    );
+    return successEl ? successEl.textContent : null;
+  }, successIndicatorSelector);
+
+  if (successIndicator) {
     return {
       status: "SUCCESS",
-      ticket_number: successMessage.split(":")[1].trim(),
+      ticket_number: successIndicator.trim(),
     };
   } else {
-    return { status: "FAILED", ticket_number: null };
+    // Cek pesan error validasi (jika form tidak redirect)
+    const errorCheck1 = await page.evaluate(
+      () =>
+        document.querySelector("#error-check") &&
+        !document.querySelector("#error-check").classList.contains("d-none")
+    );
+    const errorCheck2 = await page.evaluate(
+      () =>
+        document.querySelector("#error-check2") &&
+        !document.querySelector("#error-check2").classList.contains("d-none")
+    );
+
+    if (errorCheck1 || errorCheck2) {
+      logger.error(
+        "[RESULT] FAILED: Checkbox error shown or Captcha/NIK/Phone is wrong."
+      );
+      return { status: "FAILED_VALIDATION", ticket_number: null };
+    }
+
+    // Fallback: Gagal total
+    logger.error(
+      "[RESULT] FAILED: No success indicator found. Probably server overload/error or form not submitted."
+    );
+    return { status: "FAILED_UNKNOWN", ticket_number: null };
   }
 }
 
 // --- FUNGSI API KE LARAVEL ---
 async function sendRegistrationResult(data) {
-  // Fungsi tetap sama: mengirim hasil ke API Laravel
   try {
     const response = await axios.post(SAVE_RESULT_ENDPOINT, data);
     logger.info(
@@ -144,7 +174,7 @@ async function sendRegistrationResult(data) {
   }
 }
 
-// --- FUNGSI UTAMA BOT ENGINE PER NIK ---
+// --- FUNGSI UTAMA BOT ENGINE PER NIK (DENGAN RETRY LOOP) ---
 async function runAntamWar(userData) {
   let browser;
   let registrationResult = {
@@ -154,51 +184,105 @@ async function runAntamWar(userData) {
     war_time: new Date().toISOString().slice(0, 19).replace("T", " "),
   };
 
+  // PERBAIKAN: launchOptions dideklarasikan di luar try/catch (Scope Variabel)
+  const launchOptions = {
+    // GANTI KE `false` jika Anda ingin melihat browser terbuka saat WAR
+    headless: false,
+    args: ["--no-sandbox", "--disable-setuid-sandbox", "--start-maximized"],
+    defaultViewport: null,
+  };
+
   logger.info(`[JOB] Starting job for NIK: ${userData.nik}`);
+  let success = false;
+  let attempt = 0;
 
-  try {
-    browser = await puppeteer.launch({
-      // PENTING: Ubah 'false' ke 'true' ketika ingin menjalankan WAR tanpa tampilan (Headless Mode)
-      headless: false,
-      args: ["--no-sandbox", "--disable-setuid-sandbox", "--start-maximized"],
-      defaultViewport: null,
-    });
-
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1366, height: 768 });
-
-    await page.goto(ANTAM_URL, {
-      waitUntil: "domcontentloaded",
-      timeout: 30000,
-    });
-
-    const resultFromForm = await handleFormFilling(page, userData);
-
-    const finalPageContent = await page.content();
-
-    registrationResult = {
-      ...registrationResult,
-      ...resultFromForm,
-      raw_response: {
-        success_page_content: finalPageContent.substring(0, 500),
-      },
-    };
-  } catch (error) {
-    logger.error(
-      `[CRITICAL ERROR] Bot execution failed for NIK ${userData.nik}: ${error.message}`
+  // LOOP PERCOBAAN ULANG
+  while (attempt < MAX_RETRIES && !success) {
+    attempt++;
+    logger.warn(
+      `[RETRY] Attempt ${attempt}/${MAX_RETRIES} for NIK: ${userData.nik}`
     );
-    registrationResult.status = "FAILED";
-    registrationResult.raw_response = { error: error.message };
-  } finally {
-    if (browser) {
-      await browser.close();
-      logger.info(`[JOB] Browser closed for NIK: ${userData.nik}`);
-    }
 
-    // Kirim hasil akhir ke Laravel
-    await sendRegistrationResult({ ...userData, ...registrationResult });
-    logger.info(`[JOB] Finished job for NIK: ${userData.nik}`);
+    try {
+      // Tutup browser jika ada sisa dari loop sebelumnya
+      if (browser) await browser.close();
+
+      browser = await puppeteer.launch(launchOptions);
+      const page = await browser.newPage();
+      await page.setViewport({ width: 1366, height: 768 });
+
+      // 1. GOTO URL
+      logger.info(`[RETRY] Navigating to ${ANTAM_URL}...`);
+      await page.goto(ANTAM_URL, {
+        waitUntil: "domcontentloaded",
+        timeout: 60000, // Timeout navigasi 60 detik
+      });
+
+      // 2. TUNGGU FORM MUNCUL
+      logger.info("[RETRY] Waiting for form selector '#name'...");
+      await page.waitForSelector("#name", { timeout: 20000 }); // Timeout selektor 20 detik
+
+      // Jika berhasil sampai sini, anggap form sudah termuat
+      logger.info("[RETRY] Form loaded. Starting filling process...");
+
+      const resultFromForm = await handleFormFilling(page, userData);
+      const finalPageContent = await page.content();
+
+      registrationResult = {
+        ...registrationResult,
+        ...resultFromForm,
+        raw_response: {
+          success_page_content: finalPageContent.substring(0, 500),
+        },
+      };
+
+      success = true; // Keluar dari loop karena berhasil
+    } catch (error) {
+      logger.error(
+        `[ATTEMPT ${attempt}] Failed to load form or complete filling: ${error.message}`
+      );
+
+      // Jika ini adalah percobaan terakhir, catat sebagai gagal
+      if (attempt === MAX_RETRIES) {
+        logger.error(
+          `[CRITICAL ERROR] Max retries reached for NIK ${userData.nik}. Stopping.`
+        );
+        registrationResult.status = "FAILED";
+        registrationResult.raw_response = {
+          error: `Max retries reached: ${error.message}`,
+        };
+      } else {
+        // Tunggu sebelum mencoba lagi
+        logger.info("[RETRY] Waiting 3-5 seconds before next attempt...");
+        await randomDelay(3000, 5000);
+      }
+    } finally {
+      // Menutup browser hanya setelah selesai (sukses atau gagal total)
+      if (success || attempt === MAX_RETRIES) {
+        if (browser) {
+          // Jika mode headless: true, tutup segera. Jika false, tunggu sebentar.
+          if (launchOptions.headless) {
+            await browser.close();
+            logger.info(`[JOB] Browser closed for NIK: ${userData.nik}`);
+          } else {
+            logger.info(
+              `[JOB] Browser kept open for debug for NIK: ${userData.nik}`
+            );
+            await randomDelay(5000, 10000);
+            await browser.close();
+            logger.info(
+              `[JOB] Browser closed after delay for NIK: ${userData.nik}`
+            );
+          }
+        }
+      }
+    }
   }
+  // END LOOP PERCOBAAN ULANG
+
+  // Kirim hasil akhir ke Laravel
+  await sendRegistrationResult({ ...userData, ...registrationResult });
+  logger.info(`[JOB] Finished job for NIK: ${userData.nik}`);
 }
 
 // --- FUNGSI INPUT MANUAL DENGAN VALIDASI ---
@@ -229,10 +313,11 @@ async function processManualInput() {
     }
   } while (!phone_number.trim().startsWith("08") || isNaN(phone_number.trim()));
 
-  const branch = prompt("Masukkan Nama Cabang (ex: BUTIK EMAS SARINAH): ");
-  const branch_selector = prompt("Masukkan Selector Cabang (ex: SARINAH): ");
+  const branch = prompt("Masukkan Nama Cabang (ex: BUTIK EMAS GRAHA CIPTA): ");
+  const branch_selector = prompt(
+    "Masukkan Selector Cabang (ex: GRAHA CIPTA): "
+  );
 
-  // Asumsi tanggal tetap 2025-11-01 atau bisa ditanyakan juga
   const purchase_date =
     prompt("Masukkan Tanggal Pembelian (YYYY-MM-DD, default 2025-11-01): ") ||
     "2025-11-01";
@@ -251,7 +336,7 @@ async function processManualInput() {
   await runAntamWar(userData);
 }
 
-// --- FUNGSI PROSES UTAMA (Multi-NIK JSON) ---
+// --- FUNGSI PROSES UTAMA (Multi-NIK JSON - PERBAIKAN KEY MAPPING) ---
 async function processUserData(dataFilePath) {
   logger.info(`[CLI] Reading user data from: ${dataFilePath}`);
 
@@ -283,9 +368,12 @@ async function processUserData(dataFilePath) {
 
   // 2. Proses Setiap NIK Secara Berurutan (Sequential)
   for (const [index, userEntry] of userList.entries()) {
+    // PERBAIKAN: Pemetaan key dari JSON ke format bot
     const userData = {
       ...USER_DATA_TEMPLATE,
-      ...userEntry,
+      name: userEntry.nama || userEntry.name, // Mendukung 'nama' atau 'name'
+      nik: userEntry.nik,
+      phone_number: userEntry.telepon || userEntry.phone_number, // Mendukung 'telepon' atau 'phone_number'
     };
 
     logger.info(`\n--- Starting Job ${index + 1}/${userList.length} ---`);
@@ -313,6 +401,7 @@ async function processCSVData(dataFilePath) {
     fs.createReadStream(dataFilePath)
       .pipe(csv())
       .on("data", (data) => {
+        // Pastikan CSV Anda menggunakan header 'name', 'nik', 'phone_number'
         const userData = {
           ...USER_DATA_TEMPLATE,
           ...data,

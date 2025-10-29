@@ -52,3 +52,34 @@
 2025-10-29 00:03:33 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780008: No element found for selector: #ktp_agreement
 2025-10-29 00:03:47 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780009: No element found for selector: #ktp_agreement
 2025-10-29 00:04:00 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780010: No element found for selector: #ktp_agreement
+2025-10-29 07:33:24 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030203870007: Navigation timeout of 30000 ms exceeded
+2025-10-29 07:34:56 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030203870007: Navigation timeout of 30000 ms exceeded
+2025-10-29 07:36:39 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030203870007: Navigation timeout of 30000 ms exceeded
+2025-10-29 07:41:51 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030203870007: Waiting for selector `#name` failed
+2025-10-29 07:45:24 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030203870007: Waiting for selector `#name` failed
+2025-10-29 07:46:19 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-29 07:47:09 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175032011930003: Waiting for selector `#name` failed
+2025-10-29 07:48:02 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175042504680001: Waiting for selector `#name` failed
+2025-10-29 07:48:54 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780007: Waiting for selector `#name` failed
+2025-10-29 07:49:46 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3211080509760003: Waiting for selector `#name` failed
+2025-10-29 07:50:40 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3211086805790003: Waiting for selector `#name` failed
+2025-10-29 07:51:28 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175032705660005: Waiting for selector `#name` failed
+2025-10-29 07:52:16 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175033107840011: Waiting for selector `#name` failed
+2025-10-29 07:52:37 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3202331911950003: Navigating frame was detached
+2025-10-29 08:00:48 [ERROR]: [ERROR] Pilihan tidak valid. Silakan coba lagi.
+2025-10-29 08:02:32 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030203870007: Waiting for selector `#name` failed
+2025-10-29 08:03:04 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-29 08:03:42 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175032011930003: Waiting for selector `#name` failed
+2025-10-29 08:04:18 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175042504680001: Waiting for selector `#name` failed
+2025-10-29 08:04:53 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780007: Waiting for selector `#name` failed
+2025-10-29 08:05:31 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3211080509760003: Waiting for selector `#name` failed
+2025-10-29 08:06:07 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3211086805790003: Waiting for selector `#name` failed
+2025-10-29 08:06:40 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175032705660005: Waiting for selector `#name` failed
+2025-10-29 08:07:17 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175033107840011: Waiting for selector `#name` failed
+2025-10-29 08:07:49 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3202331911950003: Waiting for selector `#name` failed
+2025-10-29 08:22:38 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling: Waiting for selector `#name` failed
+2025-10-29 08:23:09 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling: Waiting for selector `#name` failed
+2025-10-29 08:23:45 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling: Waiting for selector `#name` failed
+2025-10-29 08:24:32 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling: Waiting for selector `#name` failed
+2025-10-29 08:25:03 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling: Waiting for selector `#name` failed
+2025-10-29 08:25:03 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175030203870007. Stopping.
