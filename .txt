@@ -1,0 +1,14 @@
+
+
+
+
+  {
+    "name": "Wawan Gunawan",
+    "nik": "3175032011930003",
+    "phone_number": "081293631417"
+  },
+  {
+    "name": "DADEN HARUMAN UNGGARA",
+    "nik": "3202331911950003",
+    "phone_number": "085783527417"
+  }

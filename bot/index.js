@@ -23,7 +23,7 @@ const SAVE_RESULT_ENDPOINT = `${LARAVEL_API_URL}/bot/save-result`;
 const LIST_REGISTRATIONS_ENDPOINT = `${LARAVEL_API_URL}/bot/list-registrations`;
 
 // Data butik default (dipakai saat bot start)
-let currentAntamURL = "http://antrigrahadipta.com/"; // Default URL
+let currentAntamURL = "https://antrigrahadipta.com/"; // Default URL
 
 // --- DATA DUMMY TEMPLATE ---
 const USER_DATA_TEMPLATE = {
@@ -210,13 +210,16 @@ async function runAntamWar(userData, antamURL) {
   // --- 3. LAUNCH OPTIONS (MENGATASI ERR_BLOCKED_BY_CLIENT) ---
   const launchOptions = {
     headless: false, // Ganti ke false untuk debugging
+    // executablePath: "/usr/bin/chromium-browser",
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--start-maximized",
-      // Opsi untuk mencegah pemblokiran oleh ekstensi atau klien (adblock/firewall)
-      "--disable-extensions-except=NONE",
-      "--disable-extensions",
+      "--ignore-certificate-errors",
+      "--allow-running-insecure-content",
+      // Tambahkan opsi di bawah jika masalah terus berlanjut
+      // '--disable-gpu',
+      // '--disable-dev-shm-usage',
     ],
     defaultViewport: null,
   };
