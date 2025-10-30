@@ -17,3 +17,48 @@
 2025-10-30 07:01:14 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3171070905960009: net::ERR_TIMED_OUT at https://antributikserpong.com/
 2025-10-30 07:15:36 [ERROR]: [FATAL] Gagal mengambil data dari Laravel API. Pastikan 'php artisan serve' berjalan.
 2025-10-30 07:15:36 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
+2025-10-30 07:30:28 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175101804020009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:28 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3603192309880004: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:28 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3205134111950001: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:28 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3171070905960009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:28 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3671111704820006: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:41 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3603192309880004: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:41 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3671111704820006: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:43 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3171070905960009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:43 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3205134111950001: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:43 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175101804020009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:52 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3603192309880004: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:58 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3205134111950001: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:58 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175101804020009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:58 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3671111704820006: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:59 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3171070905960009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:04 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3603192309880004: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:33 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3671111704820006: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:34 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3205134111950001: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:35 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175101804020009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:35 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3171070905960009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:37 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3603192309880004: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:37 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3603192309880004. Stopping.
+2025-10-30 07:31:44 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3671111704820006: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:44 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3671111704820006. Stopping.
+2025-10-30 07:31:46 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3171070905960009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:46 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3171070905960009. Stopping.
+2025-10-30 07:31:47 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175101804020009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:47 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175101804020009. Stopping.
+2025-10-30 07:31:48 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3205134111950001: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:48 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3205134111950001. Stopping.
+2025-10-30 07:46:52 [ERROR]: [FATAL] Could not read data file: ENOENT: no such file or directory, open ''
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175030203870007: Navigation timeout of 30000 ms exceeded
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175030810780007: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3211086805790003: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3211080509760003: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032705660005: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032011930003: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175033107840011: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175042504680001: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 60000 ms exceeded
+2025-10-30 10:00:52 [ERROR]: [FATAL] Gagal mengambil data dari Laravel API. Pastikan 'php artisan serve' berjalan.
+2025-10-30 10:00:52 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
+2025-10-30 10:01:15 [ERROR]: [FATAL] Could not read data file: ENOENT: no such file or directory, open 'users.jsonn'
+2025-10-30 10:13:40 [ERROR]: [FATAL] Gagal mengambil data dari Laravel API. Pastikan 'php artisan serve' berjalan.
+2025-10-30 10:13:40 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000

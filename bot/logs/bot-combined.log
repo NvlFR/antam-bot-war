@@ -140,3 +140,369 @@
 2025-10-30 07:16:01 [INFO]: Database pendaftaran masih kosong.
 2025-10-30 07:16:02 [INFO]: 
 ====================================
+2025-10-30 07:30:07 [INFO]: 
+====================================
+2025-10-30 07:30:07 [INFO]:        ANTAM BOT WAR - MENU
+2025-10-30 07:30:07 [INFO]: ====================================
+2025-10-30 07:30:07 [INFO]: 1. Manual Input (1 NIK)
+2025-10-30 07:30:07 [INFO]: 2. Input JSON File (Multi NIK - PARALEL)
+2025-10-30 07:30:07 [INFO]: 3. Input CSV File (Multi NIK - PARALEL)
+2025-10-30 07:30:07 [INFO]: 4. SHOW REGISTRATION STATUS
+2025-10-30 07:30:07 [INFO]: 5. CHANGE BOUTIQUE (Active URL): http://antrigrahadipta.com/)
+2025-10-30 07:30:07 [INFO]: 6. Exit
+2025-10-30 07:30:07 [INFO]: ------------------------------------
+2025-10-30 07:30:15 [INFO]: [CLI] Reading user data from: 30.json
+2025-10-30 07:30:15 [INFO]: [PARALLEL] Starting 5 jobs concurrently...
+2025-10-30 07:30:15 [INFO]: [JOB] Starting job for NIK: 3671111704820006
+2025-10-30 07:30:15 [WARN]: [RETRY] Attempt 1/5 for NIK: 3671111704820006
+2025-10-30 07:30:15 [INFO]: [JOB] Starting job for NIK: 3175101804020009
+2025-10-30 07:30:15 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175101804020009
+2025-10-30 07:30:15 [INFO]: [JOB] Starting job for NIK: 3603192309880004
+2025-10-30 07:30:15 [WARN]: [RETRY] Attempt 1/5 for NIK: 3603192309880004
+2025-10-30 07:30:15 [INFO]: [JOB] Starting job for NIK: 3205134111950001
+2025-10-30 07:30:15 [WARN]: [RETRY] Attempt 1/5 for NIK: 3205134111950001
+2025-10-30 07:30:15 [INFO]: [JOB] Starting job for NIK: 3171070905960009
+2025-10-30 07:30:15 [WARN]: [RETRY] Attempt 1/5 for NIK: 3171070905960009
+2025-10-30 07:30:25 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:25 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:25 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:25 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:25 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:28 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175101804020009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:28 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:28 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3603192309880004: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:28 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:28 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3205134111950001: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:28 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:28 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3171070905960009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:28 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:28 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3671111704820006: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:28 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:32 [WARN]: [RETRY] Attempt 2/5 for NIK: 3603192309880004
+2025-10-30 07:30:32 [WARN]: [RETRY] Attempt 2/5 for NIK: 3671111704820006
+2025-10-30 07:30:32 [WARN]: [RETRY] Attempt 2/5 for NIK: 3205134111950001
+2025-10-30 07:30:33 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175101804020009
+2025-10-30 07:30:33 [WARN]: [RETRY] Attempt 2/5 for NIK: 3171070905960009
+2025-10-30 07:30:38 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:38 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:39 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:39 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:40 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:41 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3603192309880004: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:41 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:41 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3671111704820006: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:41 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:43 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3171070905960009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:43 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:43 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3205134111950001: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:43 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:43 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175101804020009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:43 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:45 [WARN]: [RETRY] Attempt 3/5 for NIK: 3603192309880004
+2025-10-30 07:30:46 [WARN]: [RETRY] Attempt 3/5 for NIK: 3205134111950001
+2025-10-30 07:30:46 [WARN]: [RETRY] Attempt 3/5 for NIK: 3671111704820006
+2025-10-30 07:30:46 [WARN]: [RETRY] Attempt 3/5 for NIK: 3175101804020009
+2025-10-30 07:30:47 [WARN]: [RETRY] Attempt 3/5 for NIK: 3171070905960009
+2025-10-30 07:30:48 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:52 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3603192309880004: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:52 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:54 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:54 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:55 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:56 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:30:57 [WARN]: [RETRY] Attempt 4/5 for NIK: 3603192309880004
+2025-10-30 07:30:58 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3205134111950001: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:58 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:58 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175101804020009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:58 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:58 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3671111704820006: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:58 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:30:59 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3171070905960009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:30:59 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:31:01 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:31:01 [WARN]: [RETRY] Attempt 4/5 for NIK: 3671111704820006
+2025-10-30 07:31:03 [WARN]: [RETRY] Attempt 4/5 for NIK: 3175101804020009
+2025-10-30 07:31:03 [WARN]: [RETRY] Attempt 4/5 for NIK: 3205134111950001
+2025-10-30 07:31:03 [WARN]: [RETRY] Attempt 4/5 for NIK: 3171070905960009
+2025-10-30 07:31:04 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3603192309880004: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:04 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:31:09 [WARN]: [RETRY] Attempt 5/5 for NIK: 3603192309880004
+2025-10-30 07:31:29 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:31:31 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:31:31 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:31:31 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:31:33 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3671111704820006: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:33 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:31:34 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:31:34 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3205134111950001: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:34 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:31:35 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175101804020009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:35 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:31:35 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3171070905960009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:35 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:31:36 [WARN]: [RETRY] Attempt 5/5 for NIK: 3671111704820006
+2025-10-30 07:31:37 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3603192309880004: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:37 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3603192309880004. Stopping.
+2025-10-30 07:31:38 [WARN]: [RETRY] Attempt 5/5 for NIK: 3175101804020009
+2025-10-30 07:31:38 [WARN]: [RETRY] Attempt 5/5 for NIK: 3171070905960009
+2025-10-30 07:31:38 [INFO]: [JOB] Browser closed for NIK: 3603192309880004
+2025-10-30 07:31:39 [WARN]: [RETRY] Attempt 5/5 for NIK: 3205134111950001
+2025-10-30 07:31:41 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:31:43 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:31:44 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3671111704820006: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:44 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3671111704820006. Stopping.
+2025-10-30 07:31:44 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:31:45 [INFO]: [RETRY] Navigating to http://antrigrahadipta.com/...
+2025-10-30 07:31:45 [INFO]: [JOB] Browser closed for NIK: 3671111704820006
+2025-10-30 07:31:46 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3171070905960009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:46 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3171070905960009. Stopping.
+2025-10-30 07:31:46 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-30 07:31:46 [INFO]: [JOB] Finished job for NIK: 3603192309880004
+2025-10-30 07:31:46 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-30 07:31:46 [INFO]: [JOB] Finished job for NIK: 3671111704820006
+2025-10-30 07:31:47 [INFO]: [JOB] Browser closed for NIK: 3171070905960009
+2025-10-30 07:31:47 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-30 07:31:47 [INFO]: [JOB] Finished job for NIK: 3171070905960009
+2025-10-30 07:31:47 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175101804020009: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:47 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175101804020009. Stopping.
+2025-10-30 07:31:48 [INFO]: [JOB] Browser closed for NIK: 3175101804020009
+2025-10-30 07:31:48 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3205134111950001: net::ERR_BLOCKED_BY_CLIENT at http://antrigrahadipta.com/
+2025-10-30 07:31:48 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3205134111950001. Stopping.
+2025-10-30 07:31:48 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-30 07:31:48 [INFO]: [JOB] Finished job for NIK: 3175101804020009
+2025-10-30 07:31:48 [INFO]: [JOB] Browser closed for NIK: 3205134111950001
+2025-10-30 07:31:49 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-30 07:31:49 [INFO]: [JOB] Finished job for NIK: 3205134111950001
+2025-10-30 07:31:49 [INFO]: [PARALLEL] All concurrent jobs completed.
+2025-10-30 07:31:49 [INFO]: [CLI] All JSON user jobs completed.
+2025-10-30 07:31:50 [INFO]: 
+====================================
+2025-10-30 07:31:50 [INFO]:        ANTAM BOT WAR - MENU
+2025-10-30 07:31:50 [INFO]: ====================================
+2025-10-30 07:31:50 [INFO]: 1. Manual Input (1 NIK)
+2025-10-30 07:31:50 [INFO]: 2. Input JSON File (Multi NIK - PARALEL)
+2025-10-30 07:31:50 [INFO]: 3. Input CSV File (Multi NIK - PARALEL)
+2025-10-30 07:31:50 [INFO]: 4. SHOW REGISTRATION STATUS
+2025-10-30 07:31:50 [INFO]: 5. CHANGE BOUTIQUE (Active URL): http://antrigrahadipta.com/)
+2025-10-30 07:31:50 [INFO]: 6. Exit
+2025-10-30 07:31:50 [INFO]: ------------------------------------
+2025-10-30 07:36:20 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-30 07:36:22 [INFO]: 
+====================================
+2025-10-30 07:46:32 [INFO]: 
+====================================
+2025-10-30 07:46:32 [INFO]:        ANTAM BOT WAR - MENU
+2025-10-30 07:46:32 [INFO]: ====================================
+2025-10-30 07:46:32 [INFO]: 1. Manual Input (1 NIK) - **EKSEKUSI SEKARANG**
+2025-10-30 07:46:32 [INFO]: 2. Input JSON File (Multi NIK) - **JADWALKAN JAM 07:00:00**
+2025-10-30 07:46:32 [INFO]: 3. Input CSV File (Multi NIK) - **JADWALKAN JAM 07:00:00**
+2025-10-30 07:46:32 [INFO]: 4. SHOW REGISTRATION STATUS
+2025-10-30 07:46:32 [INFO]: 5. CHANGE BOUTIQUE (Active URL): http://antrigrahadipta.com/)
+2025-10-30 07:46:32 [INFO]: 6. Exit
+2025-10-30 07:46:32 [INFO]: ------------------------------------
+2025-10-30 07:46:52 [INFO]: [CLI] Reading user data from: 
+2025-10-30 07:46:52 [ERROR]: [FATAL] Could not read data file: ENOENT: no such file or directory, open ''
+2025-10-30 07:46:53 [INFO]: 
+====================================
+2025-10-30 07:49:59 [INFO]: 
+====================================
+2025-10-30 07:49:59 [INFO]:        ANTAM BOT WAR - MENU
+2025-10-30 07:49:59 [INFO]: ====================================
+2025-10-30 07:49:59 [INFO]: 1. Manual Input (1 NIK) - **EKSEKUSI SEKARANG**
+2025-10-30 07:49:59 [INFO]: 2. Input JSON File (Multi NIK) - **JADWALKAN WAKTU**
+2025-10-30 07:49:59 [INFO]: 3. Input CSV File (Multi NIK) - **JADWALKAN WAKTU**
+2025-10-30 07:49:59 [INFO]: 4. SHOW REGISTRATION STATUS
+2025-10-30 07:49:59 [INFO]: 5. CHANGE BOUTIQUE (Active URL): http://antrigrahadipta.com/)
+2025-10-30 07:49:59 [INFO]: 6. Exit
+2025-10-30 07:49:59 [INFO]: ------------------------------------
+2025-10-30 07:50:03 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-30 07:50:05 [INFO]: [CONFIG] URL tujuan diatur ke: file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html
+2025-10-30 07:50:06 [INFO]: 
+====================================
+2025-10-30 07:50:06 [INFO]:        ANTAM BOT WAR - MENU
+2025-10-30 07:50:06 [INFO]: ====================================
+2025-10-30 07:50:06 [INFO]: 1. Manual Input (1 NIK) - **EKSEKUSI SEKARANG**
+2025-10-30 07:50:06 [INFO]: 2. Input JSON File (Multi NIK) - **JADWALKAN WAKTU**
+2025-10-30 07:50:06 [INFO]: 3. Input CSV File (Multi NIK) - **JADWALKAN WAKTU**
+2025-10-30 07:50:06 [INFO]: 4. SHOW REGISTRATION STATUS
+2025-10-30 07:50:06 [INFO]: 5. CHANGE BOUTIQUE (Active URL): file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html)
+2025-10-30 07:50:06 [INFO]: 6. Exit
+2025-10-30 07:50:06 [INFO]: ------------------------------------
+2025-10-30 07:50:15 [INFO]: [CLI] Reading user data from: users.json
+2025-10-30 07:50:31 [WARN]: =================================================
+2025-10-30 07:50:31 [WARN]: [SCHEDULING] Mode JSON File (PARALEL) dipilih.
+2025-10-30 07:50:31 [WARN]: [SCHEDULING] Total NIK: 10
+2025-10-30 07:50:31 [WARN]: [SCHEDULING] URL Tujuan: file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html
+2025-10-30 07:50:31 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 07.51.00 WIB
+2025-10-30 07:50:31 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 28 detik.
+2025-10-30 07:50:31 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-30 07:50:31 [WARN]: =================================================
+2025-10-30 07:50:32 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 27 detik. SIAP!
+2025-10-30 07:50:33 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 26 detik. SIAP!
+2025-10-30 07:50:34 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 25 detik. SIAP!
+2025-10-30 07:50:35 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 24 detik. SIAP!
+2025-10-30 07:50:36 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 23 detik. SIAP!
+2025-10-30 07:50:37 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 22 detik. SIAP!
+2025-10-30 07:50:38 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 21 detik. SIAP!
+2025-10-30 07:50:39 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 20 detik. SIAP!
+2025-10-30 07:50:40 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 19 detik. SIAP!
+2025-10-30 07:50:41 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 18 detik. SIAP!
+2025-10-30 07:50:42 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 17 detik. SIAP!
+2025-10-30 07:50:43 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 16 detik. SIAP!
+2025-10-30 07:50:44 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 15 detik. SIAP!
+2025-10-30 07:50:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 14 detik. SIAP!
+2025-10-30 07:50:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-30 07:50:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-30 07:50:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-30 07:50:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-30 07:50:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-30 07:50:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-30 07:50:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-30 07:50:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-30 07:50:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-30 07:50:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-30 07:50:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-30 07:50:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-30 07:50:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-30 07:50:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-30 07:51:00 [INFO]: =================================================
+2025-10-30 07:51:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 07:51:00! Menjalankan Antam War Paralel...
+2025-10-30 07:51:00 [INFO]: =================================================
+2025-10-30 07:51:00 [INFO]: [PARALLEL] Starting 10 jobs concurrently...
+2025-10-30 07:51:00 [INFO]: [JOB] Starting job for NIK: 3175030203870007
+2025-10-30 07:51:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175030203870007
+2025-10-30 07:51:00 [INFO]: [JOB] Starting job for NIK: 3174085901790005
+2025-10-30 07:51:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3174085901790005
+2025-10-30 07:51:00 [INFO]: [JOB] Starting job for NIK: 3175032011930003
+2025-10-30 07:51:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175032011930003
+2025-10-30 07:51:00 [INFO]: [JOB] Starting job for NIK: 3175042504680001
+2025-10-30 07:51:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175042504680001
+2025-10-30 07:51:00 [INFO]: [JOB] Starting job for NIK: 3175030810780007
+2025-10-30 07:51:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175030810780007
+2025-10-30 07:51:00 [INFO]: [JOB] Starting job for NIK: 3211080509760003
+2025-10-30 07:51:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3211080509760003
+2025-10-30 07:51:00 [INFO]: [JOB] Starting job for NIK: 3211086805790003
+2025-10-30 07:51:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3211086805790003
+2025-10-30 07:51:00 [INFO]: [JOB] Starting job for NIK: 3175032705660005
+2025-10-30 07:51:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175032705660005
+2025-10-30 07:51:00 [INFO]: [JOB] Starting job for NIK: 3175033107840011
+2025-10-30 07:51:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175033107840011
+2025-10-30 07:51:00 [INFO]: [JOB] Starting job for NIK: 3202331911950003
+2025-10-30 07:51:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3202331911950003
+2025-10-30 07:51:58 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-30 07:51:58 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-30 07:51:58 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-30 07:51:58 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-30 07:51:58 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-30 07:51:58 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-30 07:51:58 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-30 07:51:58 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175030203870007: Navigation timeout of 30000 ms exceeded
+2025-10-30 07:53:15 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175030810780007: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3211086805790003: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3211080509760003: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032705660005: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032011930003: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175033107840011: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175042504680001: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:53:15 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:53:15 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-30 07:53:16 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-30 07:53:18 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175030203870007
+2025-10-30 07:53:20 [WARN]: [RETRY] Attempt 2/5 for NIK: 3211086805790003
+2025-10-30 07:53:20 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175033107840011
+2025-10-30 07:53:20 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175032705660005
+2025-10-30 07:53:20 [WARN]: [RETRY] Attempt 2/5 for NIK: 3174085901790005
+2025-10-30 07:53:20 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175030810780007
+2025-10-30 07:53:20 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175042504680001
+2025-10-30 07:53:20 [WARN]: [RETRY] Attempt 2/5 for NIK: 3211080509760003
+2025-10-30 07:53:20 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175032011930003
+2025-10-30 07:53:23 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-30 07:53:25 [INFO]: [RETRY] Form loaded. Starting filling process...
+2025-10-30 07:53:25 [INFO]: [FORM] Starting form automation...
+2025-10-30 07:53:25 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-30 07:53:28 [INFO]: [INPUT] Typing Name: Daden Haruman Unggara
+2025-10-30 09:44:54 [INFO]: 
+====================================
+2025-10-30 09:52:29 [INFO]: 
+====================================
+2025-10-30 09:53:12 [INFO]: 
+====================================
+2025-10-30 09:53:24 [INFO]: 
+====================================
+2025-10-30 10:00:52 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-30 10:00:52 [ERROR]: [FATAL] Gagal mengambil data dari Laravel API. Pastikan 'php artisan serve' berjalan.
+2025-10-30 10:00:52 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
+2025-10-30 10:01:15 [INFO]: [CLI] Reading user data from: users.jsonn
+2025-10-30 10:01:15 [ERROR]: [FATAL] Could not read data file: ENOENT: no such file or directory, open 'users.jsonn'
+2025-10-30 10:01:28 [INFO]: [CLI] Reading user data from: users.json
+2025-10-30 10:01:38 [WARN]: =================================================
+2025-10-30 10:01:38 [WARN]: [SCHEDULING] Mode JSON File (PARALEL) dipilih.
+2025-10-30 10:01:38 [WARN]: [SCHEDULING] Total NIK: 10
+2025-10-30 10:01:38 [WARN]: [SCHEDULING] URL Tujuan: http://antrigrahadipta.com/
+2025-10-30 10:01:38 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 10.02.00 WIB
+2025-10-30 10:01:38 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 21 detik.
+2025-10-30 10:01:38 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-30 10:01:38 [WARN]: =================================================
+2025-10-30 10:01:39 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 20 detik. SIAP!
+2025-10-30 10:01:40 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 19 detik. SIAP!
+2025-10-30 10:01:41 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 18 detik. SIAP!
+2025-10-30 10:01:42 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 17 detik. SIAP!
+2025-10-30 10:01:43 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 16 detik. SIAP!
+2025-10-30 10:01:44 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 15 detik. SIAP!
+2025-10-30 10:01:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 14 detik. SIAP!
+2025-10-30 10:01:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-30 10:01:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-30 10:01:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-30 10:01:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-30 10:01:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-30 10:01:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-30 10:01:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-30 10:01:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-30 10:01:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-30 10:01:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-30 10:01:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-30 10:01:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-30 10:01:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-30 10:01:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-30 10:02:00 [INFO]: =================================================
+2025-10-30 10:02:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 10:02:00! Menjalankan Antam War Paralel...
+2025-10-30 10:02:00 [INFO]: =================================================
+2025-10-30 10:02:00 [INFO]: [PARALLEL] Starting 10 jobs concurrently...
+2025-10-30 10:02:00 [INFO]: [JOB] Starting job for NIK: 3175030203870007
+2025-10-30 10:02:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175030203870007
+2025-10-30 10:02:00 [INFO]: [JOB] Starting job for NIK: 3174085901790005
+2025-10-30 10:02:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3174085901790005
+2025-10-30 10:02:00 [INFO]: [JOB] Starting job for NIK: 3175032011930003
+2025-10-30 10:02:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175032011930003
+2025-10-30 10:02:00 [INFO]: [JOB] Starting job for NIK: 3175042504680001
+2025-10-30 10:02:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175042504680001
+2025-10-30 10:02:00 [INFO]: [JOB] Starting job for NIK: 3175030810780007
+2025-10-30 10:02:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175030810780007
+2025-10-30 10:02:00 [INFO]: [JOB] Starting job for NIK: 3211080509760003
+2025-10-30 10:02:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3211080509760003
+2025-10-30 10:02:00 [INFO]: [JOB] Starting job for NIK: 3211086805790003
+2025-10-30 10:02:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3211086805790003
+2025-10-30 10:02:00 [INFO]: [JOB] Starting job for NIK: 3175032705660005
+2025-10-30 10:02:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175032705660005
+2025-10-30 10:02:00 [INFO]: [JOB] Starting job for NIK: 3175033107840011
+2025-10-30 10:02:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175033107840011
+2025-10-30 10:02:00 [INFO]: [JOB] Starting job for NIK: 3202331911950003
+2025-10-30 10:02:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3202331911950003
+2025-10-30 10:13:40 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-30 10:13:40 [ERROR]: [FATAL] Gagal mengambil data dari Laravel API. Pastikan 'php artisan serve' berjalan.
+2025-10-30 10:13:40 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
+2025-10-30 10:14:19 [INFO]: 
+--- STATUS PENDAFTARAN ---

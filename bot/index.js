@@ -1,4 +1,4 @@
-// antam-bot-war/bot/index.js (VERSI FINAL - PARALEL DENGAN PILIHAN BUTIK & RETRY)
+// antam-bot-war/bot/index.js (VERSI FINAL TERBARU DENGAN CUSTOM SCHEDULING)
 
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
@@ -11,6 +11,10 @@ const { hideBin } = require("yargs/helpers");
 const prompt = require("prompt-sync")({ sigint: true });
 const logger = require("./logger");
 const Table = require("cli-table3");
+const boxen = require("boxen").default;
+const gradient = require("gradient-string").default;
+const figlet = require("figlet");
+const chalk = require("chalk");
 
 // --- KONFIGURASI API & DATA TEMPLATE ---
 const MOCKUP_FILE = path.join(__dirname, "mockup_form.html");
@@ -95,20 +99,27 @@ async function handleFormFilling(page, data) {
   await randomDelay(2000, 3000);
 
   // 6. DETEKSI HASIL
-  const successIndicatorSelector = 'h4:has-text("Nomor Antrian Anda")';
-
-  const successIndicator = await page.evaluate((selector) => {
+  // Cek h4 yang mengandung "Nomor Antrian Anda"
+  const successIndicator = await page.evaluate(() => {
     const elements = Array.from(document.querySelectorAll("h4"));
     const successEl = elements.find((el) =>
       el.textContent.includes("Nomor Antrian Anda")
     );
     return successEl ? successEl.textContent : null;
-  }, successIndicatorSelector);
+  });
 
   if (successIndicator) {
+    // Ambil hanya nomor tiketnya, pastikan tidak mengambil teks lain
+    const ticketNumberMatch = successIndicator.match(
+      /Nomor Antrian Anda\s*:?\s*(\d+)/i
+    );
+    const ticketNumber = ticketNumberMatch
+      ? ticketNumberMatch[1].trim()
+      : "TICKET_NOT_PARSED";
+
     return {
       status: "SUCCESS",
-      ticket_number: successIndicator.trim(),
+      ticket_number: ticketNumber,
     };
   } else {
     // Cek pesan error validasi
@@ -172,6 +183,7 @@ async function sendRegistrationResult(data) {
 // --- FUNGSI UTAMA BOT ENGINE PER NIK (DENGAN URL DINAMIS & RETRY LOOP) ---
 async function runAntamWar(userData, antamURL) {
   let browser;
+  // --- 1. FIX TIMEZONE ---
   const now = new Date();
   const localWarTime = new Intl.DateTimeFormat("sv-SE", {
     year: "numeric",
@@ -192,12 +204,20 @@ async function runAntamWar(userData, antamURL) {
     status: "FAILED",
     ticket_number: null,
     raw_response: {},
-    war_time: localWarTime, // <--- GUNAKAN VARIABEL YANG SUDAH DIDEKLARASI
+    war_time: localWarTime,
   };
 
+  // --- 3. LAUNCH OPTIONS (MENGATASI ERR_BLOCKED_BY_CLIENT) ---
   const launchOptions = {
     headless: true, // Ganti ke false untuk debugging
-    args: ["--no-sandbox", "--disable-setuid-sandbox", "--start-maximized"],
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--start-maximized",
+      // Opsi untuk mencegah pemblokiran oleh ekstensi atau klien (adblock/firewall)
+      "--disable-extensions-except=NONE",
+      "--disable-extensions",
+    ],
     defaultViewport: null,
   };
 
@@ -213,8 +233,6 @@ async function runAntamWar(userData, antamURL) {
     );
 
     try {
-      // NOTE: Di mode paralel, kita tidak menutup browser di sini.
-      // Kita buka browser baru untuk setiap NIK/Job.
       browser = await puppeteer.launch(launchOptions);
       const page = await browser.newPage();
       await page.setViewport({ width: 1366, height: 768 });
@@ -222,7 +240,7 @@ async function runAntamWar(userData, antamURL) {
       // 1. GOTO URL menggunakan URL yang dipilih
       logger.info(`[RETRY] Navigating to ${antamURL}...`);
       await page.goto(antamURL, {
-        waitUntil: "domcontentloaded",
+        waitUntil: "domcontentloaded", // Gunakan domcontentloaded untuk kecepatan
         timeout: 60000,
       });
 
@@ -262,31 +280,12 @@ async function runAntamWar(userData, antamURL) {
         await randomDelay(3000, 5000);
       }
     } finally {
-      // Menutup browser hanya setelah selesai (sukses atau gagal total)
-      if (success || attempt === MAX_RETRIES) {
-        if (browser) {
-          if (launchOptions.headless) {
-            await browser.close();
-            logger.info(`[JOB] Browser closed for NIK: ${userData.nik}`);
-          } else {
-            logger.info(
-              `[JOB] Browser kept open for debug for NIK: ${userData.nik}`
-            );
-            // JANGAN DITUTUP OTOMATIS DI PARALEL, agar Anda bisa melihat hasilnya.
-            // Kita akan biarkan browser tetap terbuka. Hapus penutupan otomatis di sini.
-            // Biarkan user menutup manual saat debugging mode.
-            // Jika mode headless: true, browser sudah ditutup
-
-            // Hapus blok await randomDelay dan await browser.close() jika headless: false
-            if (launchOptions.headless === false && success) {
-              logger.warn(
-                `[DEBUG] Browser untuk NIK ${userData.nik} tetap terbuka. Tutup manual.`
-              );
-            } else {
-              await browser.close();
-              logger.info(`[JOB] Browser closed for NIK: ${userData.nik}`);
-            }
-          }
+      // Menutup browser
+      if (browser) {
+        // Hanya tutup jika sukses ATAU sudah mencapai max retries.
+        if (success || attempt === MAX_RETRIES) {
+          await browser.close();
+          logger.info(`[JOB] Browser closed for NIK: ${userData.nik}`);
         }
       }
     }
@@ -294,7 +293,6 @@ async function runAntamWar(userData, antamURL) {
 
   await sendRegistrationResult({ ...userData, ...registrationResult });
   logger.info(`[JOB] Finished job for NIK: ${userData.nik}`);
-  // Mengembalikan hasil untuk Promise.all
   return registrationResult;
 }
 
@@ -303,8 +301,6 @@ async function runAllJobsInParallel(userList) {
   logger.info(`[PARALLEL] Starting ${userList.length} jobs concurrently...`);
 
   const tasks = userList.map((userData) => {
-    // Run runAntamWar tanpa await.
-    // runAntamWar akan mengurus browser dan retry-nya sendiri.
     return runAntamWar(userData, currentAntamURL).catch((e) => {
       logger.error(
         `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
@@ -313,10 +309,103 @@ async function runAllJobsInParallel(userList) {
     });
   });
 
-  // Promise.all menunggu semua promise (job) selesai
   await Promise.all(tasks);
 
   logger.info("[PARALLEL] All concurrent jobs completed.");
+}
+
+// --- FUNGSI BARU: SCHEDULING ---
+async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
+  const now = new Date();
+  const targetTime = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    targetHour,
+    targetMinute,
+    0,
+    0
+  );
+
+  let timeUntilTarget = targetTime.getTime() - now.getTime();
+
+  if (timeUntilTarget < 0) {
+    logger.error("=================================================");
+    logger.error(
+      `[SCHEDULING] Waktu target ${targetHour
+        .toString()
+        .padStart(2, "0")}:${targetMinute
+        .toString()
+        .padStart(2, "0")}:00 WIB sudah lewat.`
+    );
+    logger.error("Waktu target harus di hari ini dan belum terlewat.");
+    logger.error("=================================================");
+    return;
+  }
+
+  // Tampilkan informasi countdown
+  const hours = Math.floor(timeUntilTarget / (1000 * 60 * 60));
+  const minutes = Math.floor(
+    (timeUntilTarget % (1000 * 60 * 60)) / (1000 * 60)
+  );
+  const seconds = Math.floor((timeUntilTarget % (1000 * 60)) / 1000);
+
+  logger.warn("=================================================");
+  logger.warn(`[SCHEDULING] Mode ${dataMode} (PARALEL) dipilih.`);
+  logger.warn(`[SCHEDULING] Total NIK: ${userList.length}`);
+  logger.warn(`[SCHEDULING] URL Tujuan: ${currentAntamURL}`);
+  logger.warn(
+    `[SCHEDULING] Bot akan dieksekusi tepat pada: ${targetTime.toLocaleTimeString(
+      "id-ID",
+      { hour12: false }
+    )} WIB`
+  );
+  logger.warn(
+    `[COUNTDOWN] Waktu tersisa: ${hours} jam, ${minutes} menit, ${seconds} detik.`
+  );
+  logger.warn("JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!");
+  logger.warn("=================================================");
+
+  // Set interval untuk menampilkan countdown secara real-time
+  const countdownInterval = setInterval(() => {
+    timeUntilTarget -= 1000;
+    const currentSeconds = Math.floor((timeUntilTarget % (1000 * 60)) / 1000);
+    const currentMinutes = Math.floor(
+      (timeUntilTarget % (1000 * 60 * 60)) / (1000 * 60)
+    );
+
+    if (timeUntilTarget > 60000 && currentSeconds % 10 === 0) {
+      logger.info(
+        `[COUNTDOWN] Waktu tersisa: ${currentMinutes} menit, ${currentSeconds} detik.`
+      );
+    } else if (timeUntilTarget <= 60000 && timeUntilTarget > 0) {
+      logger.warn(
+        `[COUNTDOWN] Waktu tersisa: ${currentMinutes} menit, ${currentSeconds} detik. SIAP!`
+      );
+    }
+
+    if (timeUntilTarget < 1000) {
+      clearInterval(countdownInterval);
+    }
+  }, 1000);
+
+  // Gunakan setTimeout untuk menunda eksekusi
+  await new Promise((resolve) =>
+    setTimeout(() => {
+      logger.info("=================================================");
+      logger.info(
+        `[SCHEDULING] WAKTU EKSEKUSI TEPAT ${targetHour
+          .toString()
+          .padStart(2, "0")}:${targetMinute
+          .toString()
+          .padStart(2, "0")}:00! Menjalankan Antam War Paralel...`
+      );
+      logger.info("=================================================");
+      resolve(runAllJobsInParallel(userList));
+    }, timeUntilTarget)
+  );
+
+  logger.info("[SCHEDULING] Selesai mengeksekusi semua job.");
 }
 
 // --- FUNGSI INPUT MANUAL DENGAN VALIDASI ---
@@ -401,10 +490,35 @@ async function processUserData(dataFilePath) {
     phone_number: userEntry.telepon || userEntry.phone_number,
   }));
 
-  // Panggil fungsi paralel
-  await runAllJobsInParallel(userList);
+  // --- INPUT JAM/MENIT BARU ---
+  let targetHour, targetMinute;
+  do {
+    const timeInput = prompt("Masukkan JAM War (HH:MM, contoh 07:00): ");
+    const parts = timeInput.split(":");
+    if (
+      parts.length === 2 &&
+      !isNaN(parseInt(parts[0])) &&
+      !isNaN(parseInt(parts[1]))
+    ) {
+      targetHour = parseInt(parts[0]);
+      targetMinute = parseInt(parts[1]);
+      if (
+        targetHour >= 0 &&
+        targetHour <= 23 &&
+        targetMinute >= 0 &&
+        targetMinute <= 59
+      ) {
+        break;
+      }
+    }
+    logger.error("[VALIDASI] Format jam tidak valid. Gunakan format HH:MM.");
+  } while (true);
+  // --- END INPUT JAM/MENIT BARU ---
 
-  logger.info("[CLI] All JSON user jobs completed.");
+  // Panggil fungsi scheduling menggunakan input jam dan menit
+  await scheduleAntamWar(userList, targetHour, targetMinute, "JSON File");
+
+  logger.info("[CLI] All JSON user jobs completed (after scheduling).");
 }
 
 // --- FUNGSI PROSES INPUT CSV (PARALEL) ---
@@ -445,10 +559,35 @@ async function processCSVData(dataFilePath) {
     return;
   }
 
-  // Panggil fungsi paralel
-  await runAllJobsInParallel(userList);
+  // --- INPUT JAM/MENIT BARU ---
+  let targetHour, targetMinute;
+  do {
+    const timeInput = prompt("Masukkan JAM War (HH:MM, contoh 07:00): ");
+    const parts = timeInput.split(":");
+    if (
+      parts.length === 2 &&
+      !isNaN(parseInt(parts[0])) &&
+      !isNaN(parseInt(parts[1]))
+    ) {
+      targetHour = parseInt(parts[0]);
+      targetMinute = parseInt(parts[1]);
+      if (
+        targetHour >= 0 &&
+        targetHour <= 23 &&
+        targetMinute >= 0 &&
+        targetMinute <= 59
+      ) {
+        break;
+      }
+    }
+    logger.error("[VALIDASI] Format jam tidak valid. Gunakan format HH:MM.");
+  } while (true);
+  // --- END INPUT JAM/MENIT BARU ---
 
-  logger.info("[CLI] All CSV user jobs completed.");
+  // Panggil fungsi scheduling menggunakan input jam dan menit
+  await scheduleAntamWar(userList, targetHour, targetMinute, "CSV File");
+
+  logger.info("[CLI] All CSV user jobs completed (after scheduling).");
 }
 
 // --- FUNGSI MENAMPILKAN STATUS PENDAFTARAN ---
@@ -496,73 +635,162 @@ async function displayStatus() {
   }
 }
 
-// antam-bot-war/bot/index.js (di sekitar baris FUNGSI SET URL BUTIK)
-
 // --- FUNGSI SET URL BUTIK ---
 function setAntamURL() {
-    logger.info("\n--- PILIH BUTIK ANTAM ---");
-    const butikOptions = [
-        "https://antrigrahadipta.com/",
-        "https://antributikserpong.com/",
-        "https://antributikbintaro.com/",
-        `file://${MOCKUP_FILE}`, // Opsi Baru: Mockup File Lokal
-        "Custom URL",
-    ];
+  logger.info("\n--- PILIH BUTIK ANTAM ---");
+  const butikOptions = [
+    "https://antrigrahadipta.com/",
+    "https://antributikserpong.com/",
+    "https://antributikbintaro.com/",
+    `file://${MOCKUP_FILE}`, // Opsi Baru: Mockup File Lokal
+    "Custom URL",
+  ];
 
-    butikOptions.forEach((url, index) => {
-        // Tampilkan nama yang lebih mudah dibaca untuk mockup
-        const displayUrl = url.startsWith('file://') ? 'MOCKUP FILE (Local HTML)' : url;
-        console.log(`${index + 1}. ${displayUrl}`);
-    });
-    
-    console.log(`\nURL Aktif Saat Ini: ${currentAntamURL}`);
-    
-    const choice = prompt("Pilih nomor butik atau masukkan URL baru: ");
-    const numChoice = parseInt(choice.trim());
+  butikOptions.forEach((url, index) => {
+    // Tampilkan nama yang lebih mudah dibaca untuk mockup
+    const displayUrl = url.startsWith("file://")
+      ? "MOCKUP FILE (Local HTML)"
+      : url;
+    console.log(`${index + 1}. ${displayUrl}`);
+  });
 
-    if (numChoice >= 1 && numChoice <= butikOptions.length) {
-        currentAntamURL = butikOptions[numChoice - 1];
-        if (currentAntamURL === "Custom URL") {
-             const customUrl = prompt("Masukkan URL kustom (harus diawali http/https): ");
-             currentAntamURL = customUrl.trim();
-        }
-        logger.info(`[CONFIG] URL tujuan diatur ke: ${currentAntamURL}`);
-    } else if (choice.trim().toLowerCase().startsWith('http') || choice.trim().toLowerCase().startsWith('file://')) {
-        currentAntamURL = choice.trim();
-        logger.info(`[CONFIG] URL kustom diatur ke: ${currentAntamURL}`);
-    } else {
-        logger.error("[ERROR] Pilihan atau format URL tidak valid.");
+  console.log(`\nURL Aktif Saat Ini: ${currentAntamURL}`);
+
+  const choice = prompt("Pilih nomor butik atau masukkan URL baru: ");
+  const numChoice = parseInt(choice.trim());
+
+  if (numChoice >= 1 && numChoice <= butikOptions.length) {
+    currentAntamURL = butikOptions[numChoice - 1];
+    if (currentAntamURL === "Custom URL") {
+      const customUrl = prompt(
+        "Masukkan URL kustom (harus diawali http/https): "
+      );
+      currentAntamURL = customUrl.trim();
     }
+    logger.info(`[CONFIG] URL tujuan diatur ke: ${currentAntamURL}`);
+  } else if (
+    choice.trim().toLowerCase().startsWith("http") ||
+    choice.trim().toLowerCase().startsWith("file://")
+  ) {
+    currentAntamURL = choice.trim();
+    logger.info(`[CONFIG] URL kustom diatur ke: ${currentAntamURL}`);
+  } else {
+    logger.error("[ERROR] Pilihan atau format URL tidak valid.");
+  }
 }
 
+// --- FUNGSI MENU UTAMA INTERAKTIF ---
 
-// --- FUNGSI MENU UTAMA INTERAKTIF (Hanya untuk update penomoran) ---
+
+// --- FUNSI BANNER DENGAN GRADIENT DAN BOXEN ---
+async function showBanner() {
+  return new Promise((resolve, reject) => {
+    figlet.text(
+      "ANTAM BOT WAR",
+      {
+        font: "ANSI Shadow",
+        horizontalLayout: "default",
+        verticalLayout: "default",
+      },
+      (err, data) => {
+        if (err) return reject(err);
+        console.clear();
+
+        // Buat teks figlet dengan gradient (tanpa boxen dulu)
+        const banner = gradient("cyan", "yellow").multiline(data);
+        const subtitle = gradient(
+          "yellow",
+          "green"
+        )("AUTOMATED REGISTRATION BOT");
+
+        // Bungkus pakai boxen dulu (tanpa warna)
+        const box = boxen(`${banner}\n${subtitle}`, {
+          padding: 1,
+          borderStyle: "round",
+          borderColor: "yellow",
+          align: "center",
+        });
+
+        // Setelah itu, warnai hasil boxen secara keseluruhan
+        console.log(chalk.yellowBright(box));
+
+        resolve();
+      }
+    );
+  });
+}
+
+// --- MENU UTAMA DENGAN GRADIENT & BOXEN ---
 async function displayMainMenu() {
   let continueLoop = true;
-  while (continueLoop) {
-    logger.info("\n====================================");
-    logger.info("       ANTAM BOT WAR - MENU");
-    logger.info("====================================");
-    logger.info("1. Manual Input (1 NIK)");
-    logger.info("2. Input JSON File (Multi NIK - PARALEL)");
-    logger.info("3. Input CSV File (Multi NIK - PARALEL)");
-    logger.info("4. SHOW REGISTRATION STATUS");
-    logger.info(`5. CHANGE BOUTIQUE (Active URL): ${currentAntamURL})`);
-    logger.info("6. Exit");
-    logger.info("------------------------------------");
 
-    const choice = prompt("Select mode (1/2/3/4/5/6): ");
+  while (continueLoop) {
+
+    const titleBox = boxen("✨ ANTAM BOT WAR MENU ✨", {
+      padding: 1,
+      margin: 1,
+      borderStyle: "double",
+      borderColor: "cyan",
+      align: "center",
+    });
+
+    console.log(chalk.cyanBright(titleBox));
+
+
+   console.log(
+     chalk.yellow(
+       boxen("Pilih Mode Eksekusi:", {
+         padding: 0.5,
+         borderColor: "yellow",
+         borderStyle: "round",
+       })
+     )
+   );
+
+
+    console.log(
+      chalk.cyanBright("1.") +
+        " 🧍 Manual Input (1 NIK)  — " +
+        chalk.greenBright("EKSEKUSI SEKARANG")
+    );
+    console.log(
+      chalk.cyanBright("2.") +
+        " 🧾 Input JSON File       — " +
+        chalk.yellowBright("JADWALKAN WAKTU")
+    );
+    console.log(
+      chalk.cyanBright("3.") +
+        " 📄 Input CSV File        — " +
+        chalk.yellowBright("JADWALKAN WAKTU")
+    );
+    console.log(
+      chalk.cyanBright("4.") + " 📋 Show Registration Status"
+    );
+    console.log(
+      chalk.cyanBright("5.") +
+        " 🏢 Ganti Butik (Active URL): " +
+        chalk.magentaBright(currentAntamURL)
+    );
+    console.log(chalk.cyanBright("6.") + " 🚪 Exit");
+
+    console.log(gradient("yellow", "green")("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"));
+
+    const choice = prompt(chalk.bold("Pilih menu (1-6): "));
+
+    // Sedikit animasi loading kecil
+    console.log(gradient("cyan", "magenta")("\n⏳ Memproses pilihanmu...\n"));
+    await randomDelay(500, 1200);
 
     switch (choice.trim()) {
       case "1":
         await processManualInput();
         break;
       case "2":
-        const jsonPath = prompt("Enter the JSON File Path (ex: users.json): ");
+        const jsonPath = prompt("Masukkan path JSON (contoh: users.json): ");
         await processUserData(jsonPath.trim());
         break;
       case "3":
-        const csvPath = prompt("Enter CSV File Path (ex: users.csv): ");
+        const csvPath = prompt("Masukkan path CSV (contoh: users.csv): ");
         await processCSVData(csvPath.trim());
         break;
       case "4":
@@ -572,16 +800,26 @@ async function displayMainMenu() {
         setAntamURL();
         break;
       case "6":
-        logger.info("[EXIT] Program terminated.");
+        console.log(
+          gradient("red", "yellow")(
+            "\n👋 Terima kasih telah menggunakan ANTAM BOT WAR!"
+          )
+        );
         continueLoop = false;
         break;
       default:
-        logger.error("[ERROR] Pilihan tidak valid. Silakan coba lagi.");
+        console.log(chalk.redBright("[!] Pilihan tidak valid, coba lagi."));
     }
+
     if (continueLoop) {
-      await randomDelay(1000, 1000);
+      console.log(gradient("yellow", "green")("\nTekan ENTER untuk kembali..."));
+      prompt("");
     }
   }
 }
+
 // --- EKSEKUSI UTAMA ---
-displayMainMenu();
+(async () => {
+  await showBanner(); // tampilkan banner dulu
+  await displayMainMenu(); // lalu tampilkan menu
+})();
