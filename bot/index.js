@@ -209,7 +209,7 @@ async function runAntamWar(userData, antamURL) {
 
   // --- 3. LAUNCH OPTIONS (MENGATASI ERR_BLOCKED_BY_CLIENT) ---
   const launchOptions = {
-    headless: true, // Ganti ke false untuk debugging
+    headless: false, // Ganti ke false untuk debugging
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
