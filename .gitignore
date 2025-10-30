@@ -10,3 +10,11 @@
 /.txt
 /data.html
 /t.html
+bot/logs/bot-combined.log
+bot/logs/bot-error.log
+bot/node_modules
+
+
+.txt
+data.html
+t.html
