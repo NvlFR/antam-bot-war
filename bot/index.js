@@ -1,4 +1,4 @@
-// antam-bot-war/bot/index.js (VERSI FINAL TERBARU DENGAN CUSTOM SCHEDULING)
+// antam-bot-war/bot/index.js (VERSI FINAL REVISI)
 
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
@@ -22,7 +22,12 @@ const LARAVEL_API_URL = "http://127.0.0.1:8000/api";
 const SAVE_RESULT_ENDPOINT = `${LARAVEL_API_URL}/bot/save-result`;
 const LIST_REGISTRATIONS_ENDPOINT = `${LARAVEL_API_URL}/bot/list-registrations`;
 
-// Data butik default (dipakai saat bot start)
+// --- KONFIGURASI FOLDER INPUT BARU ---
+const DATA_DIR = path.join(__dirname, "data"); // Folder utama data
+const JSON_DIR = path.join(DATA_DIR, "json"); // Subfolder untuk JSON
+const CSV_DIR = path.join(DATA_DIR, "csv"); // Subfolder untuk CSV
+
+// Data butik default (diubah ke HTTPS agar bisa ditangani flag ignore)
 let currentAntamURL = "https://antrigrahadipta.com/"; // Default URL
 
 // --- DATA DUMMY TEMPLATE ---
@@ -32,20 +37,36 @@ const USER_DATA_TEMPLATE = {
   phone_number: "085695810460",
   branch: "BUTIK EMAS GRAHA CIPTA",
   branch_selector: "GRAHA CIPTA",
-  purchase_date: "2025-10-30",
+  purchase_date: "2025-10-30", // Akan ditimpa secara otomatis
 };
 
 const MAX_RETRIES = 5;
 
 puppeteer.use(StealthPlugin());
 
-// --- UTILITY FUNGSI ---
+// --------------------------------------------------------------------------------------------------------------------------------
+//                                                      UTILITY FUNGSI
+// --------------------------------------------------------------------------------------------------------------------------------
+
 const randomDelay = (min, max) => {
   const delay = Math.floor(Math.random() * (max - min + 1)) + min;
   return new Promise((resolve) => setTimeout(resolve, delay));
 };
+/**
+ * Mengambil tanggal hari ini dalam format YYYY-MM-DD
+ */
+function getTodayDateString() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
 
-// --- FUNGSI INTI OTOMASI FORM ---
+// --------------------------------------------------------------------------------------------------------------------------------
+//                                                FUNGSI INTI OTOMASI FORM
+// --------------------------------------------------------------------------------------------------------------------------------
+
 async function handleFormFilling(page, data) {
   logger.info("[FORM] Starting form automation...");
 
@@ -82,16 +103,24 @@ async function handleFormFilling(page, data) {
 
   // 4. MEMBACA DAN MENGISI CAPTCHA TEKS
   logger.info("[CAPTCHA] Reading static Captcha text...");
-  const captchaText = await page.$eval("#captcha-box", (el) =>
-    el.textContent.trim()
-  );
-  logger.info(`[CAPTCHA] Text found: ${captchaText}`);
+  // Captcha box mungkin tidak muncul langsung di mockup, gunakan try/catch
+  let captchaText = "";
+  try {
+    captchaText = await page.$eval("#captcha-box", (el) =>
+      el.textContent.trim()
+    );
+    logger.info(`[CAPTCHA] Text found: ${captchaText}`);
 
-  logger.info("[CAPTCHA] Typing Captcha answer...");
-  await page.type("#captcha_input", captchaText, {
-    delay: randomDelay(100, 250),
-  });
-  await randomDelay(1000, 2000);
+    logger.info("[CAPTCHA] Typing Captcha answer...");
+    await page.type("#captcha_input", captchaText, {
+      delay: randomDelay(100, 250),
+    });
+    await randomDelay(1000, 2000);
+  } catch (e) {
+    logger.warn(
+      "[CAPTCHA] Captcha box selector #captcha-box not found. Skipping Captcha input."
+    );
+  }
 
   // 5. SUBMIT FORM
   logger.info("[FORM] Clicking submit button...");
@@ -109,7 +138,7 @@ async function handleFormFilling(page, data) {
   });
 
   if (successIndicator) {
-    // Ambil hanya nomor tiketnya, pastikan tidak mengambil teks lain
+    // Ambil hanya nomor tiketnya
     const ticketNumberMatch = successIndicator.match(
       /Nomor Antrian Anda\s*:?\s*(\d+)/i
     );
@@ -122,7 +151,22 @@ async function handleFormFilling(page, data) {
       ticket_number: ticketNumber,
     };
   } else {
-    // Cek pesan error validasi
+    // REVISI: Penambahan deteksi error spesifik (Stok/NIK Terdaftar)
+    const genericErrorMessage = await page.$eval("body", (el) => el.innerText);
+
+    if (
+      genericErrorMessage.includes("STOK TIDAK TERSEDIA") ||
+      genericErrorMessage.includes("stok sudah habis")
+    ) {
+      logger.error("[RESULT] FAILED: Gagal karena STOK HABIS.");
+      return { status: "FAILED_STOCK", ticket_number: null };
+    }
+    if (genericErrorMessage.includes("NIK sudah terdaftar")) {
+      logger.error("[RESULT] FAILED: Gagal karena NIK SUDAH TERDAFTAR.");
+      return { status: "FAILED_ALREADY_REGISTERED", ticket_number: null };
+    }
+
+    // Cek pesan error validasi checkbox/captcha
     const errorCheck1 = await page.evaluate(
       () =>
         document.querySelector("#error-check") &&
@@ -148,42 +192,13 @@ async function handleFormFilling(page, data) {
   }
 }
 
-// --- FUNGSI API KE LARAVEL ---
-async function sendRegistrationResult(data) {
-  try {
-    const response = await axios.post(SAVE_RESULT_ENDPOINT, data);
-    logger.info(
-      "[SUCCESS] Result sent to Laravel. ID:",
-      response.data.registration_id
-    );
-  } catch (error) {
-    logger.error(
-      "[FATAL] Failed to send result to Laravel. Check DB/Validation."
-    );
+// --------------------------------------------------------------------------------------------------------------------------------
+//                                                 FUNGSI UTAMA BOT ENGINE
+// --------------------------------------------------------------------------------------------------------------------------------
 
-    if (error.response) {
-      logger.error(`Status API: ${error.response.status}`);
-      if (error.response.data && error.response.data.errors) {
-        logger.error(
-          "Validation Errors:",
-          JSON.stringify(error.response.data.errors, null, 2)
-        );
-      } else {
-        logger.error(
-          "API Error Response:",
-          JSON.stringify(error.response.data, null, 2)
-        );
-      }
-    } else {
-      logger.error(`Error details: ${error.message}`);
-    }
-  }
-}
-
-// --- FUNGSI UTAMA BOT ENGINE PER NIK (DENGAN URL DINAMIS & RETRY LOOP) ---
 async function runAntamWar(userData, antamURL) {
   let browser;
-  // --- 1. FIX TIMEZONE ---
+  // --- 1. FIX TIMEZONE & TANGGAL DINAMIS ---
   const now = new Date();
   const localWarTime = new Intl.DateTimeFormat("sv-SE", {
     year: "numeric",
@@ -199,6 +214,11 @@ async function runAntamWar(userData, antamURL) {
     .replace(/-/g, "-")
     .replace(" ", " ");
 
+  const todayDate = getTodayDateString();
+  // TIMPA TANGGAL DINAMIS (FIX 2)
+  userData.purchase_date = todayDate;
+  logger.info(`[DATE] War date set to: ${userData.purchase_date}`);
+
   // --- 2. DEKLARASI REGISTRATION RESULT ---
   let registrationResult = {
     status: "FAILED",
@@ -207,9 +227,10 @@ async function runAntamWar(userData, antamURL) {
     war_time: localWarTime,
   };
 
-  // --- 3. LAUNCH OPTIONS (MENGATASI ERR_BLOCKED_BY_CLIENT) ---
+  // --- 3. LAUNCH OPTIONS (FIX KONEKSI & LINUX STABILITAS) ---
   const launchOptions = {
-    headless: false, // Ganti ke false untuk debugging
+    headless: true, // JANGAN LUPA GANTI ke 'true' untuk real war!
+    // FIX 1: Gunakan Chromium Sistem untuk menghindari masalah Snap/Dependency
     // executablePath: "/usr/bin/chromium-browser",
     args: [
       "--no-sandbox",
@@ -240,12 +261,28 @@ async function runAntamWar(userData, antamURL) {
       const page = await browser.newPage();
       await page.setViewport({ width: 1366, height: 768 });
 
-      // 1. GOTO URL menggunakan URL yang dipilih
+      // 1. GOTO URL
       logger.info(`[RETRY] Navigating to ${antamURL}...`);
       await page.goto(antamURL, {
-        waitUntil: "domcontentloaded", // Gunakan domcontentloaded untuk kecepatan
+        // FIX 3: Gunakan networkidle2 untuk stabilitas
+        waitUntil: "networkidle2",
         timeout: 60000,
       });
+
+      // FIX 4: LOGIKA MELEWATI HALAMAN PERINGATAN KONEKSI
+      try {
+        await page.waitForSelector('button[aria-label="Continue to site"]', {
+          timeout: 3000,
+        });
+        logger.warn(
+          "[SECURITY] Halaman peringatan koneksi terdeteksi. Mengklik 'Continue to site'..."
+        );
+        await page.click('button[aria-label="Continue to site"]');
+        await page.waitForNavigation({ waitUntil: "networkidle2" });
+      } catch (e) {
+        // Jika selector tidak ditemukan, berarti tidak ada halaman peringatan.
+        logger.info("[SECURITY] Tidak ada halaman peringatan koneksi. Lanjut.");
+      }
 
       // 2. TUNGGU FORM MUNCUL
       logger.info("[RETRY] Waiting for form selector '#name'...");
@@ -299,7 +336,43 @@ async function runAntamWar(userData, antamURL) {
   return registrationResult;
 }
 
-// --- FUNGSI PEMBANTU UNTUK MENJALANKAN JOB SECARA PARALEL ---
+// --------------------------------------------------------------------------------------------------------------------------------
+//                                                 FUNGSI LAIN (API & MENU)
+// --------------------------------------------------------------------------------------------------------------------------------
+
+// FUNGSI API KE LARAVEL
+async function sendRegistrationResult(data) {
+  try {
+    const response = await axios.post(SAVE_RESULT_ENDPOINT, data);
+    logger.info(
+      "[SUCCESS] Result sent to Laravel. ID:",
+      response.data.registration_id
+    );
+  } catch (error) {
+    logger.error(
+      "[FATAL] Failed to send result to Laravel. Check DB/Validation."
+    );
+
+    if (error.response) {
+      logger.error(`Status API: ${error.response.status}`);
+      if (error.response.data && error.response.data.errors) {
+        logger.error(
+          "Validation Errors:",
+          JSON.stringify(error.response.data.errors, null, 2)
+        );
+      } else {
+        logger.error(
+          "API Error Response:",
+          JSON.stringify(error.response.data, null, 2)
+        );
+      }
+    } else {
+      logger.error(`Error details: ${error.message}`);
+    }
+  }
+}
+
+// FUNGSI PEMBANTU UNTUK MENJALANKAN JOB SECARA PARALEL
 async function runAllJobsInParallel(userList) {
   logger.info(`[PARALLEL] Starting ${userList.length} jobs concurrently...`);
 
@@ -317,7 +390,7 @@ async function runAllJobsInParallel(userList) {
   logger.info("[PARALLEL] All concurrent jobs completed.");
 }
 
-// --- FUNGSI BARU: SCHEDULING ---
+// FUNGSI SCHEDULING
 async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   const now = new Date();
   const targetTime = new Date(
@@ -411,7 +484,7 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   logger.info("[SCHEDULING] Selesai mengeksekusi semua job.");
 }
 
-// --- FUNGSI INPUT MANUAL DENGAN VALIDASI ---
+// FUNGSI INPUT MANUAL DENGAN VALIDASI
 async function processManualInput() {
   logger.info("\n--- MODE INPUT MANUAL ---");
 
@@ -442,10 +515,6 @@ async function processManualInput() {
     "Masukkan Selector Cabang (ex: GRAHA CIPTA): "
   );
 
-  const purchase_date =
-    prompt("Masukkan Tanggal Pembelian (YYYY-MM-DD, default 2025-11-01): ") ||
-    "2025-11-01";
-
   const userData = {
     ...USER_DATA_TEMPLATE,
     name,
@@ -453,15 +522,63 @@ async function processManualInput() {
     phone_number: phone_number.trim(),
     branch,
     branch_selector,
-    purchase_date,
   };
+  // Tanggal akan otomatis diatur di runAntamWar
 
   logger.info(`[MANUAL] Starting single job for NIK: ${userData.nik}`);
   await runAntamWar(userData, currentAntamURL);
 }
 
 // --- FUNGSI PROSES UTAMA (Multi-NIK JSON - PARALEL) ---
-async function processUserData(dataFilePath) {
+async function processUserData() {
+  logger.info("\n--- INPUT JSON FILE ---");
+
+  // Pastikan folder ada
+  if (!fs.existsSync(JSON_DIR)) {
+    logger.error(
+      `[FATAL] Folder JSON tidak ditemukan: ${JSON_DIR}. Silakan buat folder ini.`
+    );
+    return;
+  }
+
+  // 1. Pindai file JSON
+  const jsonFiles = fs
+    .readdirSync(JSON_DIR)
+    .filter((file) => file.endsWith(".json"));
+
+  if (jsonFiles.length === 0) {
+    logger.error(
+      `[FATAL] Tidak ada file .json ditemukan di folder: ${JSON_DIR}`
+    );
+    return;
+  }
+
+  // 2. Tampilkan daftar
+  console.log(chalk.yellowBright("\nAvailable JSON Files:"));
+  jsonFiles.forEach((file, index) => {
+    console.log(chalk.cyanBright(`${index + 1}.`) + ` ${file}`);
+  });
+
+  // 3. Minta input
+  let choiceIndex;
+  do {
+    const choice = prompt(`Pilih nomor file (1-${jsonFiles.length}): `);
+    choiceIndex = parseInt(choice.trim()) - 1;
+    if (
+      choiceIndex < 0 ||
+      choiceIndex >= jsonFiles.length ||
+      isNaN(choiceIndex)
+    ) {
+      logger.error("[VALIDASI] Pilihan tidak valid.");
+    }
+  } while (
+    choiceIndex < 0 ||
+    choiceIndex >= jsonFiles.length ||
+    isNaN(choiceIndex)
+  );
+
+  const selectedFile = jsonFiles[choiceIndex];
+  const dataFilePath = path.join(JSON_DIR, selectedFile);
   logger.info(`[CLI] Reading user data from: ${dataFilePath}`);
 
   let rawData;
@@ -491,9 +608,12 @@ async function processUserData(dataFilePath) {
     name: userEntry.nama || userEntry.name,
     nik: userEntry.nik,
     phone_number: userEntry.telepon || userEntry.phone_number,
+    branch: userEntry.branch || USER_DATA_TEMPLATE.branch,
+    branch_selector:
+      userEntry.branch_selector || USER_DATA_TEMPLATE.branch_selector,
   }));
 
-  // --- INPUT JAM/MENIT BARU ---
+  // --- INPUT JAM/MENIT ---
   let targetHour, targetMinute;
   do {
     const timeInput = prompt("Masukkan JAM War (HH:MM, contoh 07:00): ");
@@ -516,16 +636,66 @@ async function processUserData(dataFilePath) {
     }
     logger.error("[VALIDASI] Format jam tidak valid. Gunakan format HH:MM.");
   } while (true);
-  // --- END INPUT JAM/MENIT BARU ---
+  // --- END INPUT JAM/MENIT ---
 
-  // Panggil fungsi scheduling menggunakan input jam dan menit
-  await scheduleAntamWar(userList, targetHour, targetMinute, "JSON File");
+  await scheduleAntamWar(
+    userList,
+    targetHour,
+    targetMinute,
+    `JSON File: ${selectedFile}`
+  );
 
   logger.info("[CLI] All JSON user jobs completed (after scheduling).");
 }
 
 // --- FUNGSI PROSES INPUT CSV (PARALEL) ---
-async function processCSVData(dataFilePath) {
+async function processCSVData() {
+  logger.info("\n--- INPUT CSV FILE ---");
+
+  // Pastikan folder ada
+  if (!fs.existsSync(CSV_DIR)) {
+    logger.error(
+      `[FATAL] Folder CSV tidak ditemukan: ${CSV_DIR}. Silakan buat folder ini.`
+    );
+    return;
+  }
+
+  // 1. Pindai file CSV
+  const csvFiles = fs
+    .readdirSync(CSV_DIR)
+    .filter((file) => file.endsWith(".csv"));
+
+  if (csvFiles.length === 0) {
+    logger.error(`[FATAL] Tidak ada file .csv ditemukan di folder: ${CSV_DIR}`);
+    return;
+  }
+
+  // 2. Tampilkan daftar
+  console.log(chalk.yellowBright("\nAvailable CSV Files:"));
+  csvFiles.forEach((file, index) => {
+    console.log(chalk.cyanBright(`${index + 1}.`) + ` ${file}`);
+  });
+
+  // 3. Minta input
+  let choiceIndex;
+  do {
+    const choice = prompt(`Pilih nomor file (1-${csvFiles.length}): `);
+    choiceIndex = parseInt(choice.trim()) - 1;
+    if (
+      choiceIndex < 0 ||
+      choiceIndex >= csvFiles.length ||
+      isNaN(choiceIndex)
+    ) {
+      logger.error("[VALIDASI] Pilihan tidak valid.");
+    }
+  } while (
+    choiceIndex < 0 ||
+    choiceIndex >= csvFiles.length ||
+    isNaN(choiceIndex)
+  );
+
+  const selectedFile = csvFiles[choiceIndex];
+  const dataFilePath = path.join(CSV_DIR, selectedFile);
   logger.info(`[CLI] Reading user data from CSV: ${dataFilePath}`);
 
   const userList = await new Promise((resolve, reject) => {
@@ -542,6 +712,13 @@ async function processCSVData(dataFilePath) {
         const userData = {
           ...USER_DATA_TEMPLATE,
           ...data,
+          // Mapping data dari CSV
+          name: data.name || data.nama,
+          nik: data.nik,
+          phone_number: data.phone_number || data.telepon,
+          branch: data.branch || USER_DATA_TEMPLATE.branch,
+          branch_selector:
+            data.branch_selector || USER_DATA_TEMPLATE.branch_selector,
         };
         results.push(userData);
       })
@@ -562,7 +739,7 @@ async function processCSVData(dataFilePath) {
     return;
   }
 
-  // --- INPUT JAM/MENIT BARU ---
+  // --- INPUT JAM/MENIT ---
   let targetHour, targetMinute;
   do {
     const timeInput = prompt("Masukkan JAM War (HH:MM, contoh 07:00): ");
@@ -585,15 +762,19 @@ async function processCSVData(dataFilePath) {
     }
     logger.error("[VALIDASI] Format jam tidak valid. Gunakan format HH:MM.");
   } while (true);
-  // --- END INPUT JAM/MENIT BARU ---
+  // --- END INPUT JAM/MENIT ---
 
-  // Panggil fungsi scheduling menggunakan input jam dan menit
-  await scheduleAntamWar(userList, targetHour, targetMinute, "CSV File");
+  await scheduleAntamWar(
+    userList,
+    targetHour,
+    targetMinute,
+    `CSV File: ${selectedFile}`
+  );
 
   logger.info("[CLI] All CSV user jobs completed (after scheduling).");
 }
 
-// --- FUNGSI MENAMPILKAN STATUS PENDAFTARAN ---
+// FUNGSI MENAMPILKAN STATUS PENDAFTARAN
 async function displayStatus() {
   logger.info("\n--- STATUS PENDAFTARAN ---");
 
@@ -638,11 +819,11 @@ async function displayStatus() {
   }
 }
 
-// --- FUNGSI SET URL BUTIK ---
+// FUNGSI SET URL BUTIK
 function setAntamURL() {
   logger.info("\n--- PILIH BUTIK ANTAM ---");
   const butikOptions = [
-    "https://antrigrahadipta.com/",
+    "https://antrigrahadipta.com/", // Diubah ke HTTPS
     "https://antributikserpong.com/",
     "https://antributikbintaro.com/",
     `file://${MOCKUP_FILE}`, // Opsi Baru: Mockup File Lokal
@@ -673,6 +854,7 @@ function setAntamURL() {
     logger.info(`[CONFIG] URL tujuan diatur ke: ${currentAntamURL}`);
   } else if (
     choice.trim().toLowerCase().startsWith("http") ||
+    choice.trim().toLowerCase().startsWith("https") || // Tambah https
     choice.trim().toLowerCase().startsWith("file://")
   ) {
     currentAntamURL = choice.trim();
@@ -682,10 +864,7 @@ function setAntamURL() {
   }
 }
 
-// --- FUNGSI MENU UTAMA INTERAKTIF ---
-
-
-// --- FUNSI BANNER DENGAN GRADIENT DAN BOXEN ---
+// FUNSI BANNER DENGAN GRADIENT DAN BOXEN
 async function showBanner() {
   return new Promise((resolve, reject) => {
     figlet.text(
@@ -698,37 +877,29 @@ async function showBanner() {
       (err, data) => {
         if (err) return reject(err);
         console.clear();
-
-        // Buat teks figlet dengan gradient (tanpa boxen dulu)
         const banner = gradient("cyan", "yellow").multiline(data);
         const subtitle = gradient(
           "yellow",
           "green"
         )("AUTOMATED REGISTRATION BOT");
-
-        // Bungkus pakai boxen dulu (tanpa warna)
         const box = boxen(`${banner}\n${subtitle}`, {
           padding: 1,
           borderStyle: "round",
           borderColor: "yellow",
           align: "center",
         });
-
-        // Setelah itu, warnai hasil boxen secara keseluruhan
         console.log(chalk.yellowBright(box));
-
         resolve();
       }
     );
   });
 }
 
-// --- MENU UTAMA DENGAN GRADIENT & BOXEN ---
+// MENU UTAMA DENGAN GRADIENT & BOXEN
 async function displayMainMenu() {
   let continueLoop = true;
 
   while (continueLoop) {
-
     const titleBox = boxen("✨ ANTAM BOT WAR MENU ✨", {
       padding: 1,
       margin: 1,
@@ -739,17 +910,15 @@ async function displayMainMenu() {
 
     console.log(chalk.cyanBright(titleBox));
 
-
-   console.log(
-     chalk.yellow(
-       boxen("Pilih Mode Eksekusi:", {
-         padding: 0.5,
-         borderColor: "yellow",
-         borderStyle: "round",
-       })
-     )
-   );
-
+    console.log(
+      chalk.yellow(
+        boxen("Pilih Mode Eksekusi:", {
+          padding: 0.5,
+          borderColor: "yellow",
+          borderStyle: "round",
+        })
+      )
+    );
 
     console.log(
       chalk.cyanBright("1.") +
@@ -766,9 +935,7 @@ async function displayMainMenu() {
         " 📄 Input CSV File        — " +
         chalk.yellowBright("JADWALKAN WAKTU")
     );
-    console.log(
-      chalk.cyanBright("4.") + " 📋 Show Registration Status"
-    );
+    console.log(chalk.cyanBright("4.") + " 📋 Show Registration Status");
     console.log(
       chalk.cyanBright("5.") +
         " 🏢 Ganti Butik (Active URL): " +
@@ -776,7 +943,9 @@ async function displayMainMenu() {
     );
     console.log(chalk.cyanBright("6.") + " 🚪 Exit");
 
-    console.log(gradient("yellow", "green")("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"));
+    console.log(
+      gradient("yellow", "green")("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    );
 
     const choice = prompt(chalk.bold("Pilih menu (1-6): "));
 
@@ -789,12 +958,10 @@ async function displayMainMenu() {
         await processManualInput();
         break;
       case "2":
-        const jsonPath = prompt("Masukkan path JSON (contoh: users.json): ");
-        await processUserData(jsonPath.trim());
+        await processUserData();
         break;
       case "3":
-        const csvPath = prompt("Masukkan path CSV (contoh: users.csv): ");
-        await processCSVData(csvPath.trim());
+        await processCSVData();
         break;
       case "4":
         await displayStatus();
@@ -804,9 +971,10 @@ async function displayMainMenu() {
         break;
       case "6":
         console.log(
-          gradient("red", "yellow")(
-            "\n👋 Terima kasih telah menggunakan ANTAM BOT WAR!"
-          )
+          gradient(
+            "red",
+            "yellow"
+          )("\n👋 Terima kasih telah menggunakan ANTAM BOT WAR!")
         );
         continueLoop = false;
         break;
@@ -815,7 +983,9 @@ async function displayMainMenu() {
     }
 
     if (continueLoop) {
-      console.log(gradient("yellow", "green")("\nTekan ENTER untuk kembali..."));
+      console.log(
+        gradient("yellow", "green")("\nTekan ENTER untuk kembali...")
+      );
       prompt("");
     }
   }

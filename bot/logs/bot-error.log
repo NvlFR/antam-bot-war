@@ -41,3 +41,25 @@
 2025-10-30 16:27:02 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
 2025-10-30 16:27:34 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
 2025-10-30 16:27:34 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-30 22:36:29 [ERROR]: [FATAL] Tidak ada file .json ditemukan di folder: /home/novalftr/nftr/antam-bot-war/bot/data/json
+2025-10-30 22:55:31 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3171041307940002: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:31 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175014904921002: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:31 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175040501690003: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:31 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3275122503900001: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:31 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175035601840011: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:31 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3272045208000001: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:31 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175077009850002: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:32 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175025010030004: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:32 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175035301910016: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:32 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175036212040006: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:32 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175012408990001: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:32 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032103820005: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:32 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175044907900008: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:32 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032808880014: Navigation timeout of 60000 ms exceeded
+2025-10-30 22:55:32 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175076410840002: Navigation timeout of 60000 ms exceeded
+2025-10-30 23:23:02 [ERROR]: [FATAL] Gagal mengambil data dari Laravel API. Pastikan 'php artisan serve' berjalan.
+2025-10-30 23:23:02 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
+2025-10-30 23:41:50 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-30 23:41:50 [ERROR]: Status API: 422
+2025-10-30 23:41:50 [ERROR]: Validation Errors:
+2025-10-30 23:42:07 [ERROR]: [ERROR] Pilihan atau format URL tidak valid.
