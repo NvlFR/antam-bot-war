@@ -1,85 +1,19 @@
-2025-10-28 21:29:54 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 21:29:54 [ERROR]: Status API: 422
-2025-10-28 21:29:54 [ERROR]: Validation Errors:
-2025-10-28 21:29:54 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 21:32:20 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 21:32:20 [ERROR]: Status API: 422
-2025-10-28 21:32:20 [ERROR]: Validation Errors:
-2025-10-28 21:35:41 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 21:35:41 [ERROR]: Status API: 422
-2025-10-28 21:35:41 [ERROR]: Validation Errors:
-2025-10-28 21:38:29 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 21:38:29 [ERROR]: Status API: 422
-2025-10-28 21:38:29 [ERROR]: Validation Errors:
-2025-10-28 21:45:05 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 21:45:05 [ERROR]: Status API: 422
-2025-10-28 21:45:05 [ERROR]: Validation Errors:
-2025-10-28 21:45:37 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 21:45:37 [ERROR]: Status API: 422
-2025-10-28 21:45:37 [ERROR]: Validation Errors:
-2025-10-28 22:36:00 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 22:36:00 [ERROR]: Status API: 422
-2025-10-28 22:36:00 [ERROR]: Validation Errors:
-2025-10-28 22:53:40 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 22:53:40 [ERROR]: Status API: 422
-2025-10-28 22:53:40 [ERROR]: Validation Errors:
-2025-10-28 22:54:00 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 22:54:00 [ERROR]: Status API: 422
-2025-10-28 22:54:00 [ERROR]: Validation Errors:
-2025-10-28 22:54:18 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 22:54:18 [ERROR]: Status API: 422
-2025-10-28 22:54:18 [ERROR]: Validation Errors:
-2025-10-28 23:06:46 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 23:06:46 [ERROR]: Status API: 422
-2025-10-28 23:06:46 [ERROR]: Validation Errors:
-2025-10-28 23:07:03 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 23:07:03 [ERROR]: Status API: 422
-2025-10-28 23:07:03 [ERROR]: Validation Errors:
-2025-10-28 23:07:22 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-28 23:07:22 [ERROR]: Status API: 422
-2025-10-28 23:07:22 [ERROR]: Validation Errors:
-2025-10-28 23:29:33 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780008: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
-2025-10-28 23:30:25 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780009: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
-2025-10-29 00:01:05 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780008: No element found for selector: #ktp_agreement
-2025-10-29 00:01:05 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-29 00:01:05 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
-2025-10-29 00:01:19 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780009: No element found for selector: #ktp_agreement
-2025-10-29 00:01:19 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-29 00:01:19 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
-2025-10-29 00:01:35 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780010: No element found for selector: #ktp_agreement
-2025-10-29 00:01:35 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
-2025-10-29 00:01:35 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
-2025-10-29 00:03:33 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780008: No element found for selector: #ktp_agreement
-2025-10-29 00:03:47 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780009: No element found for selector: #ktp_agreement
-2025-10-29 00:04:00 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780010: No element found for selector: #ktp_agreement
-2025-10-29 07:33:24 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030203870007: Navigation timeout of 30000 ms exceeded
-2025-10-29 07:34:56 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030203870007: Navigation timeout of 30000 ms exceeded
-2025-10-29 07:36:39 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030203870007: Navigation timeout of 30000 ms exceeded
-2025-10-29 07:41:51 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030203870007: Waiting for selector `#name` failed
-2025-10-29 07:45:24 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030203870007: Waiting for selector `#name` failed
-2025-10-29 07:46:19 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3174085901790005: Waiting for selector `#name` failed
-2025-10-29 07:47:09 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175032011930003: Waiting for selector `#name` failed
-2025-10-29 07:48:02 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175042504680001: Waiting for selector `#name` failed
-2025-10-29 07:48:54 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780007: Waiting for selector `#name` failed
-2025-10-29 07:49:46 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3211080509760003: Waiting for selector `#name` failed
-2025-10-29 07:50:40 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3211086805790003: Waiting for selector `#name` failed
-2025-10-29 07:51:28 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175032705660005: Waiting for selector `#name` failed
-2025-10-29 07:52:16 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175033107840011: Waiting for selector `#name` failed
-2025-10-29 07:52:37 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3202331911950003: Navigating frame was detached
-2025-10-29 08:00:48 [ERROR]: [ERROR] Pilihan tidak valid. Silakan coba lagi.
-2025-10-29 08:02:32 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030203870007: Waiting for selector `#name` failed
-2025-10-29 08:03:04 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3174085901790005: Waiting for selector `#name` failed
-2025-10-29 08:03:42 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175032011930003: Waiting for selector `#name` failed
-2025-10-29 08:04:18 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175042504680001: Waiting for selector `#name` failed
-2025-10-29 08:04:53 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175030810780007: Waiting for selector `#name` failed
-2025-10-29 08:05:31 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3211080509760003: Waiting for selector `#name` failed
-2025-10-29 08:06:07 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3211086805790003: Waiting for selector `#name` failed
-2025-10-29 08:06:40 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175032705660005: Waiting for selector `#name` failed
-2025-10-29 08:07:17 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3175033107840011: Waiting for selector `#name` failed
-2025-10-29 08:07:49 [ERROR]: [CRITICAL ERROR] Bot execution failed for NIK 3202331911950003: Waiting for selector `#name` failed
-2025-10-29 08:22:38 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling: Waiting for selector `#name` failed
-2025-10-29 08:23:09 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling: Waiting for selector `#name` failed
-2025-10-29 08:23:45 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling: Waiting for selector `#name` failed
-2025-10-29 08:24:32 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling: Waiting for selector `#name` failed
-2025-10-29 08:25:03 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling: Waiting for selector `#name` failed
-2025-10-29 08:25:03 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175030203870007. Stopping.
+2025-10-30 06:49:30 [ERROR]: [ERROR] Pilihan tidak valid. Silakan coba lagi.
+2025-10-30 06:59:51 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3603192309880004: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-30 06:59:51 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3671110911810002: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-30 07:00:20 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3202331911950003: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:00:20 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175101804020009: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:00:20 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3272045208000001: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:00:21 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 1801157103910002: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:00:21 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3205134111950001: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:00:21 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3671111704820006: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:00:21 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3171070905960009: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:00:28 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3671110911810002: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-30 07:00:56 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3603192309880004: Navigation timeout of 60000 ms exceeded
+2025-10-30 07:01:01 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3202331911950003: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-30 07:01:11 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 1801157103910002: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-30 07:01:12 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175101804020009: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-30 07:01:12 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3671111704820006: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-30 07:01:14 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3171070905960009: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-30 07:15:36 [ERROR]: [FATAL] Gagal mengambil data dari Laravel API. Pastikan 'php artisan serve' berjalan.
+2025-10-30 07:15:36 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000

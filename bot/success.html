@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BELM - Bukti Pendaftaran</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        .nav-link {
+            transition: color 0.2s ease-in-out;
+        }
+        .nav-link:hover {
+            color: #0d6efd !important;
+        }
+        .navbar-brand:hover {
+            opacity: 0.9;
+        }
+        .navbar {
+            transition: background-color 0.3s ease-in-out;
+        }
+        
+        .btn-primary {
+            background-color: #379777;
+            border-color: #379777;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2d7a61;
+            border-color: #2d7a61;
+        }
+
+        .btn-group .btn {
+            font-size: 14px;
+            padding: 10px 15px;
+        }
+    </style>
+</head>
+<body>
+    
+    <br><br><br>
+
+    <nav class="navbar navbar-expand-lg fixed-top shadow-sm bg-white">
+        <div class="container py-2">
+            
+            <a class="navbar-brand d-flex flex-column text-dark fw-semibold" href="/">
+                <span style="font-size: 16px;">Butik Emas LM ANTAM - Graha Dipta</span>
+                <small class="text-muted" style="font-size: 9px;">
+                    Gedung Graha Dipta, Jalan Pemuda, No.1.
+                    <br>Jatinegara kaum, Pulogadung, Jakarta 13250
+                </small>
+            </a>
+
+            
+            <div class="d-flex d-lg-none justify-content-around w-100 mt-3">
+                <a href="/"
+                    class="text-center text-decoration-none flex-fill text-dark">
+                    <i class="bi bi-person-plus-fill" style="font-size: 20px;"></i><br>
+                    <small>Daftar Antrian</small>
+                </a>
+                <a href="/search"
+                    class="text-center text-decoration-none flex-fill text-primary fw-bold">
+                    <i class="bi bi-search" style="font-size: 20px;"></i><br>
+                    <small>Cek Antrian</small>
+                </a>
+                <a href="/bukti-transfer"
+                    class="text-center text-decoration-none flex-fill text-dark">
+                    <i class="bi bi-receipt me-1"></i><br>
+                    <small>Bukti Transfer</small>
+                </a>
+            </div>
+
+            
+            <div class="d-none d-lg-flex ms-auto align-items-center gap-3">
+                <a class="nav-link text-dark" href="/">
+                    <i class="bi bi-person-plus-fill me-1"></i> Daftar Antrian
+                </a>
+                <a class="nav-link active fw-bold text-primary"
+                    href="/search">
+                    <i class="bi bi-search me-1"></i> Cek Antrian
+                </a>
+                <a class="nav-link text-dark"
+                    href="/bukti-transfer">
+                    <i class="bi bi-receipt me-1"></i> Bukti Transfer
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4" style="margin-top: 120px; margin-bottom: 50px;">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <h1 class="text-center mb-2 h5 font-weight-bold">Butik Emas LM ANTAM - Graha Dipta</h1>
+                <p class="text-center text-muted small mb-4">
+                    Gedung Graha Dipta, Jalan Pemuda, No.1.<br>
+                    Jatinegara kaum, Pulogadung,<br>
+                    Jakarta 13250
+                </p>
+
+                <div class="text-center mb-4">
+                    <div class="btn-group" role="group">
+                        <a href="/" class="btn btn-outline-secondary">
+                            <i class="bi bi-person-plus"></i><br>
+                            <small>Daftar Antrian</small>
+                        </a>
+                        <button type="button" class="btn btn-outline-secondary active">
+                            <i class="bi bi-search"></i><br>
+                            <small>Cek Antrian</small>
+                        </button>
+                        <a href="/bukti-transfer" class="btn btn-outline-secondary">
+                            <i class="bi bi-receipt"></i><br>
+                            <small>Bukti Transfer</small>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="text-center mb-4">
+                    <h5 class="mb-3">Masukkan Nomor HP Anda</h5>
+                    <p class="text-danger">Input nomor HP Anda sesuai form</p>
+                    
+                    <div class="d-flex justify-content-center align-items-center gap-2 mb-4">
+                        <input type="text" class="form-control" id="searchPhone" placeholder="08xxxxxxxx" style="max-width: 300px;">
+                        <button class="btn btn-primary" onclick="showResult()" style="background-color: #379777; border-color: #379777;">Cari</button>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-4 text-center">
+                        <h5 class="fw-bold mb-3">Bukti Pendaftaran</h5>
+                        <p class="fw-bold">Butik Graha Dipta</p>
+                        
+                        <h2 class="text-primary fw-bold my-4" id="queueNumber">BGD2910 A-005</h2>
+                        
+                        <div class="text-start">
+                            <p class="mb-2"><strong>Ref:</strong> <span id="refNumber">001290007202510</span></p>
+                            <hr>
+                            <p class="mb-2"><strong>Nama KTP:</strong> <span id="resultName">SYAIFUL BAHRI</span></p>
+                            <hr>
+                            <p class="mb-2"><strong>Nomor KTP:</strong> <span id="resultKTP">************0007</span></p>
+                            <hr>
+                            <p class="mb-2"><strong>Nomor Hp/WhatsApp:</strong> <span id="resultPhone">********9021</span></p>
+                            <hr>
+                            <p class="mb-2"><strong>Waktu Kedatangan:</strong> <span id="arrivalTime">29-10-2025</span></p>
+                        </div>
+
+                        <div class="alert alert-danger mt-4 text-start">
+                            <p class="fw-bold mb-1">Wajib hadir pukul 08.30 - 11.00</p>
+                            <p class="mb-0 small">Diluar waktu tersebut menggunakan antrian baru</p>
+                        </div>
+
+                        <div class="d-flex gap-2 mt-4">
+                            <button class="btn btn-primary flex-fill" onclick="downloadProof()" style="background-color: #379777; border-color: #379777;">
+                                <i class="bi bi-download me-1"></i> Unduh Bukti (PNG)
+                            </button>
+                            <button class="btn btn-outline-secondary flex-fill" onclick="shareLink()">
+                                <i class="bi bi-share me-1"></i> Bagikan Link Pencarian
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="footer" class="bg-white">
+        <div class="container py-5">
+            <footer>
+                <div class="row">
+                    
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+    
+    <script>
+        // Load data dari localStorage jika ada
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedData = localStorage.getItem('registrationData');
+            
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                // Update data di halaman
+                document.getElementById('queueNumber').textContent = data.queueNumber;
+                document.getElementById('refNumber').textContent = data.refNumber;
+                document.getElementById('resultName').textContent = data.name.toUpperCase();
+                
+                // Mask KTP (tampilkan 4 digit terakhir)
+                const maskedKTP = '*'.repeat(12) + data.ktp.slice(-4);
+                document.getElementById('resultKTP').textContent = maskedKTP;
+                
+                // Mask Phone (tampilkan 4 digit terakhir)
+                const maskedPhone = '*'.repeat(8) + data.phone.slice(-4);
+                document.getElementById('resultPhone').textContent = maskedPhone;
+                
+                document.getElementById('arrivalTime').textContent = data.arrivalTime;
+            }
+        });
+
+        function showResult() {
+            // Fungsi untuk mencari data berdasarkan nomor HP
+            const phone = document.getElementById('searchPhone').value;
+            if (!phone) {
+                alert('Masukkan nomor HP terlebih dahulu');
+                return;
+            }
+            alert('Mencari data untuk nomor: ' + phone);
+        }
+
+        function downloadProof() {
+            // Fungsi untuk download bukti pendaftaran
+            alert('Mengunduh bukti pendaftaran (PNG)...');
+            // Implementasi download bisa menggunakan html2canvas atau library lainnya
+        }
+
+        function shareLink() {
+            // Fungsi untuk share link pencarian
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Cek Antrian Butik Emas',
+                    text: 'Cek antrian Anda di Butik Emas LM ANTAM',
+                    url: url
+                }).catch(err => console.log('Error sharing:', err));
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('Link berhasil disalin!');
+                }).catch(err => {
+                    console.error('Error copying:', err);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
