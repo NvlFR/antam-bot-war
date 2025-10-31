@@ -9,11 +9,13 @@ const gradient = require("gradient-string").default;
 const figlet = require("figlet");
 const chalk = require("chalk");
 const pLimit = require("p-limit").default;
-const puppeteer = require("puppeteer-extra");
-const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-puppeteer.use(StealthPlugin());
 
-// --- PERUBAHAN: Impor saveState ---
+// --- PERBAIKAN: HAPUS PUPPETEER DARI SINI ---
+// const puppeteer = require("puppeteer-extra");
+// const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+// puppeteer.use(StealthPlugin());
+// --- SELESAI PERBAIKAN ---
+
 const {
   state,
   constants,
@@ -21,70 +23,38 @@ const {
   getRandomProxy,
   hasProxies,
 } = require("./config");
-// --- SELESAI PERUBAHAN ---
-
 const { randomDelay } = require("./utils");
 const { displayStatus } = require("./api");
 const { runAntamWar } = require("./bot");
 
-const limit = pLimit(1); // Atur limit konkurensi
+const limit = pLimit(1); // Atur limit konkurensi (1 untuk IP HP)
 
-async function runAllJobsInParallel(userList, browser) {
+// --- PERBAIKAN: 'runAllJobsInParallel' TIDAK butuh browser ---
+async function runAllJobsInParallel(userList) {
   logger.info(
     `[PARALLEL] Starting ${userList.length} jobs with a concurrency limit of 1...`
   );
 
   const tasks = userList.map((userData) => {
-    return limit(() =>
-      runAntamWar(userData, state.currentAntamURL, browser)
-    ).catch((e) => {
-      logger.error(
-        `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
-      );
-      return { status: "FAILED_CRITICAL", nik: userData.nik };
-    });
+    // Panggil runAntamWar tanpa 'browser'
+    return limit(() => runAntamWar(userData, state.currentAntamURL)).catch(
+      (e) => {
+        logger.error(
+          `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
+        );
+        return { status: "FAILED_CRITICAL", nik: userData.nik };
+      }
+    );
   });
 
   await Promise.all(tasks);
   logger.info("[PARALLEL] All concurrent jobs completed.");
 }
-async function runWarExecution(userList, dataMode) {
-  logger.info(`[EKSEKUSI] Memulai eksekusi perang untuk: ${dataMode}`);
-  let browser;
-  try {
-    const launchOptions = {
-      headless: true,
-      ignoreHTTPSErrors: true,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--start-maximized",
-        "--ignore-certificate-errors",
-        "--allow-running-insecure-content",
-      ],
-      defaultViewport: null,
-    };
 
-    logger.info("[BROWSER POOL] Meluncurkan browser bersama...");
-    browser = await puppeteer.launch(launchOptions);
-    logger.info(
-      "[BROWSER POOL] Browser bersama berhasil diluncurkan. Menjalankan jobs..."
-    );
+// --- PERBAIKAN: 'runWarExecution' DIHAPUS ---
+// Fungsi ini tidak perlu lagi karena logikanya ada di 'runAllJobsInParallel'
 
-    await runAllJobsInParallel(userList, browser);
-
-    logger.info("[EKSEKUSI] Selesai mengeksekusi semua job.");
-  } catch (err) {
-    logger.error(`[BROWSER POOL] Gagal meluncurkan browser: ${err.message}`);
-  } finally {
-    if (browser) {
-      await browser.close();
-      logger.info(
-        "[BROWSER POOL] Semua job paralel selesai. Browser bersama ditutup."
-      );
-    }
-  }
-}
+// --- PERBAIKAN: 'scheduleAntamWar' disederhanakan ---
 async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   const now = new Date();
   const targetTime = new Date(
@@ -161,17 +131,20 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   }, 1000);
   // --- Akhir Logika Countdown ---
 
-  // Timer menunggu...
+  // Hapus semua logika try/catch/finally Browser Pool
   await new Promise((resolve) =>
     setTimeout(() => {
       logger.info("=================================================");
       logger.info("[SCHEDULING] WAKTU EKSEKUSI TEPAT! Menjalankan War...");
       logger.info("=================================================");
-      // Timer selesai, panggil eksekusi
-      resolve(runWarExecution(userList, dataMode));
+      resolve(runAllJobsInParallel(userList)); // Panggil langsung
     }, timeUntilTarget)
   );
+
+  logger.info("[SCHEDULING] Selesai mengeksekusi semua job.");
 }
+// --- SELESAI PERBAIKAN ---
+
 async function loadDataAndGetList(dataType) {
   const FOLDER_PATH =
     dataType === "json" ? constants.JSON_DIR : constants.CSV_DIR;
@@ -427,7 +400,8 @@ async function processDataWithMonitor() {
   if (fs.existsSync(constants.SIGNAL_FILE_PATH)) {
     fs.unlinkSync(constants.SIGNAL_FILE_PATH);
   }
-  await runWarExecution(data.userList, `MONITOR SIGNAL (${data.selectedFile})`);
+  // --- PERBAIKAN: Panggil runAllJobsInParallel ---
+  await runAllJobsInParallel(data.userList);
 }
 
 function setAntamURL() {
@@ -444,14 +418,12 @@ function setAntamURL() {
     "Custom URL",
   ];
 
-  // --- PERBAIKAN BUG DIMULAI ---
   butikOptions.forEach((url, index) => {
     const displayUrl = url.startsWith("file://")
       ? "MOCKUP FILE (Local HTML)"
       : url;
     console.log(`${index + 1}. ${displayUrl}`);
   });
-  // --- PERBAIKAN BUG SELESAI ---
 
   console.log(`\nURL Aktif Saat Ini: ${state.currentAntamURL}`);
   const choice = prompt("Pilih nomor butik atau masukkan URL baru: ");
