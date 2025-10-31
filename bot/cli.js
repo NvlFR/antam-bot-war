@@ -9,35 +9,82 @@ const gradient = require("gradient-string").default;
 const figlet = require("figlet");
 const chalk = require("chalk");
 const pLimit = require("p-limit").default;
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+puppeteer.use(StealthPlugin());
 
-const { state, constants, getRandomProxy, hasProxies } = require("./config");
+// --- PERUBAHAN: Impor saveState ---
+const {
+  state,
+  constants,
+  saveState,
+  getRandomProxy,
+  hasProxies,
+} = require("./config");
+// --- SELESAI PERUBAHAN ---
+
 const { randomDelay } = require("./utils");
 const { displayStatus } = require("./api");
 const { runAntamWar } = require("./bot");
 
-// --- PERUBAHAN: Sesuaikan limit Anda di sini ---
-const limit = pLimit(1); // Gunakan '1' untuk strategi IP HP
+const limit = pLimit(1); // Atur limit konkurensi
 
-async function runAllJobsInParallel(userList) {
+async function runAllJobsInParallel(userList, browser) {
   logger.info(
     `[PARALLEL] Starting ${userList.length} jobs with a concurrency limit of 1...`
   );
 
   const tasks = userList.map((userData) => {
-    return limit(() => runAntamWar(userData, state.currentAntamURL)).catch(
-      (e) => {
-        logger.error(
-          `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
-        );
-        return { status: "FAILED_CRITICAL", nik: userData.nik };
-      }
-    );
+    return limit(() =>
+      runAntamWar(userData, state.currentAntamURL, browser)
+    ).catch((e) => {
+      logger.error(
+        `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
+      );
+      return { status: "FAILED_CRITICAL", nik: userData.nik };
+    });
   });
 
   await Promise.all(tasks);
   logger.info("[PARALLEL] All concurrent jobs completed.");
 }
+async function runWarExecution(userList, dataMode) {
+  logger.info(`[EKSEKUSI] Memulai eksekusi perang untuk: ${dataMode}`);
+  let browser;
+  try {
+    const launchOptions = {
+      headless: true,
+      ignoreHTTPSErrors: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--start-maximized",
+        "--ignore-certificate-errors",
+        "--allow-running-insecure-content",
+      ],
+      defaultViewport: null,
+    };
 
+    logger.info("[BROWSER POOL] Meluncurkan browser bersama...");
+    browser = await puppeteer.launch(launchOptions);
+    logger.info(
+      "[BROWSER POOL] Browser bersama berhasil diluncurkan. Menjalankan jobs..."
+    );
+
+    await runAllJobsInParallel(userList, browser);
+
+    logger.info("[EKSEKUSI] Selesai mengeksekusi semua job.");
+  } catch (err) {
+    logger.error(`[BROWSER POOL] Gagal meluncurkan browser: ${err.message}`);
+  } finally {
+    if (browser) {
+      await browser.close();
+      logger.info(
+        "[BROWSER POOL] Semua job paralel selesai. Browser bersama ditutup."
+      );
+    }
+  }
+}
 async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   const now = new Date();
   const targetTime = new Date(
@@ -49,37 +96,26 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
     0,
     0
   );
-
   let timeUntilTarget = targetTime.getTime() - now.getTime();
 
   if (timeUntilTarget < 0) {
     logger.error("=================================================");
-    logger.error(
-      `[SCHEDULING] Waktu target ${targetHour
-        .toString()
-        .padStart(2, "0")}:${targetMinute
-        .toString()
-        .padStart(2, "0")}:00 WIB sudah lewat.`
-    );
-    logger.error("Waktu target harus di hari ini dan belum terlewat.");
+    logger.error("[SCHEDULING] Waktu target sudah lewat.");
     logger.error("=================================================");
     return;
   }
 
+  // (Logika Countdown... tidak berubah)
   const hours = Math.floor(timeUntilTarget / (1000 * 60 * 60));
   const minutes = Math.floor(
     (timeUntilTarget % (1000 * 60 * 60)) / (1000 * 60)
   );
   const seconds = Math.floor((timeUntilTarget % (1000 * 60)) / 1000);
   logger.warn("=================================================");
-  logger.warn(`[SCHEDULING] Mode ${dataMode} (PARALEL) dipilih.`);
+  logger.warn(`[SCHEDULING] Mode ${dataMode} (TIMER) dipilih.`);
   logger.warn(`[SCHEDULING] Total NIK: ${userList.length}`);
   logger.warn(`[SCHEDULING] URL Tujuan: ${state.currentAntamURL}`);
-
-  // --- PERUBAHAN: Tampilkan juga branch default ---
   logger.warn(`[SCHEDULING] Cabang Default: ${state.currentBranch}`);
-  // --- SELESAI PERUBAHAN ---
-
   if (hasProxies()) {
     logger.warn(
       `[SCHEDULING] Rotasi Proxy AKTIF. Menggunakan ${
@@ -93,7 +129,6 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
       "[SCHEDULING] Rotasi Proxy TIDAK AKTIF (proxies.json tidak ditemukan). Menggunakan IP lokal."
     );
   }
-
   logger.warn(
     `[SCHEDULING] Bot akan dieksekusi tepat pada: ${targetTime.toLocaleTimeString(
       "id-ID",
@@ -105,7 +140,6 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   );
   logger.warn("JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!");
   logger.warn("=================================================");
-
   const countdownInterval = setInterval(() => {
     timeUntilTarget -= 1000;
     const currentSeconds = Math.floor((timeUntilTarget % (1000 * 60)) / 1000);
@@ -125,30 +159,127 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
       clearInterval(countdownInterval);
     }
   }, 1000);
+  // --- Akhir Logika Countdown ---
 
+  // Timer menunggu...
   await new Promise((resolve) =>
     setTimeout(() => {
       logger.info("=================================================");
-      logger.info(
-        `[SCHEDULING] WAKTU EKSEKUSI TEPAT ${targetHour
-          .toString()
-          .padStart(2, "0")}:${targetMinute
-          .toString()
-          .padStart(2, "0")}:00! Menjalankan Antam War Paralel...`
-      );
+      logger.info("[SCHEDULING] WAKTU EKSEKUSI TEPAT! Menjalankan War...");
       logger.info("=================================================");
-      resolve(runAllJobsInParallel(userList));
+      // Timer selesai, panggil eksekusi
+      resolve(runWarExecution(userList, dataMode));
     }, timeUntilTarget)
   );
+}
+async function loadDataAndGetList(dataType) {
+  const FOLDER_PATH =
+    dataType === "json" ? constants.JSON_DIR : constants.CSV_DIR;
+  const FILE_EXT = dataType === "json" ? ".json" : ".csv";
 
-  logger.info("[SCHEDULING] Selesai mengeksekusi semua job.");
+  if (!fs.existsSync(FOLDER_PATH)) {
+    logger.error(
+      `[FATAL] Folder ${dataType.toUpperCase()} tidak ditemukan: ${FOLDER_PATH}.`
+    );
+    return null;
+  }
+
+  const files = fs
+    .readdirSync(FOLDER_PATH)
+    .filter((file) => file.endsWith(FILE_EXT));
+  if (files.length === 0) {
+    logger.error(
+      `[FATAL] Tidak ada file ${FILE_EXT} ditemukan di folder: ${FOLDER_PATH}`
+    );
+    return null;
+  }
+
+  console.log(
+    chalk.yellowBright(`\nAvailable ${dataType.toUpperCase()} Files:`)
+  );
+  files.forEach((file, index) => {
+    console.log(chalk.cyanBright(`${index + 1}.`) + ` ${file}`);
+  });
+
+  let choiceIndex;
+  do {
+    const choice = prompt(`Pilih nomor file (1-${files.length}): `);
+    choiceIndex = parseInt(choice.trim()) - 1;
+    if (choiceIndex < 0 || choiceIndex >= files.length || isNaN(choiceIndex)) {
+      logger.error("[VALIDASI] Pilihan tidak valid.");
+    }
+  } while (
+    choiceIndex < 0 ||
+    choiceIndex >= files.length ||
+    isNaN(choiceIndex)
+  );
+
+  const selectedFile = files[choiceIndex];
+  const dataFilePath = path.join(FOLDER_PATH, selectedFile);
+  logger.info(`[CLI] Reading user data from: ${dataFilePath}`);
+
+  let userList;
+
+  if (dataType === "json") {
+    try {
+      const rawData = fs.readFileSync(dataFilePath);
+      const userListRaw = JSON.parse(rawData);
+      if (!Array.isArray(userListRaw) || userListRaw.length === 0) {
+        logger.error("[FATAL] Data file must contain a non-empty array.");
+        return null;
+      }
+      userList = userListRaw.map((userEntry) => ({
+        ...constants.USER_DATA_TEMPLATE,
+        name: userEntry.nama || userEntry.name,
+        nik: userEntry.nik,
+        phone_number: userEntry.telepon || userEntry.phone_number,
+        branch: userEntry.branch || state.currentBranch,
+        branch_selector:
+          userEntry.branch_selector || state.currentBranchSelector,
+      }));
+    } catch (e) {
+      logger.error(`[FATAL] Gagal memproses JSON: ${e.message}`);
+      return null;
+    }
+  } else {
+    // Logika CSV
+    userList = await new Promise((resolve) => {
+      const results = [];
+      fs.createReadStream(dataFilePath)
+        .pipe(csv())
+        .on("data", (data) => {
+          results.push({
+            ...constants.USER_DATA_TEMPLATE,
+            ...data,
+            name: data.name || data.nama,
+            nik: data.nik,
+            phone_number: data.phone_number || data.telepon,
+            branch: data.branch || state.currentBranch,
+            branch_selector:
+              data.branch_selector || state.currentBranchSelector,
+          });
+        })
+        .on("end", () => {
+          if (results.length === 0) {
+            logger.error("[FATAL] CSV file is empty.");
+            resolve(null);
+          }
+          resolve(results);
+        })
+        .on("error", (err) => {
+          logger.error(`[FATAL] Error reading CSV file: ${err.message}`);
+          resolve(null);
+        });
+    });
+  }
+
+  return { userList, selectedFile };
 }
 
 // --- FUNGSI MENU ---
 
 async function processManualInput() {
   logger.info("\n--- MODE INPUT MANUAL ---");
-
   const name = prompt("Masukkan Nama: ");
   let nik;
   do {
@@ -159,7 +290,6 @@ async function processManualInput() {
       );
     }
   } while (nik.trim().length !== 16 || isNaN(nik.trim()));
-
   let phone_number;
   do {
     phone_number = prompt("Masukkan No. HP (diawali 08xx): ");
@@ -169,106 +299,27 @@ async function processManualInput() {
       );
     }
   } while (!phone_number.trim().startsWith("08") || isNaN(phone_number.trim()));
-
-  // Di mode manual, kita tetap bertanya. Kita tidak pakai default dari state.
   const branch = prompt(
     `Masukkan Nama Cabang (default: ${state.currentBranch}): `
   );
   const branch_selector = prompt(
     `Masukkan Selector Cabang (default: ${state.currentBranchSelector}): `
   );
-
   const userData = {
     ...constants.USER_DATA_TEMPLATE,
     name,
     nik: nik.trim(),
     phone_number: phone_number.trim(),
-    // Gunakan input manual, JIKA KOSONG, baru pakai state
     branch: branch || state.currentBranch,
     branch_selector: branch_selector || state.currentBranchSelector,
   };
-
   logger.info(`[MANUAL] Starting single job for NIK: ${userData.nik}`);
   await runAntamWar(userData, state.currentAntamURL);
 }
-
 async function processUserData() {
-  logger.info("\n--- INPUT JSON FILE ---");
-  if (!fs.existsSync(constants.JSON_DIR)) {
-    logger.error(
-      `[FATAL] Folder JSON tidak ditemukan: ${constants.JSON_DIR}. Silakan buat folder ini.`
-    );
-    return;
-  }
-
-  const jsonFiles = fs
-    .readdirSync(constants.JSON_DIR)
-    .filter((file) => file.endsWith(".json"));
-  if (jsonFiles.length === 0) {
-    logger.error(
-      `[FATAL] Tidak ada file .json ditemukan di folder: ${constants.JSON_DIR}`
-    );
-    return;
-  }
-
-  console.log(chalk.yellowBright("\nAvailable JSON Files:"));
-  jsonFiles.forEach((file, index) => {
-    console.log(chalk.cyanBright(`${index + 1}.`) + ` ${file}`);
-  });
-
-  let choiceIndex;
-  do {
-    const choice = prompt(`Pilih nomor file (1-${jsonFiles.length}): `);
-    choiceIndex = parseInt(choice.trim()) - 1;
-    if (
-      choiceIndex < 0 ||
-      choiceIndex >= jsonFiles.length ||
-      isNaN(choiceIndex)
-    ) {
-      logger.error("[VALIDASI] Pilihan tidak valid.");
-    }
-  } while (
-    choiceIndex < 0 ||
-    choiceIndex >= jsonFiles.length ||
-    isNaN(choiceIndex)
-  );
-
-  const selectedFile = jsonFiles[choiceIndex];
-  const dataFilePath = path.join(constants.JSON_DIR, selectedFile);
-  logger.info(`[CLI] Reading user data from: ${dataFilePath}`);
-
-  let rawData;
-  try {
-    rawData = fs.readFileSync(dataFilePath);
-  } catch (e) {
-    logger.error(`[FATAL] Could not read data file: ${e.message}`);
-    return;
-  }
-
-  let userListRaw;
-  try {
-    userListRaw = JSON.parse(rawData);
-  } catch (e) {
-    logger.error(`[FATAL] Failed to parse JSON data: ${e.message}`);
-    return;
-  }
-
-  if (!Array.isArray(userListRaw) || userListRaw.length === 0) {
-    logger.error("[FATAL] Data file must contain a non-empty array of users.");
-    return;
-  }
-
-  const userList = userListRaw.map((userEntry) => ({
-    ...constants.USER_DATA_TEMPLATE,
-    name: userEntry.nama || userEntry.name,
-    nik: userEntry.nik,
-    phone_number: userEntry.telepon || userEntry.phone_number,
-    // --- PERUBAHAN: Gunakan 'state' sebagai fallback ---
-    branch: userEntry.branch || state.currentBranch,
-    branch_selector: userEntry.branch_selector || state.currentBranchSelector,
-    // --- SELESAI PERUBAHAN ---
-  }));
-
+  logger.info("\n--- INPUT JSON FILE (TIMER) ---");
+  const data = await loadDataAndGetList("json");
+  if (!data) return;
   let targetHour, targetMinute;
   do {
     const timeInput = prompt("Masukkan JAM War (HH:MM, contoh 07:00): ");
@@ -291,101 +342,17 @@ async function processUserData() {
     }
     logger.error("[VALIDASI] Format jam tidak valid. Gunakan format HH:MM.");
   } while (true);
-
   await scheduleAntamWar(
-    userList,
+    data.userList,
     targetHour,
     targetMinute,
-    `JSON File: ${selectedFile}`
+    `JSON File: ${data.selectedFile}`
   );
-
-  logger.info("[CLI] All JSON user jobs completed (after scheduling).");
 }
-
 async function processCSVData() {
-  logger.info("\n--- INPUT CSV FILE ---");
-  if (!fs.existsSync(constants.CSV_DIR)) {
-    logger.error(
-      `[FATAL] Folder CSV tidak ditemukan: ${constants.CSV_DIR}. Silakan buat folder ini.`
-    );
-    return;
-  }
-
-  const csvFiles = fs
-    .readdirSync(constants.CSV_DIR)
-    .filter((file) => file.endsWith(".csv"));
-  if (csvFiles.length === 0) {
-    logger.error(
-      `[FATAL] Tidak ada file .csv ditemukan di folder: ${constants.CSV_DIR}`
-    );
-    return;
-  }
-
-  console.log(chalk.yellowBright("\nAvailable CSV Files:"));
-  csvFiles.forEach((file, index) => {
-    console.log(chalk.cyanBright(`${index + 1}.`) + ` ${file}`);
-  });
-
-  let choiceIndex;
-  do {
-    const choice = prompt(`Pilih nomor file (1-${csvFiles.length}): `);
-    choiceIndex = parseInt(choice.trim()) - 1;
-    if (
-      choiceIndex < 0 ||
-      choiceIndex >= csvFiles.length ||
-      isNaN(choiceIndex)
-    ) {
-      logger.error("[VALIDASI] Pilihan tidak valid.");
-    }
-  } while (
-    choiceIndex < 0 ||
-    choiceIndex >= csvFiles.length ||
-    isNaN(choiceIndex)
-  );
-
-  const selectedFile = csvFiles[choiceIndex];
-  const dataFilePath = path.join(constants.CSV_DIR, selectedFile);
-  logger.info(`[CLI] Reading user data from CSV: ${dataFilePath}`);
-
-  const userList = await new Promise((resolve, reject) => {
-    const results = [];
-    if (!fs.existsSync(dataFilePath)) {
-      logger.error(`[FATAL] File not found: ${dataFilePath}`);
-      return resolve([]);
-    }
-    fs.createReadStream(dataFilePath)
-      .pipe(csv())
-      .on("data", (data) => {
-        const userData = {
-          ...constants.USER_DATA_TEMPLATE,
-          ...data,
-          name: data.name || data.nama,
-          nik: data.nik,
-          phone_number: data.phone_number || data.telepon,
-          // --- PERUBAHAN: Gunakan 'state' sebagai fallback ---
-          branch: data.branch || state.currentBranch,
-          branch_selector: data.branch_selector || state.currentBranchSelector,
-          // --- SELESAI PERUBAHAN ---
-        };
-        results.push(userData);
-      })
-      .on("end", () => {
-        logger.info(
-          `[CLI] Successfully parsed ${results.length} records from CSV.`
-        );
-        resolve(results);
-      })
-      .on("error", (err) => {
-        logger.error(`[FATAL] Error reading CSV file: ${err.message}`);
-        reject(err);
-      });
-  });
-
-  if (!Array.isArray(userList) || userList.length === 0) {
-    logger.error("[FATAL] CSV file is empty or could not be processed.");
-    return;
-  }
-
+  logger.info("\n--- INPUT CSV FILE (TIMER) ---");
+  const data = await loadDataAndGetList("csv");
+  if (!data) return;
   let targetHour, targetMinute;
   do {
     const timeInput = prompt("Masukkan JAM War (HH:MM, contoh 07:00): ");
@@ -408,14 +375,59 @@ async function processCSVData() {
     }
     logger.error("[VALIDASI] Format jam tidak valid. Gunakan format HH:MM.");
   } while (true);
-
   await scheduleAntamWar(
-    userList,
+    data.userList,
     targetHour,
     targetMinute,
-    `CSV File: ${selectedFile}`
+    `CSV File: ${data.selectedFile}`
   );
-  logger.info("[CLI] All CSV user jobs completed (after scheduling).");
+}
+async function processDataWithMonitor() {
+  logger.info("\n--- SIAGA (TUNGGU SINYAL MONITOR) ---");
+  console.log("Pilih file data yang ingin disiagakan:");
+  const dataType = prompt("Ketik 'json' or 'csv': ").toLowerCase();
+  let data;
+  if (dataType === "json") {
+    data = await loadDataAndGetList("json");
+  } else if (dataType === "csv") {
+    data = await loadDataAndGetList("csv");
+  } else {
+    logger.error("Pilihan tidak valid.");
+    return;
+  }
+  if (!data) return;
+  if (fs.existsSync(constants.SIGNAL_FILE_PATH)) {
+    fs.unlinkSync(constants.SIGNAL_FILE_PATH);
+  }
+  logger.warn("=================================================");
+  logger.warn("🤖 BOT DALAM MODE SIAGA 🤖");
+  logger.warn(`Total NIK disiagakan: ${data.userList.length}`);
+  logger.warn(
+    `Menunggu sinyal dari 'monitor.js' di file: ${constants.SIGNAL_FILE_PATH}`
+  );
+  logger.warn(
+    "Pastikan Anda menjalankan 'node bot/monitor.js' di terminal lain."
+  );
+  logger.warn("=================================================");
+  let watcher;
+  const signalPromise = new Promise((resolve) => {
+    watcher = fs.watch(__dirname, (eventType, filename) => {
+      if (filename === path.basename(constants.SIGNAL_FILE_PATH)) {
+        logger.info(
+          chalk.greenBright(
+            "\n[PISTOL START!] Sinyal terdeteksi! Menjalankan War..."
+          )
+        );
+        resolve();
+      }
+    });
+  });
+  await signalPromise;
+  watcher.close();
+  if (fs.existsSync(constants.SIGNAL_FILE_PATH)) {
+    fs.unlinkSync(constants.SIGNAL_FILE_PATH);
+  }
+  await runWarExecution(data.userList, `MONITOR SIGNAL (${data.selectedFile})`);
 }
 
 function setAntamURL() {
@@ -432,17 +444,18 @@ function setAntamURL() {
     "Custom URL",
   ];
 
+  // --- PERBAIKAN BUG DIMULAI ---
   butikOptions.forEach((url, index) => {
     const displayUrl = url.startsWith("file://")
       ? "MOCKUP FILE (Local HTML)"
       : url;
     console.log(`${index + 1}. ${displayUrl}`);
   });
+  // --- PERBAIKAN BUG SELESAI ---
 
   console.log(`\nURL Aktif Saat Ini: ${state.currentAntamURL}`);
   const choice = prompt("Pilih nomor butik atau masukkan URL baru: ");
   const numChoice = parseInt(choice.trim());
-
   if (numChoice >= 1 && numChoice <= butikOptions.length) {
     state.currentAntamURL = butikOptions[numChoice - 1];
     if (state.currentAntamURL === "Custom URL") {
@@ -460,23 +473,22 @@ function setAntamURL() {
     logger.error("[ERROR] Pilihan atau format URL tidak valid.");
   }
   logger.info(`[CONFIG] URL tujuan diatur ke: ${state.currentAntamURL}`);
+
+  saveState();
 }
 
-// --- PERUBAHAN: Fungsi baru untuk ganti branch ---
 function setBranch() {
   logger.info("\n--- PENGATURAN CABANG (BRANCH) ---");
   console.log(chalk.yellow(`Cabang Default Saat Ini: ${state.currentBranch}`));
   console.log(
     chalk.yellow(`Selector Default Saat Ini: ${state.currentBranchSelector}`)
   );
-
   const newBranch = prompt(
     "Masukkan Nama Cabang BARU (ex: BUTIK EMAS GRAHA DIPTA): "
   );
   const newSelector = prompt(
     "Masukkan Selector Cabang BARU (ex: GRAHA DIPTA): "
   );
-
   if (
     newBranch &&
     newBranch.trim() !== "" &&
@@ -490,43 +502,35 @@ function setBranch() {
         `[CONFIG] Cabang default diatur ke: ${state.currentBranch}`
       )
     );
+
+    saveState();
   } else {
     logger.warn("[CONFIG] Input tidak valid. Pengaturan cabang tidak diubah.");
   }
 }
-// --- SELESAI PERUBAHAN ---
 
 async function showBanner() {
   return new Promise((resolve, reject) => {
-    figlet.text(
-      "ANTAM BOT WAR",
-      {
-        font: "ANSI Shadow",
-        horizontalLayout: "default",
-        verticalLayout: "default",
-      },
-      (err, data) => {
-        if (err) return reject(err);
-        console.clear();
-        const banner = gradient("cyan", "yellow").multiline(data);
-        const subtitle = gradient(
-          "yellow",
-          "green"
-        )("AUTOMATED REGISTRATION BOT");
-        const box = boxen(`${banner}\n${subtitle}`, {
-          padding: 1,
-          borderStyle: "round",
-          borderColor: "yellow",
-          align: "center",
-        });
-        console.log(chalk.yellowBright(box));
-        resolve();
-      }
-    );
+    figlet.text("ANTAM BOT WAR", { font: "ANSI Shadow" }, (err, data) => {
+      if (err) return reject(err);
+      console.clear();
+      const banner = gradient("cyan", "yellow").multiline(data);
+      const subtitle = gradient(
+        "yellow",
+        "green"
+      )("AUTOMATED REGISTRATION BOT");
+      const box = boxen(`${banner}\n${subtitle}`, {
+        padding: 1,
+        borderStyle: "round",
+        borderColor: "yellow",
+        align: "center",
+      });
+      console.log(chalk.yellowBright(box));
+      resolve();
+    });
   });
 }
 
-// --- PERUBAHAN: Memperbarui Menu Utama ---
 async function displayMainMenu() {
   let continueLoop = true;
   while (continueLoop) {
@@ -537,10 +541,8 @@ async function displayMainMenu() {
       borderColor: "cyan",
       align: "center",
     });
-
     console.log(chalk.cyanBright(titleBox));
 
-    // Menampilkan status konfigurasi saat ini
     const statusBox = boxen(
       chalk.yellow("KONFIGURASI SAAT INI:\n") +
         `URL Target : ${chalk.magentaBright(state.currentAntamURL)}\n` +
@@ -564,29 +566,36 @@ async function displayMainMenu() {
         })
       )
     );
+
     console.log(
       chalk.cyanBright("1.") +
-        " 🧍 Manual Input (1 NIK)  — " +
+        " 🧍 Manual Input (1 NIK)         — " +
         chalk.greenBright("EKSEKUSI SEKARANG")
     );
     console.log(
       chalk.cyanBright("2.") +
-        " 🧾 Input JSON File       — " +
-        chalk.yellowBright("JADWALKAN WAKTU")
+        " 🔫 Siaga (Tunggu Sinyal)        — " +
+        chalk.redBright("MODE PERANG UTAMA")
     );
     console.log(
       chalk.cyanBright("3.") +
-        " 📄 Input CSV File        — " +
+        " 🧾 Input JSON File (Timer)      — " +
         chalk.yellowBright("JADWALKAN WAKTU")
     );
-    console.log(chalk.cyanBright("4.") + " 📋 Tampilkan Status Registrasi");
-    console.log(chalk.cyanBright("5.") + " 🏢 Ganti Butik (URL Target)");
-    console.log(chalk.cyanBright("6.") + " ⚙️ Ganti Cabang (Branch Default)"); // <-- MENU BARU
-    console.log(chalk.cyanBright("7.") + " 🚪 Keluar"); // <-- Exit jadi 7
+    console.log(
+      chalk.cyanBright("4.") +
+        " 📄 Input CSV File (Timer)       — " +
+        chalk.yellowBright("JADWALKAN WAKTU")
+    );
+    console.log(chalk.cyanBright("5.") + " 📋 Tampilkan Status Registrasi");
+    console.log(chalk.cyanBright("6.") + " 🏢 Ganti Butik (URL Target)");
+    console.log(chalk.cyanBright("7.") + " ⚙️ Ganti Cabang (Branch Default)");
+    console.log(chalk.cyanBright("8.") + " 🚪 Keluar");
+
     console.log(
       gradient("yellow", "green")("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     );
-    const choice = prompt(chalk.bold("Pilih menu (1-7): "));
+    const choice = prompt(chalk.bold("Pilih menu (1-8): "));
     console.log(gradient("cyan", "magenta")("\n⏳ Memproses pilihanmu...\n"));
     await randomDelay(500, 1200);
 
@@ -595,21 +604,24 @@ async function displayMainMenu() {
         await processManualInput();
         break;
       case "2":
-        await processUserData();
+        await processDataWithMonitor();
         break;
       case "3":
-        await processCSVData();
+        await processUserData();
         break;
       case "4":
-        await displayStatus();
+        await processCSVData();
         break;
       case "5":
+        await displayStatus();
+        break;
+      case "6":
         setAntamURL();
         break;
-      case "6": // <-- CASE BARU
+      case "7":
         setBranch();
         break;
-      case "7": // <-- Exit jadi 7
+      case "8":
         console.log(
           gradient(
             "red",
@@ -629,7 +641,6 @@ async function displayMainMenu() {
     }
   }
 }
-// --- SELESAI PERUBAHAN ---
 
 module.exports = {
   displayMainMenu,

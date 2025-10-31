@@ -4,12 +4,12 @@ const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const logger = require("./logger");
 const { sendRegistrationResult } = require("./api");
 const { randomDelay, getTodayDateString } = require("./utils");
-// --- PERUBAHAN: Impor getRandomProxy ---
-const { constants, getRandomProxy } = require("./config");
+// --- PERUBAHAN: Impor getRandomUserAgent ---
+const { constants, getRandomProxy, getRandomUserAgent } = require("./config");
 
 puppeteer.use(StealthPlugin());
 
-// (Fungsi handleFormFilling tidak berubah, tetap salin di sini)
+// (Fungsi handleFormFilling tidak berubah, salin fungsi Anda yang ada di sini)
 async function handleFormFilling(page, data) {
   logger.info("[FORM] Starting form automation...");
 
@@ -154,9 +154,8 @@ async function handleFormFilling(page, data) {
     return { status: "FAILED_UNKNOWN", ticket_number: null };
   }
 }
+// --- (Akhir fungsi handleFormFilling) ---
 
-// --- PERUBAHAN BESAR: Mengembalikan logika 'runAntamWar' dan menambah PROXY ---
-// Hapus 'existingBrowser' dari argumen
 async function runAntamWar(userData, antamURL) {
   let browser;
   let page;
@@ -198,7 +197,6 @@ async function runAntamWar(userData, antamURL) {
     );
 
     try {
-      // --- LOGIKA PROXY BARU ---
       const launchOptions = {
         headless: true,
         ignoreHTTPSErrors: true,
@@ -212,21 +210,22 @@ async function runAntamWar(userData, antamURL) {
         defaultViewport: null,
       };
 
-      // Dapatkan proxy baru untuk SETIAP attempt
       const proxy = getRandomProxy();
       if (proxy) {
         launchOptions.args.push(`--proxy-server=${proxy}`);
       }
-      // --- SELESAI LOGIKA PROXY ---
 
-      // Browser diluncurkan DI DALAM loop (ini yang kita revert)
       browser = await puppeteer.launch(launchOptions);
       page = await browser.newPage();
       await page.setViewport({ width: 1366, height: 768 });
 
-      await page.setUserAgent(
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+      // --- PERUBAHAN: Gunakan User-Agent Acak ---
+      const userAgent = getRandomUserAgent();
+      logger.info(
+        `[CONFIG] Using User-Agent: ${userAgent.substring(0, 40)}...`
       );
+      await page.setUserAgent(userAgent);
+      // --- SELESAI PERUBAHAN ---
 
       logger.info(`[RETRY] Navigating to ${antamURL}...`);
       await page.goto(antamURL, {
@@ -288,7 +287,6 @@ async function runAntamWar(userData, antamURL) {
         await randomDelay(3000, 5000);
       }
     } finally {
-      // Logika cleanup yang lama (tutup browser setiap selesai)
       if (browser) {
         if (success || attempt === constants.MAX_RETRIES) {
           try {

@@ -46,6 +46,7 @@ bot/data/json/30.json
 bot/data/json/users_war_30okt.json
 bot/data/json/users.json
 bot/data/csv/users.csv
+bot/START.signal
 
 # Jika wa-worker punya node_modules sendiri
 bot/wa-worker/node_modules/
