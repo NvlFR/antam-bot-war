@@ -9,19 +9,27 @@ const gradient = require("gradient-string").default;
 const figlet = require("figlet");
 const chalk = require("chalk");
 
+// --- PERUBAHAN BARU: Impor puppeteer di CLI ---
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+puppeteer.use(StealthPlugin());
+// --- SELESAI PERUBAHAN ---
+
 // Impor modul yang sudah kita pecah
 const { state, constants } = require("./config");
 const { randomDelay } = require("./utils");
 const { displayStatus } = require("./api");
-const { runAntamWar } = require("./bot");
+const { runAntamWar } = require("./bot"); // runAntamWar sekarang lebih pintar
 
-// --- FUNGSI ORKESTRASI (Dipanggil oleh Menu) ---
-
-async function runAllJobsInParallel(userList) {
-  logger.info(`[PARALLEL] Starting ${userList.length} jobs concurrently...`);
+// --- PERUBAHAN: 'runAllJobsInParallel' sekarang menerima browser ---
+async function runAllJobsInParallel(userList, browser) {
+  logger.info(
+    `[PARALLEL] Starting ${userList.length} jobs concurrently using shared browser...`
+  );
 
   const tasks = userList.map((userData) => {
-    return runAntamWar(userData, state.currentAntamURL).catch((e) => {
+    // Pass browser yang sudah ada ke setiap job
+    return runAntamWar(userData, state.currentAntamURL, browser).catch((e) => {
       logger.error(
         `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
       );
@@ -33,6 +41,7 @@ async function runAllJobsInParallel(userList) {
   logger.info("[PARALLEL] All concurrent jobs completed.");
 }
 
+// --- PERUBAHAN: 'scheduleAntamWar' sekarang mengelola browser pool ---
 async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   const now = new Date();
   const targetTime = new Date(
@@ -61,12 +70,12 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
     return;
   }
 
+  // (Logika countdown tidak berubah)
   const hours = Math.floor(timeUntilTarget / (1000 * 60 * 60));
   const minutes = Math.floor(
     (timeUntilTarget % (1000 * 60 * 60)) / (1000 * 60)
   );
   const seconds = Math.floor((timeUntilTarget % (1000 * 60)) / 1000);
-
   logger.warn("=================================================");
   logger.warn(`[SCHEDULING] Mode ${dataMode} (PARALEL) dipilih.`);
   logger.warn(`[SCHEDULING] Total NIK: ${userList.length}`);
@@ -82,14 +91,12 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   );
   logger.warn("JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!");
   logger.warn("=================================================");
-
   const countdownInterval = setInterval(() => {
     timeUntilTarget -= 1000;
     const currentSeconds = Math.floor((timeUntilTarget % (1000 * 60)) / 1000);
     const currentMinutes = Math.floor(
       (timeUntilTarget % (1000 * 60 * 60)) / (1000 * 60)
     );
-
     if (timeUntilTarget > 60000 && currentSeconds % 10 === 0) {
       logger.info(
         `[COUNTDOWN] Waktu tersisa: ${currentMinutes} menit, ${currentSeconds} detik.`
@@ -99,31 +106,68 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
         `[COUNTDOWN] Waktu tersisa: ${currentMinutes} menit, ${currentSeconds} detik. SIAP!`
       );
     }
-
     if (timeUntilTarget < 1000) {
       clearInterval(countdownInterval);
     }
   }, 1000);
 
-  await new Promise((resolve) =>
-    setTimeout(() => {
-      logger.info("=================================================");
-      logger.info(
-        `[SCHEDULING] WAKTU EKSEKUSI TEPAT ${targetHour
-          .toString()
-          .padStart(2, "0")}:${targetMinute
-          .toString()
-          .padStart(2, "0")}:00! Menjalankan Antam War Paralel...`
-      );
-      logger.info("=================================================");
-      resolve(runAllJobsInParallel(userList));
-    }, timeUntilTarget)
-  );
+  // --- LOGIKA BROWSER POOL DIMULAI ---
+  let browser;
+  try {
+    // 1. Tentukan launchOptions di sini
+    const launchOptions = {
+      headless: true,
+      ignoreHTTPSErrors: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--start-maximized",
+        "--ignore-certificate-errors",
+        "--allow-running-insecure-content",
+      ],
+      defaultViewport: null,
+    };
 
-  logger.info("[SCHEDULING] Selesai mengeksekusi semua job.");
+    // 2. Luncurkan SATU browser untuk semua job
+    logger.info("[BROWSER POOL] Meluncurkan browser bersama...");
+    browser = await puppeteer.launch(launchOptions);
+    logger.info(
+      "[BROWSER POOL] Browser bersama berhasil diluncurkan. Menunggu jadwal..."
+    );
+
+    // 3. Jalankan timer
+    await new Promise((resolve) =>
+      setTimeout(() => {
+        logger.info("=================================================");
+        logger.info(
+          `[SCHEDULING] WAKTU EKSEKUSI TEPAT ${targetHour
+            .toString()
+            .padStart(2, "0")}:${targetMinute
+            .toString()
+            .padStart(2, "0")}:00! Menjalankan Antam War Paralel...`
+        );
+        logger.info("=================================================");
+        // 4. Kirim browser yang sudah hidup ke semua job
+        resolve(runAllJobsInParallel(userList, browser));
+      }, timeUntilTarget)
+    );
+
+    logger.info("[SCHEDULING] Selesai mengeksekusi semua job.");
+  } catch (err) {
+    logger.error(`[BROWSER POOL] Gagal meluncurkan browser: ${err.message}`);
+  } finally {
+    // 5. Setelah SEMUA selesai, tutup browser
+    if (browser) {
+      await browser.close();
+      logger.info(
+        "[BROWSER POOL] Semua job paralel selesai. Browser bersama ditutup."
+      );
+    }
+  }
+  // --- LOGIKA BROWSER POOL SELESAI ---
 }
 
-// --- FUNGSI MENU ---
+// --- FUNGSI MENU (Tidak ada perubahan di bawah ini) ---
 
 async function processManualInput() {
   logger.info("\n--- MODE INPUT MANUAL ---");
@@ -164,6 +208,8 @@ async function processManualInput() {
   };
 
   logger.info(`[MANUAL] Starting single job for NIK: ${userData.nik}`);
+  // Ini akan otomatis menggunakan `existingBrowser = null`
+  // dan `runAntamWar` akan meluncurkan/menutup browser-nya sendiri.
   await runAntamWar(userData, state.currentAntamURL);
 }
 

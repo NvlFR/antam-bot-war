@@ -8,6 +8,7 @@ const { constants } = require("./config");
 
 puppeteer.use(StealthPlugin());
 
+// (Fungsi handleFormFilling tidak berubah, tetap salin di sini)
 async function handleFormFilling(page, data) {
   logger.info("[FORM] Starting form automation...");
 
@@ -153,8 +154,13 @@ async function handleFormFilling(page, data) {
   }
 }
 
-async function runAntamWar(userData, antamURL) {
+// --- PERUBAHAN UTAMA DIMULAI DI SINI ---
+async function runAntamWar(userData, antamURL, existingBrowser = null) {
   let browser;
+  let page;
+  // Flag untuk melacak siapa yang meluncurkan browser
+  let shouldCloseBrowser = false;
+
   const now = new Date();
   const localWarTime = new Intl.DateTimeFormat("sv-SE", {
     year: "numeric",
@@ -181,6 +187,7 @@ async function runAntamWar(userData, antamURL) {
     war_time: localWarTime,
   };
 
+  // Launch options tetap didefinisikan di sini
   const launchOptions = {
     headless: true,
     ignoreHTTPSErrors: true,
@@ -205,8 +212,20 @@ async function runAntamWar(userData, antamURL) {
     );
 
     try {
-      browser = await puppeteer.launch(launchOptions);
-      const page = await browser.newPage();
+      // --- LOGIKA POOL DIMULAI ---
+      if (existingBrowser) {
+        // 1. Jika diberi browser, gunakan itu
+        browser = existingBrowser;
+      } else {
+        // 2. Jika tidak (mode Manual), luncurkan browser baru
+        browser = await puppeteer.launch(launchOptions);
+        shouldCloseBrowser = true; // Tandai agar kita menutupnya nanti
+      }
+
+      // Selalu buat halaman (tab) baru. Ini JAUH LEBIH CEPAT!
+      page = await browser.newPage();
+      // --- LOGIKA POOL SELESAI ---
+
       await page.setViewport({ width: 1366, height: 768 });
 
       await page.setUserAgent(
@@ -273,18 +292,31 @@ async function runAntamWar(userData, antamURL) {
         await randomDelay(3000, 5000);
       }
     } finally {
-      if (browser) {
+      // --- LOGIKA CLEANUP POOL ---
+      if (page) {
+        // 1. Selalu tutup HALAMAN (TAB) setelah selesai
+        try {
+          await page.close();
+        } catch (e) {
+          logger.warn(`[JOB] Gagal menutup halaman: ${e.message}`);
+        }
+      }
+
+      // 2. Hanya tutup BROWSER jika kita yang meluncurkannya (mode Manual)
+      //    Jika ini mode Pool, biarkan 'cli.js' yang menutupnya nanti.
+      if (browser && shouldCloseBrowser) {
         if (success || attempt === constants.MAX_RETRIES) {
           try {
             await browser.close();
-            logger.info(`[JOB] Browser closed for NIK: ${userData.nik}`);
-          } catch (e) {
-            logger.warn(
-              `[JOB] Failed to close browser, maybe already closed: ${e.message}`
+            logger.info(
+              `[JOB] Browser (manual) closed for NIK: ${userData.nik}`
             );
+          } catch (e) {
+            logger.warn(`[JOB] Failed to close browser (manual): ${e.message}`);
           }
         }
       }
+      // --- LOGIKA CLEANUP POOL SELESAI ---
     }
   }
 
