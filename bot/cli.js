@@ -8,41 +8,33 @@ const boxen = require("boxen").default;
 const gradient = require("gradient-string").default;
 const figlet = require("figlet");
 const chalk = require("chalk");
-const pLimit = require("p-limit"); // <-- PERUBAHAN 1: Impor p-limit
+const pLimit = require("p-limit").default;
 
-const puppeteer = require("puppeteer-extra");
-const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-puppeteer.use(StealthPlugin());
-
-const { state, constants } = require("./config");
+const { state, constants, getRandomProxy, hasProxies } = require("./config");
 const { randomDelay } = require("./utils");
 const { displayStatus } = require("./api");
 const { runAntamWar } = require("./bot");
 
-// --- PERUBAHAN 2: Tentukan batas konkurensi (misal 8 pekerjaan sekaligus) ---
-// Anda bisa ubah angka ini sesuai kekuatan CPU/RAM Anda
-const limit = pLimit(8);
-// --------------------------------------------------------------------
+// --- PERUBAHAN: Sesuaikan limit Anda di sini ---
+const limit = pLimit(1); // Gunakan '1' untuk strategi IP HP
 
-async function runAllJobsInParallel(userList, browser) {
+async function runAllJobsInParallel(userList) {
   logger.info(
-    `[PARALLEL] Starting ${userList.length} jobs with a concurrency limit of 8...` // Log diubah
+    `[PARALLEL] Starting ${userList.length} jobs with a concurrency limit of 1...`
   );
 
   const tasks = userList.map((userData) => {
-    // --- PERUBAHAN 3: Bungkus 'runAntamWar' di dalam 'limit' ---
-    return limit(() =>
-      runAntamWar(userData, state.currentAntamURL, browser)
-    ).catch((e) => {
-      logger.error(
-        `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
-      );
-      return { status: "FAILED_CRITICAL", nik: userData.nik };
-    });
-    // --------------------------------------------------------
+    return limit(() => runAntamWar(userData, state.currentAntamURL)).catch(
+      (e) => {
+        logger.error(
+          `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
+        );
+        return { status: "FAILED_CRITICAL", nik: userData.nik };
+      }
+    );
   });
 
-  await Promise.all(tasks); // p-limit akan mengatur antriannya secara otomatis
+  await Promise.all(tasks);
   logger.info("[PARALLEL] All concurrent jobs completed.");
 }
 
@@ -83,6 +75,25 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   logger.warn(`[SCHEDULING] Mode ${dataMode} (PARALEL) dipilih.`);
   logger.warn(`[SCHEDULING] Total NIK: ${userList.length}`);
   logger.warn(`[SCHEDULING] URL Tujuan: ${state.currentAntamURL}`);
+
+  // --- PERUBAHAN: Tampilkan juga branch default ---
+  logger.warn(`[SCHEDULING] Cabang Default: ${state.currentBranch}`);
+  // --- SELESAI PERUBAHAN ---
+
+  if (hasProxies()) {
+    logger.warn(
+      `[SCHEDULING] Rotasi Proxy AKTIF. Menggunakan ${
+        constants.MAX_RETRIES
+      } proxy per NIK (total ${
+        userList.length * constants.MAX_RETRIES
+      } percobaan).`
+    );
+  } else {
+    logger.warn(
+      "[SCHEDULING] Rotasi Proxy TIDAK AKTIF (proxies.json tidak ditemukan). Menggunakan IP lokal."
+    );
+  }
+
   logger.warn(
     `[SCHEDULING] Bot akan dieksekusi tepat pada: ${targetTime.toLocaleTimeString(
       "id-ID",
@@ -94,6 +105,7 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   );
   logger.warn("JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!");
   logger.warn("=================================================");
+
   const countdownInterval = setInterval(() => {
     timeUntilTarget -= 1000;
     const currentSeconds = Math.floor((timeUntilTarget % (1000 * 60)) / 1000);
@@ -114,56 +126,25 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
     }
   }, 1000);
 
-  let browser;
-  try {
-    const launchOptions = {
-      headless: true,
-      ignoreHTTPSErrors: true,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--start-maximized",
-        "--ignore-certificate-errors",
-        "--allow-running-insecure-content",
-      ],
-      defaultViewport: null,
-    };
-
-    logger.info("[BROWSER POOL] Meluncurkan browser bersama...");
-    browser = await puppeteer.launch(launchOptions);
-    logger.info(
-      "[BROWSER POOL] Browser bersama berhasil diluncurkan. Menunggu jadwal..."
-    );
-
-    await new Promise((resolve) =>
-      setTimeout(() => {
-        logger.info("=================================================");
-        logger.info(
-          `[SCHEDULING] WAKTU EKSEKUSI TEPAT ${targetHour
-            .toString()
-            .padStart(2, "0")}:${targetMinute
-            .toString()
-            .padStart(2, "0")}:00! Menjalankan Antam War Paralel...`
-        );
-        logger.info("=================================================");
-        resolve(runAllJobsInParallel(userList, browser));
-      }, timeUntilTarget)
-    );
-
-    logger.info("[SCHEDULING] Selesai mengeksekusi semua job.");
-  } catch (err) {
-    logger.error(`[BROWSER POOL] Gagal meluncurkan browser: ${err.message}`);
-  } finally {
-    if (browser) {
-      await browser.close();
+  await new Promise((resolve) =>
+    setTimeout(() => {
+      logger.info("=================================================");
       logger.info(
-        "[BROWSER POOL] Semua job paralel selesai. Browser bersama ditutup."
+        `[SCHEDULING] WAKTU EKSEKUSI TEPAT ${targetHour
+          .toString()
+          .padStart(2, "0")}:${targetMinute
+          .toString()
+          .padStart(2, "0")}:00! Menjalankan Antam War Paralel...`
       );
-    }
-  }
+      logger.info("=================================================");
+      resolve(runAllJobsInParallel(userList));
+    }, timeUntilTarget)
+  );
+
+  logger.info("[SCHEDULING] Selesai mengeksekusi semua job.");
 }
 
-// --- FUNGSI MENU (Tidak ada perubahan di bawah ini) ---
+// --- FUNGSI MENU ---
 
 async function processManualInput() {
   logger.info("\n--- MODE INPUT MANUAL ---");
@@ -189,9 +170,12 @@ async function processManualInput() {
     }
   } while (!phone_number.trim().startsWith("08") || isNaN(phone_number.trim()));
 
-  const branch = prompt("Masukkan Nama Cabang (ex: BUTIK EMAS GRAHA CIPTA): ");
+  // Di mode manual, kita tetap bertanya. Kita tidak pakai default dari state.
+  const branch = prompt(
+    `Masukkan Nama Cabang (default: ${state.currentBranch}): `
+  );
   const branch_selector = prompt(
-    "Masukkan Selector Cabang (ex: GRAHA CIPTA): "
+    `Masukkan Selector Cabang (default: ${state.currentBranchSelector}): `
   );
 
   const userData = {
@@ -199,8 +183,9 @@ async function processManualInput() {
     name,
     nik: nik.trim(),
     phone_number: phone_number.trim(),
-    branch,
-    branch_selector,
+    // Gunakan input manual, JIKA KOSONG, baru pakai state
+    branch: branch || state.currentBranch,
+    branch_selector: branch_selector || state.currentBranchSelector,
   };
 
   logger.info(`[MANUAL] Starting single job for NIK: ${userData.nik}`);
@@ -278,9 +263,10 @@ async function processUserData() {
     name: userEntry.nama || userEntry.name,
     nik: userEntry.nik,
     phone_number: userEntry.telepon || userEntry.phone_number,
-    branch: userEntry.branch || constants.USER_DATA_TEMPLATE.branch,
-    branch_selector:
-      userEntry.branch_selector || constants.USER_DATA_TEMPLATE.branch_selector,
+    // --- PERUBAHAN: Gunakan 'state' sebagai fallback ---
+    branch: userEntry.branch || state.currentBranch,
+    branch_selector: userEntry.branch_selector || state.currentBranchSelector,
+    // --- SELESAI PERUBAHAN ---
   }));
 
   let targetHour, targetMinute;
@@ -376,10 +362,10 @@ async function processCSVData() {
           name: data.name || data.nama,
           nik: data.nik,
           phone_number: data.phone_number || data.telepon,
-          branch: data.branch || constants.USER_DATA_TEMPLATE.branch,
-          branch_selector:
-            data.branch_selector ||
-            constants.USER_DATA_TEMPLATE.branch_selector,
+          // --- PERUBAHAN: Gunakan 'state' sebagai fallback ---
+          branch: data.branch || state.currentBranch,
+          branch_selector: data.branch_selector || state.currentBranchSelector,
+          // --- SELESAI PERUBAHAN ---
         };
         results.push(userData);
       })
@@ -433,7 +419,7 @@ async function processCSVData() {
 }
 
 function setAntamURL() {
-  logger.info("\n--- PILIH BUTIK ANTAM ---");
+  logger.info("\n--- PILIH BUTIK ANTAM (URL) ---");
   const butikOptions = [
     "https://antrigrahadipta.com/",
     "https://antributikserpong.com/",
@@ -476,6 +462,40 @@ function setAntamURL() {
   logger.info(`[CONFIG] URL tujuan diatur ke: ${state.currentAntamURL}`);
 }
 
+// --- PERUBAHAN: Fungsi baru untuk ganti branch ---
+function setBranch() {
+  logger.info("\n--- PENGATURAN CABANG (BRANCH) ---");
+  console.log(chalk.yellow(`Cabang Default Saat Ini: ${state.currentBranch}`));
+  console.log(
+    chalk.yellow(`Selector Default Saat Ini: ${state.currentBranchSelector}`)
+  );
+
+  const newBranch = prompt(
+    "Masukkan Nama Cabang BARU (ex: BUTIK EMAS GRAHA DIPTA): "
+  );
+  const newSelector = prompt(
+    "Masukkan Selector Cabang BARU (ex: GRAHA DIPTA): "
+  );
+
+  if (
+    newBranch &&
+    newBranch.trim() !== "" &&
+    newSelector &&
+    newSelector.trim() !== ""
+  ) {
+    state.currentBranch = newBranch.trim();
+    state.currentBranchSelector = newSelector.trim();
+    logger.info(
+      chalk.greenBright(
+        `[CONFIG] Cabang default diatur ke: ${state.currentBranch}`
+      )
+    );
+  } else {
+    logger.warn("[CONFIG] Input tidak valid. Pengaturan cabang tidak diubah.");
+  }
+}
+// --- SELESAI PERUBAHAN ---
+
 async function showBanner() {
   return new Promise((resolve, reject) => {
     figlet.text(
@@ -506,6 +526,7 @@ async function showBanner() {
   });
 }
 
+// --- PERUBAHAN: Memperbarui Menu Utama ---
 async function displayMainMenu() {
   let continueLoop = true;
   while (continueLoop) {
@@ -516,7 +537,24 @@ async function displayMainMenu() {
       borderColor: "cyan",
       align: "center",
     });
+
     console.log(chalk.cyanBright(titleBox));
+
+    // Menampilkan status konfigurasi saat ini
+    const statusBox = boxen(
+      chalk.yellow("KONFIGURASI SAAT INI:\n") +
+        `URL Target : ${chalk.magentaBright(state.currentAntamURL)}\n` +
+        `Cabang     : ${chalk.magentaBright(state.currentBranch)}\n` +
+        `Selector   : ${chalk.magentaBright(state.currentBranchSelector)}`,
+      {
+        padding: 0.5,
+        borderColor: "gray",
+        borderStyle: "round",
+        dimBorder: true,
+      }
+    );
+    console.log(statusBox);
+
     console.log(
       chalk.yellow(
         boxen("Pilih Mode Eksekusi:", {
@@ -541,17 +579,14 @@ async function displayMainMenu() {
         " 📄 Input CSV File        — " +
         chalk.yellowBright("JADWALKAN WAKTU")
     );
-    console.log(chalk.cyanBright("4.") + " 📋 Show Registration Status");
-    console.log(
-      chalk.cyanBright("5.") +
-        " 🏢 Ganti Butik (Active URL): " +
-        chalk.magentaBright(state.currentAntamURL)
-    );
-    console.log(chalk.cyanBright("6.") + " 🚪 Exit");
+    console.log(chalk.cyanBright("4.") + " 📋 Tampilkan Status Registrasi");
+    console.log(chalk.cyanBright("5.") + " 🏢 Ganti Butik (URL Target)");
+    console.log(chalk.cyanBright("6.") + " ⚙️ Ganti Cabang (Branch Default)"); // <-- MENU BARU
+    console.log(chalk.cyanBright("7.") + " 🚪 Keluar"); // <-- Exit jadi 7
     console.log(
       gradient("yellow", "green")("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     );
-    const choice = prompt(chalk.bold("Pilih menu (1-6): "));
+    const choice = prompt(chalk.bold("Pilih menu (1-7): "));
     console.log(gradient("cyan", "magenta")("\n⏳ Memproses pilihanmu...\n"));
     await randomDelay(500, 1200);
 
@@ -571,7 +606,10 @@ async function displayMainMenu() {
       case "5":
         setAntamURL();
         break;
-      case "6":
+      case "6": // <-- CASE BARU
+        setBranch();
+        break;
+      case "7": // <-- Exit jadi 7
         console.log(
           gradient(
             "red",
@@ -591,6 +629,7 @@ async function displayMainMenu() {
     }
   }
 }
+// --- SELESAI PERUBAHAN ---
 
 module.exports = {
   displayMainMenu,

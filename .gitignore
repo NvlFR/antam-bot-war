@@ -36,6 +36,7 @@ backend/Homestead.yaml
 # ==================================
 # Node.js Bot (di folder /bot)
 # ==================================
+bot/proxies.json
 bot/node_modules/
 bot/logs/
 bot/screenshots/

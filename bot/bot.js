@@ -4,7 +4,8 @@ const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const logger = require("./logger");
 const { sendRegistrationResult } = require("./api");
 const { randomDelay, getTodayDateString } = require("./utils");
-const { constants } = require("./config");
+// --- PERUBAHAN: Impor getRandomProxy ---
+const { constants, getRandomProxy } = require("./config");
 
 puppeteer.use(StealthPlugin());
 
@@ -154,12 +155,11 @@ async function handleFormFilling(page, data) {
   }
 }
 
-// --- PERUBAHAN UTAMA DIMULAI DI SINI ---
-async function runAntamWar(userData, antamURL, existingBrowser = null) {
+// --- PERUBAHAN BESAR: Mengembalikan logika 'runAntamWar' dan menambah PROXY ---
+// Hapus 'existingBrowser' dari argumen
+async function runAntamWar(userData, antamURL) {
   let browser;
   let page;
-  // Flag untuk melacak siapa yang meluncurkan browser
-  let shouldCloseBrowser = false;
 
   const now = new Date();
   const localWarTime = new Intl.DateTimeFormat("sv-SE", {
@@ -187,20 +187,6 @@ async function runAntamWar(userData, antamURL, existingBrowser = null) {
     war_time: localWarTime,
   };
 
-  // Launch options tetap didefinisikan di sini
-  const launchOptions = {
-    headless: true,
-    ignoreHTTPSErrors: true,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--start-maximized",
-      "--ignore-certificate-errors",
-      "--allow-running-insecure-content",
-    ],
-    defaultViewport: null,
-  };
-
   logger.info(`[JOB] Starting job for NIK: ${userData.nik}`);
   let success = false;
   let attempt = 0;
@@ -212,20 +198,30 @@ async function runAntamWar(userData, antamURL, existingBrowser = null) {
     );
 
     try {
-      // --- LOGIKA POOL DIMULAI ---
-      if (existingBrowser) {
-        // 1. Jika diberi browser, gunakan itu
-        browser = existingBrowser;
-      } else {
-        // 2. Jika tidak (mode Manual), luncurkan browser baru
-        browser = await puppeteer.launch(launchOptions);
-        shouldCloseBrowser = true; // Tandai agar kita menutupnya nanti
+      // --- LOGIKA PROXY BARU ---
+      const launchOptions = {
+        headless: true,
+        ignoreHTTPSErrors: true,
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--start-maximized",
+          "--ignore-certificate-errors",
+          "--allow-running-insecure-content",
+        ],
+        defaultViewport: null,
+      };
+
+      // Dapatkan proxy baru untuk SETIAP attempt
+      const proxy = getRandomProxy();
+      if (proxy) {
+        launchOptions.args.push(`--proxy-server=${proxy}`);
       }
+      // --- SELESAI LOGIKA PROXY ---
 
-      // Selalu buat halaman (tab) baru. Ini JAUH LEBIH CEPAT!
+      // Browser diluncurkan DI DALAM loop (ini yang kita revert)
+      browser = await puppeteer.launch(launchOptions);
       page = await browser.newPage();
-      // --- LOGIKA POOL SELESAI ---
-
       await page.setViewport({ width: 1366, height: 768 });
 
       await page.setUserAgent(
@@ -292,31 +288,19 @@ async function runAntamWar(userData, antamURL, existingBrowser = null) {
         await randomDelay(3000, 5000);
       }
     } finally {
-      // --- LOGIKA CLEANUP POOL ---
-      if (page) {
-        // 1. Selalu tutup HALAMAN (TAB) setelah selesai
-        try {
-          await page.close();
-        } catch (e) {
-          logger.warn(`[JOB] Gagal menutup halaman: ${e.message}`);
-        }
-      }
-
-      // 2. Hanya tutup BROWSER jika kita yang meluncurkannya (mode Manual)
-      //    Jika ini mode Pool, biarkan 'cli.js' yang menutupnya nanti.
-      if (browser && shouldCloseBrowser) {
+      // Logika cleanup yang lama (tutup browser setiap selesai)
+      if (browser) {
         if (success || attempt === constants.MAX_RETRIES) {
           try {
             await browser.close();
-            logger.info(
-              `[JOB] Browser (manual) closed for NIK: ${userData.nik}`
-            );
+            logger.info(`[JOB] Browser closed for NIK: ${userData.nik}`);
           } catch (e) {
-            logger.warn(`[JOB] Failed to close browser (manual): ${e.message}`);
+            logger.warn(
+              `[JOB] Failed to close browser, maybe already closed: ${e.message}`
+            );
           }
         }
       }
-      // --- LOGIKA CLEANUP POOL SELESAI ---
     }
   }
 
