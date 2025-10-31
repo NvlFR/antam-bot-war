@@ -1,4 +1,4 @@
-// antam-bot-war/bot/index.js (VERSI FINAL REVISI)
+// antam-bot-war/bot/index.js (VERSI PERBAIKAN: RESILIENCE)
 
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
@@ -32,12 +32,12 @@ let currentAntamURL = "https://antrigrahadipta.com/"; // Default URL
 
 // --- DATA DUMMY TEMPLATE ---
 const USER_DATA_TEMPLATE = {
-  name: "Anto Santoso",
-  nik: "3175030203870007",
-  phone_number: "085695810460",
-  branch: "BUTIK EMAS GRAHA CIPTA",
-  branch_selector: "GRAHA CIPTA",
-  purchase_date: "2025-10-30", // Akan ditimpa secara otomatis
+  name: "IRFAN SURACHMAN",
+  nik: "3671110911810002",
+  phone_number: "089518744931",
+  branch: "BUTIK GRAHA DIPTA",
+  branch_selector: "GRAHA DIPTA",
+  purchase_date: "2025-10-31", // Akan ditimpa secara otomatis
 };
 
 const MAX_RETRIES = 5;
@@ -125,33 +125,65 @@ async function handleFormFilling(page, data) {
   // 5. SUBMIT FORM
   logger.info("[FORM] Clicking submit button...");
   await page.click('button[type="submit"]');
-  await randomDelay(2000, 3000);
 
-  // 6. DETEKSI HASIL
-  // Cek h4 yang mengandung "Nomor Antrian Anda"
-  const successIndicator = await page.evaluate(() => {
-    const elements = Array.from(document.querySelectorAll("h4"));
-    const successEl = elements.find((el) =>
-      el.textContent.includes("Nomor Antrian Anda")
+  // FIX 6: PERPANJANG DELAY SETELAH SUBMIT (5-7 detik) untuk memberi waktu server memproses
+  await randomDelay(5000, 7000);
+
+  // 6. DETEKSI HASIL (LOGIKA BARU YANG LEBIH KUAT)
+
+  // <-- PERBAIKAN LOGIKA DETEKSI DIMULAI -->
+  let ticketNumber = null;
+
+  try {
+    // CARA BARU: Coba ambil teks dari selector H1 (sesuai mockup pintar Anda)
+    // Ini mungkin selector yang lebih realistis untuk web aslinya
+    ticketNumber = await page.$eval("#ticket-number-display", (el) =>
+      el.textContent.trim()
     );
-    return successEl ? successEl.textContent : null;
-  });
-
-  if (successIndicator) {
-    // Ambil hanya nomor tiketnya
-    const ticketNumberMatch = successIndicator.match(
-      /Nomor Antrian Anda\s*:?\s*(\d+)/i
+    logger.info(
+      `[RESULT] Success detected using new logic (#ticket-number-display).`
     );
-    const ticketNumber = ticketNumberMatch
-      ? ticketNumberMatch[1].trim()
-      : "TICKET_NOT_PARSED";
+  } catch (e) {
+    // CARA LAMA (FALLBACK): Jika #ticket-number-display tidak ada, coba logika regex lama
+    logger.warn(
+      "[RESULT] New logic failed. Falling back to old H4 regex logic..."
+    );
+    try {
+      const successIndicator = await page.evaluate(() => {
+        const elements = Array.from(document.querySelectorAll("h4"));
+        const successEl = elements.find((el) =>
+          el.textContent.includes("Nomor Antrian Anda")
+        );
+        return successEl ? successEl.textContent : null;
+      });
 
+      if (successIndicator) {
+        // REVISI REGEX: Izinkan huruf dan angka [A-Z0-9]+
+        const ticketNumberMatch = successIndicator.match(
+          /Nomor Antrian Anda\s*:?\s*([A-Z0-9]+)/i
+        );
+        if (ticketNumberMatch) {
+          ticketNumber = ticketNumberMatch[1].trim();
+          logger.info(
+            `[RESULT] Success detected using fallback H4 regex logic.`
+          );
+        }
+      }
+    } catch (evalError) {
+      logger.error(
+        `[RESULT] Fallback H4 logic also failed: ${evalError.message}`
+      );
+    }
+  }
+
+  // Cek final
+  if (ticketNumber) {
     return {
       status: "SUCCESS",
       ticket_number: ticketNumber,
     };
   } else {
-    // REVISI: Penambahan deteksi error spesifik (Stok/NIK Terdaftar)
+    // JIKA GAGAL, baru cek skenario error...
     const genericErrorMessage = await page.$eval("body", (el) => el.innerText);
 
     if (
@@ -166,7 +198,7 @@ async function handleFormFilling(page, data) {
       return { status: "FAILED_ALREADY_REGISTERED", ticket_number: null };
     }
 
-    // Cek pesan error validasi checkbox/captcha
+    // Cek pesan error validasi (dari logika lama, tetap berguna)
     const errorCheck1 = await page.evaluate(
       () =>
         document.querySelector("#error-check") &&
@@ -182,6 +214,7 @@ async function handleFormFilling(page, data) {
       logger.error(
         "[RESULT] FAILED: Checkbox error shown or Captcha/NIK/Phone is wrong."
       );
+      // Ini juga bisa terjadi di mockup jika bot gagal klik checkbox
       return { status: "FAILED_VALIDATION", ticket_number: null };
     }
 
@@ -190,6 +223,7 @@ async function handleFormFilling(page, data) {
     );
     return { status: "FAILED_UNKNOWN", ticket_number: null };
   }
+  // <-- PERBAIKAN LOGIKA DETEKSI SELESAI -->
 }
 
 // --------------------------------------------------------------------------------------------------------------------------------
@@ -229,16 +263,14 @@ async function runAntamWar(userData, antamURL) {
 
   // --- 3. LAUNCH OPTIONS (FIX KONEKSI & LINUX STABILITAS) ---
   const launchOptions = {
-    headless: true, // JANGAN LUPA GANTI ke 'true' untuk real war!
-    // FIX 1: Gunakan Chromium Sistem untuk menghindari masalah Snap/Dependency
-    // executablePath: "/usr/bin/chromium-browser",
+    headless: true, // WAJIB TRUE SAAT WAR! DEBUG
+    ignoreHTTPSErrors: true, // FIX 1: Abaikan error koneksi (HTTPS/Sertifikat)
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--start-maximized",
       "--ignore-certificate-errors",
       "--allow-running-insecure-content",
-      // Tambahkan opsi di bawah jika masalah terus berlanjut
       // '--disable-gpu',
       // '--disable-dev-shm-usage',
     ],
@@ -261,32 +293,49 @@ async function runAntamWar(userData, antamURL) {
       const page = await browser.newPage();
       await page.setViewport({ width: 1366, height: 768 });
 
+      // FIX 3: Tambahkan User Agent agar tidak mudah terdeteksi bot/blokir firewall
+      await page.setUserAgent(
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+      );
+
       // 1. GOTO URL
       logger.info(`[RETRY] Navigating to ${antamURL}...`);
       await page.goto(antamURL, {
-        // FIX 3: Gunakan networkidle2 untuk stabilitas
         waitUntil: "networkidle2",
-        timeout: 60000,
+        timeout: 30000, // Perpanjang timeout navigasi menjadi 120 detik
       });
 
-      // FIX 4: LOGIKA MELEWATI HALAMAN PERINGATAN KONEKSI
-      try {
-        await page.waitForSelector('button[aria-label="Continue to site"]', {
-          timeout: 3000,
-        });
+      // <-- PERBAIKAN 1 DIMULAI: Deteksi Halaman Error (502/503) ---
+      // Cek title dan content untuk halaman error server
+      const pageTitle = (await page.title()).toLowerCase();
+      const pageContentCheck = (await page.content()).toLowerCase();
+
+      if (
+        pageTitle.includes("500 internal server error") || // <-- TAMBAHKAN BARIS INI
+        pageTitle.includes("502 bad gateway") ||
+        pageTitle.includes("503 service unavailable") ||
+        pageTitle.includes("service temporarily unavailable") ||
+        pageTitle.includes("error 503") ||
+        pageContentCheck.includes("500 internal server error") || // <-- DAN BARIS INI
+        pageContentCheck.includes("502 bad gateway") ||
+        pageContentCheck.includes("service unavailable")
+      ) {
         logger.warn(
-          "[SECURITY] Halaman peringatan koneksi terdeteksi. Mengklik 'Continue to site'..."
+          `[RETRY] Server returned error page (502/503). Retrying... (Title: ${pageTitle})`
         );
-        await page.click('button[aria-label="Continue to site"]');
-        await page.waitForNavigation({ waitUntil: "networkidle2" });
-      } catch (e) {
-        // Jika selector tidak ditemukan, berarti tidak ada halaman peringatan.
-        logger.info("[SECURITY] Tidak ada halaman peringatan koneksi. Lanjut.");
+        // Lemparkan error agar ditangkap oleh catch block dan memicu retry
+        throw new Error(`Server error page detected: ${pageTitle}`);
       }
+      logger.info("[RETRY] Page loaded, title OK. Checking for form...");
+      // <-- PERBAIKAN 1 SELESAI ---
 
       // 2. TUNGGU FORM MUNCUL
       logger.info("[RETRY] Waiting for form selector '#name'...");
-      await page.waitForSelector("#name", { timeout: 20000 });
+
+      // <-- PERBAIKAN 2: Perpanjang timeout tunggu selector form (vs 10 detik)
+      // Ini SANGAT PENTING agar bot tidak menyerah terlalu cepat saat server lemot.
+      await page.waitForSelector("#name", { timeout: 20000 }); // 45 Detik
+      // <-- PERBAIKAN 2 SELESAI ---
 
       logger.info("[RETRY] Form loaded. Starting filling process...");
 
@@ -324,8 +373,14 @@ async function runAntamWar(userData, antamURL) {
       if (browser) {
         // Hanya tutup jika sukses ATAU sudah mencapai max retries.
         if (success || attempt === MAX_RETRIES) {
-          await browser.close();
-          logger.info(`[JOB] Browser closed for NIK: ${userData.nik}`);
+          try {
+            await browser.close();
+            logger.info(`[JOB] Browser closed for NIK: ${userData.nik}`);
+          } catch (e) {
+            logger.warn(
+              `[JOB] Failed to close browser, maybe already closed: ${e.message}`
+            );
+          }
         }
       }
     }
@@ -340,7 +395,11 @@ async function runAntamWar(userData, antamURL) {
 //                                                 FUNGSI LAIN (API & MENU)
 // --------------------------------------------------------------------------------------------------------------------------------
 
-// FUNGSI API KE LARAVEL
+// --------------------------------------------------------------------------------------------------------------------------------
+//                                                 FUNGSI LAIN (API & MENU)
+// --------------------------------------------------------------------------------------------------------------------------------
+
+// FUNGSI API KE LARAVEL (TELAH DIREVISI)
 async function sendRegistrationResult(data) {
   try {
     const response = await axios.post(SAVE_RESULT_ENDPOINT, data);
@@ -355,16 +414,58 @@ async function sendRegistrationResult(data) {
 
     if (error.response) {
       logger.error(`Status API: ${error.response.status}`);
-      if (error.response.data && error.response.data.errors) {
+
+      // >>> REVISI INI: Tangani Error 422 (NIK Already Registered) <<<
+      if (
+        error.response.status === 422 &&
+        error.response.data.errors &&
+        error.response.data.errors.nik
+      ) {
         logger.error(
-          "Validation Errors:",
-          JSON.stringify(error.response.data.errors, null, 2)
+          `[NIK WARNING] NIK ${data.nik} ditolak API (422: sudah terdaftar). Mengirim ulang data sebagai RIWAYAT GAGAL.`
         );
+
+        // KIRIM ULANG DATA, GANTI KEY 'nik' menjadi 'nik_history' atau 'nik_failed'
+        // Catatan: Ini membutuhkan modifikasi di sisi Laravel untuk menerima field 'nik_history'
+        const historyData = {
+          ...data,
+          nik_history: data.nik, // NIK asli dijadikan riwayat
+          nik: "HISTORY_" + data.nik, // Ganti NIK utama agar unik dan lolos validasi
+          name: data.name + " (HISTORY)",
+          status: "FAILED_HISTORY", // Status yang lebih jelas
+        };
+
+        // Hapus field yang tidak perlu
+        delete historyData.nik_history;
+
+        try {
+          const historyResponse = await axios.post(
+            SAVE_RESULT_ENDPOINT,
+            historyData
+          );
+          logger.info(
+            "[SUCCESS] Result sent to Laravel as HISTORY. ID:",
+            historyResponse.data.registration_id
+          );
+        } catch (e) {
+          logger.error(
+            "[FATAL] Gagal menyimpan riwayat NIK ke Laravel (meski sudah diganti key)."
+          );
+          logger.error(`Error details: ${e.message}`);
+        }
       } else {
-        logger.error(
-          "API Error Response:",
-          JSON.stringify(error.response.data, null, 2)
-        );
+        // Error 422 lainnya atau error non-422
+        if (error.response.data && error.response.data.errors) {
+          logger.error(
+            "Validation Errors:",
+            JSON.stringify(error.response.data.errors, null, 2)
+          );
+        } else {
+          logger.error(
+            "API Error Response:",
+            JSON.stringify(error.response.data, null, 2)
+          );
+        }
       }
     } else {
       logger.error(`Error details: ${error.message}`);
@@ -774,39 +875,90 @@ async function processCSVData() {
   logger.info("[CLI] All CSV user jobs completed (after scheduling).");
 }
 
-// FUNGSI MENAMPILKAN STATUS PENDAFTARAN
+// --- FUNGSI MENAMPILKAN STATUS PENDAFTARAN (REVISI) ---
 async function displayStatus() {
   logger.info("\n--- STATUS PENDAFTARAN ---");
 
   try {
     const response = await axios.get(LIST_REGISTRATIONS_ENDPOINT);
-    const data = response.data.data;
+    const rawData = response.data.data;
 
-    if (data.length === 0) {
+    if (rawData.length === 0) {
       logger.info("Database pendaftaran masih kosong.");
       return;
     }
 
-    const table = new Table({
-      head: ["Waktu Daftar", "NIK", "Nama", "Cabang", "Status", "No. Tiket"],
-      colWidths: [20, 18, 15, 18, 10, 12],
-    });
+    // 1. PENGELOMPOKAN DATA
+    const successful = rawData.filter(item => item.status === 'SUCCESS');
+    const failedHistory = rawData.filter(item => item.status.includes('FAILED') || item.status.includes('BLOCKED'));
+    const pending = rawData.filter(item => item.status === 'PENDING');
+    
+    // Fungsi untuk membuat dan menampilkan tabel
+    const printTable = (dataList, title, colorFunc) => {
+        if (dataList.length === 0) {
+            console.log(colorFunc(`\n[ ${title} ] - Tidak ada data.`));
+            return;
+        }
 
-    data.forEach((item) => {
-      const statusText = item.status === "SUCCESS" ? "BERHASIL ✅" : "GAGAL ❌";
-      const ticketText = item.ticket_number || "-";
+        console.log(colorFunc(`\n================================================`));
+        console.log(colorFunc(`[ ${title} ] - Total: ${dataList.length} Entri`));
+        console.log(colorFunc(`================================================`));
 
-      table.push([
-        item.created_at.substring(5, 16).replace("T", " "),
-        item.nik,
-        item.name.substring(0, 14),
-        item.branch.substring(13, item.branch.length),
-        statusText,
-        ticketText,
-      ]);
-    });
+        const table = new Table({
+            head: ["Waktu Daftar", "NIK", "Nama", "Cabang", "Status", "No. Tiket"],
+            // Sesuaikan lebar kolom agar lebih rapi
+            colWidths: [18, 18, 15, 18, 20, 12], 
+            style: {
+                // Atur warna header sesuai kelompok
+                head: [colorFunc.name], 
+            }
+        });
 
-    console.log(table.toString());
+        dataList.forEach((item) => {
+            const time = item.created_at.substring(5, 16).replace("T", " ");
+            const name = item.name.substring(0, 14);
+            // Ambil hanya nama cabang setelah 'BUTIK EMAS ' atau hanya 10 karakter terakhir
+            const branch = item.branch.split(' ').pop().substring(0, 10); 
+            const ticketText = item.ticket_number || "-";
+            
+            let statusText;
+            if (item.status === 'SUCCESS') {
+                statusText = chalk.greenBright(`BERHASIL ✅`);
+            } else if (item.status === 'PENDING') {
+                statusText = chalk.yellow(`PENDING ⏳`);
+            } else if (item.status === 'FAILED_CRITICAL') {
+                 statusText = chalk.bgRed.white(`KRITIS ❌`); // Menonjolkan error fatal
+            } else if (item.status === 'FAILED_HISTORY') {
+                 statusText = chalk.red(`RIWAYAT GAGAL 🛑`);
+            } else {
+                statusText = chalk.red(`GAGAL (${item.status}) ❌`);
+            }
+
+            table.push([
+                time,
+                item.nik,
+                name,
+                branch,
+                statusText,
+                ticketText,
+            ]);
+        });
+
+        console.log(table.toString());
+    };
+    
+    // 2. MENAMPILKAN TABEL SATU PER SATU
+    
+    // Tampilkan data Sukses (Hijau)
+    printTable(successful, "STATUS BERHASIL (SUCCESS)", chalk.greenBright);
+
+    // Tampilkan data Gagal / Riwayat (Merah)
+    printTable(failedHistory, "STATUS GAGAL & RIWAYAT (FAILED/HISTORY/BLOCKED)", chalk.redBright);
+    
+    // Tampilkan data Pending (Kuning)
+    printTable(pending, "STATUS TERTUNDA (PENDING)", chalk.yellow);
+
+
   } catch (error) {
     logger.error(
       "[FATAL] Gagal mengambil data dari Laravel API. Pastikan 'php artisan serve' berjalan."
@@ -826,6 +978,10 @@ function setAntamURL() {
     "https://antrigrahadipta.com/", // Diubah ke HTTPS
     "https://antributikserpong.com/",
     "https://antributikbintaro.com/",
+    "http://127.0.0.1:9090/", //  -> (Skenario Sukses, memuat form)
+    "http://127.0.0.1:9090/500",
+    "http://127.0.0.1:9090/503", //-> (Skenario Error 503)
+    "http://127.0.0.1:9090/slow",
     `file://${MOCKUP_FILE}`, // Opsi Baru: Mockup File Lokal
     "Custom URL",
   ];

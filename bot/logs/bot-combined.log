@@ -1144,3 +1144,1656 @@
 2025-10-30 23:42:07 [ERROR]: [ERROR] Pilihan atau format URL tidak valid.
 2025-10-30 23:42:12 [INFO]: 
 --- STATUS PENDAFTARAN ---
+2025-10-31 06:37:20 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 06:37:22 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/users_war_30okt.json
+2025-10-31 06:39:28 [WARN]: =================================================
+2025-10-31 06:39:28 [WARN]: [SCHEDULING] Mode JSON File: users_war_30okt.json (PARALEL) dipilih.
+2025-10-31 06:39:28 [WARN]: [SCHEDULING] Total NIK: 4
+2025-10-31 06:39:28 [WARN]: [SCHEDULING] URL Tujuan: https://antributikserpong.com/
+2025-10-31 06:39:28 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 06.59.00 WIB
+2025-10-31 06:39:28 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 19 menit, 31 detik.
+2025-10-31 06:39:28 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 06:39:28 [WARN]: =================================================
+2025-10-31 06:39:29 [INFO]: [COUNTDOWN] Waktu tersisa: 19 menit, 30 detik.
+2025-10-31 06:39:39 [INFO]: [COUNTDOWN] Waktu tersisa: 19 menit, 20 detik.
+2025-10-31 06:39:49 [INFO]: [COUNTDOWN] Waktu tersisa: 19 menit, 10 detik.
+2025-10-31 06:39:59 [INFO]: [COUNTDOWN] Waktu tersisa: 19 menit, 0 detik.
+2025-10-31 06:40:09 [INFO]: [COUNTDOWN] Waktu tersisa: 18 menit, 50 detik.
+2025-10-31 06:40:19 [INFO]: [COUNTDOWN] Waktu tersisa: 18 menit, 40 detik.
+2025-10-31 06:40:29 [INFO]: [COUNTDOWN] Waktu tersisa: 18 menit, 30 detik.
+2025-10-31 06:40:39 [INFO]: [COUNTDOWN] Waktu tersisa: 18 menit, 20 detik.
+2025-10-31 06:40:49 [INFO]: [COUNTDOWN] Waktu tersisa: 18 menit, 10 detik.
+2025-10-31 06:40:59 [INFO]: [COUNTDOWN] Waktu tersisa: 18 menit, 0 detik.
+2025-10-31 06:41:09 [INFO]: [COUNTDOWN] Waktu tersisa: 17 menit, 50 detik.
+2025-10-31 06:41:19 [INFO]: [COUNTDOWN] Waktu tersisa: 17 menit, 40 detik.
+2025-10-31 06:41:29 [INFO]: [COUNTDOWN] Waktu tersisa: 17 menit, 30 detik.
+2025-10-31 06:41:39 [INFO]: [COUNTDOWN] Waktu tersisa: 17 menit, 20 detik.
+2025-10-31 06:41:49 [INFO]: [COUNTDOWN] Waktu tersisa: 17 menit, 10 detik.
+2025-10-31 06:41:59 [INFO]: [COUNTDOWN] Waktu tersisa: 17 menit, 0 detik.
+2025-10-31 06:42:09 [INFO]: [COUNTDOWN] Waktu tersisa: 16 menit, 50 detik.
+2025-10-31 06:42:19 [INFO]: [COUNTDOWN] Waktu tersisa: 16 menit, 40 detik.
+2025-10-31 06:42:29 [INFO]: [COUNTDOWN] Waktu tersisa: 16 menit, 30 detik.
+2025-10-31 06:42:39 [INFO]: [COUNTDOWN] Waktu tersisa: 16 menit, 20 detik.
+2025-10-31 06:42:49 [INFO]: [COUNTDOWN] Waktu tersisa: 16 menit, 10 detik.
+2025-10-31 06:42:59 [INFO]: [COUNTDOWN] Waktu tersisa: 16 menit, 0 detik.
+2025-10-31 06:43:09 [INFO]: [COUNTDOWN] Waktu tersisa: 15 menit, 50 detik.
+2025-10-31 06:43:19 [INFO]: [COUNTDOWN] Waktu tersisa: 15 menit, 40 detik.
+2025-10-31 06:43:29 [INFO]: [COUNTDOWN] Waktu tersisa: 15 menit, 30 detik.
+2025-10-31 06:43:39 [INFO]: [COUNTDOWN] Waktu tersisa: 15 menit, 20 detik.
+2025-10-31 06:43:49 [INFO]: [COUNTDOWN] Waktu tersisa: 15 menit, 10 detik.
+2025-10-31 06:43:59 [INFO]: [COUNTDOWN] Waktu tersisa: 15 menit, 0 detik.
+2025-10-31 06:44:09 [INFO]: [COUNTDOWN] Waktu tersisa: 14 menit, 50 detik.
+2025-10-31 06:44:19 [INFO]: [COUNTDOWN] Waktu tersisa: 14 menit, 40 detik.
+2025-10-31 06:44:29 [INFO]: [COUNTDOWN] Waktu tersisa: 14 menit, 30 detik.
+2025-10-31 06:44:39 [INFO]: [COUNTDOWN] Waktu tersisa: 14 menit, 20 detik.
+2025-10-31 06:44:49 [INFO]: [COUNTDOWN] Waktu tersisa: 14 menit, 10 detik.
+2025-10-31 06:44:59 [INFO]: [COUNTDOWN] Waktu tersisa: 14 menit, 0 detik.
+2025-10-31 06:45:09 [INFO]: [COUNTDOWN] Waktu tersisa: 13 menit, 50 detik.
+2025-10-31 06:45:19 [INFO]: [COUNTDOWN] Waktu tersisa: 13 menit, 40 detik.
+2025-10-31 06:45:29 [INFO]: [COUNTDOWN] Waktu tersisa: 13 menit, 30 detik.
+2025-10-31 06:45:39 [INFO]: [COUNTDOWN] Waktu tersisa: 13 menit, 20 detik.
+2025-10-31 06:45:49 [INFO]: [COUNTDOWN] Waktu tersisa: 13 menit, 10 detik.
+2025-10-31 06:45:59 [INFO]: [COUNTDOWN] Waktu tersisa: 13 menit, 0 detik.
+2025-10-31 06:46:09 [INFO]: [COUNTDOWN] Waktu tersisa: 12 menit, 50 detik.
+2025-10-31 06:46:19 [INFO]: [COUNTDOWN] Waktu tersisa: 12 menit, 40 detik.
+2025-10-31 06:46:29 [INFO]: [COUNTDOWN] Waktu tersisa: 12 menit, 30 detik.
+2025-10-31 06:46:39 [INFO]: [COUNTDOWN] Waktu tersisa: 12 menit, 20 detik.
+2025-10-31 06:46:49 [INFO]: [COUNTDOWN] Waktu tersisa: 12 menit, 10 detik.
+2025-10-31 06:46:59 [INFO]: [COUNTDOWN] Waktu tersisa: 12 menit, 0 detik.
+2025-10-31 06:47:09 [INFO]: [COUNTDOWN] Waktu tersisa: 11 menit, 50 detik.
+2025-10-31 06:47:19 [INFO]: [COUNTDOWN] Waktu tersisa: 11 menit, 40 detik.
+2025-10-31 06:47:29 [INFO]: [COUNTDOWN] Waktu tersisa: 11 menit, 30 detik.
+2025-10-31 06:47:39 [INFO]: [COUNTDOWN] Waktu tersisa: 11 menit, 20 detik.
+2025-10-31 06:47:49 [INFO]: [COUNTDOWN] Waktu tersisa: 11 menit, 10 detik.
+2025-10-31 06:47:59 [INFO]: [COUNTDOWN] Waktu tersisa: 11 menit, 0 detik.
+2025-10-31 06:48:09 [INFO]: [COUNTDOWN] Waktu tersisa: 10 menit, 50 detik.
+2025-10-31 06:48:19 [INFO]: [COUNTDOWN] Waktu tersisa: 10 menit, 40 detik.
+2025-10-31 06:48:29 [INFO]: [COUNTDOWN] Waktu tersisa: 10 menit, 30 detik.
+2025-10-31 06:48:39 [INFO]: [COUNTDOWN] Waktu tersisa: 10 menit, 20 detik.
+2025-10-31 06:48:49 [INFO]: [COUNTDOWN] Waktu tersisa: 10 menit, 10 detik.
+2025-10-31 06:48:59 [INFO]: [COUNTDOWN] Waktu tersisa: 10 menit, 0 detik.
+2025-10-31 06:49:09 [INFO]: [COUNTDOWN] Waktu tersisa: 9 menit, 50 detik.
+2025-10-31 06:49:20 [INFO]: [COUNTDOWN] Waktu tersisa: 9 menit, 40 detik.
+2025-10-31 06:49:30 [INFO]: [COUNTDOWN] Waktu tersisa: 9 menit, 30 detik.
+2025-10-31 06:49:40 [INFO]: [COUNTDOWN] Waktu tersisa: 9 menit, 20 detik.
+2025-10-31 06:49:50 [INFO]: [COUNTDOWN] Waktu tersisa: 9 menit, 10 detik.
+2025-10-31 06:50:00 [INFO]: [COUNTDOWN] Waktu tersisa: 9 menit, 0 detik.
+2025-10-31 06:50:10 [INFO]: [COUNTDOWN] Waktu tersisa: 8 menit, 50 detik.
+2025-10-31 06:50:20 [INFO]: [COUNTDOWN] Waktu tersisa: 8 menit, 40 detik.
+2025-10-31 06:50:30 [INFO]: [COUNTDOWN] Waktu tersisa: 8 menit, 30 detik.
+2025-10-31 06:50:40 [INFO]: [COUNTDOWN] Waktu tersisa: 8 menit, 20 detik.
+2025-10-31 06:50:50 [INFO]: [COUNTDOWN] Waktu tersisa: 8 menit, 10 detik.
+2025-10-31 06:51:00 [INFO]: [COUNTDOWN] Waktu tersisa: 8 menit, 0 detik.
+2025-10-31 06:51:10 [INFO]: [COUNTDOWN] Waktu tersisa: 7 menit, 50 detik.
+2025-10-31 06:51:20 [INFO]: [COUNTDOWN] Waktu tersisa: 7 menit, 40 detik.
+2025-10-31 06:51:30 [INFO]: [COUNTDOWN] Waktu tersisa: 7 menit, 30 detik.
+2025-10-31 06:51:40 [INFO]: [COUNTDOWN] Waktu tersisa: 7 menit, 20 detik.
+2025-10-31 06:51:50 [INFO]: [COUNTDOWN] Waktu tersisa: 7 menit, 10 detik.
+2025-10-31 06:52:00 [INFO]: [COUNTDOWN] Waktu tersisa: 7 menit, 0 detik.
+2025-10-31 06:52:10 [INFO]: [COUNTDOWN] Waktu tersisa: 6 menit, 50 detik.
+2025-10-31 06:52:20 [INFO]: [COUNTDOWN] Waktu tersisa: 6 menit, 40 detik.
+2025-10-31 06:52:30 [INFO]: [COUNTDOWN] Waktu tersisa: 6 menit, 30 detik.
+2025-10-31 06:52:40 [INFO]: [COUNTDOWN] Waktu tersisa: 6 menit, 20 detik.
+2025-10-31 06:52:50 [INFO]: [COUNTDOWN] Waktu tersisa: 6 menit, 10 detik.
+2025-10-31 06:53:00 [INFO]: [COUNTDOWN] Waktu tersisa: 6 menit, 0 detik.
+2025-10-31 06:53:10 [INFO]: [COUNTDOWN] Waktu tersisa: 5 menit, 50 detik.
+2025-10-31 06:53:20 [INFO]: [COUNTDOWN] Waktu tersisa: 5 menit, 40 detik.
+2025-10-31 06:53:30 [INFO]: [COUNTDOWN] Waktu tersisa: 5 menit, 30 detik.
+2025-10-31 06:53:40 [INFO]: [COUNTDOWN] Waktu tersisa: 5 menit, 20 detik.
+2025-10-31 06:53:50 [INFO]: [COUNTDOWN] Waktu tersisa: 5 menit, 10 detik.
+2025-10-31 06:54:00 [INFO]: [COUNTDOWN] Waktu tersisa: 5 menit, 0 detik.
+2025-10-31 06:54:10 [INFO]: [COUNTDOWN] Waktu tersisa: 4 menit, 50 detik.
+2025-10-31 06:54:20 [INFO]: [COUNTDOWN] Waktu tersisa: 4 menit, 40 detik.
+2025-10-31 06:54:30 [INFO]: [COUNTDOWN] Waktu tersisa: 4 menit, 30 detik.
+2025-10-31 06:54:40 [INFO]: [COUNTDOWN] Waktu tersisa: 4 menit, 20 detik.
+2025-10-31 06:54:50 [INFO]: [COUNTDOWN] Waktu tersisa: 4 menit, 10 detik.
+2025-10-31 06:55:00 [INFO]: [COUNTDOWN] Waktu tersisa: 4 menit, 0 detik.
+2025-10-31 06:55:10 [INFO]: [COUNTDOWN] Waktu tersisa: 3 menit, 50 detik.
+2025-10-31 06:55:20 [INFO]: [COUNTDOWN] Waktu tersisa: 3 menit, 40 detik.
+2025-10-31 06:55:30 [INFO]: [COUNTDOWN] Waktu tersisa: 3 menit, 30 detik.
+2025-10-31 06:55:40 [INFO]: [COUNTDOWN] Waktu tersisa: 3 menit, 20 detik.
+2025-10-31 06:55:50 [INFO]: [COUNTDOWN] Waktu tersisa: 3 menit, 10 detik.
+2025-10-31 06:56:00 [INFO]: [COUNTDOWN] Waktu tersisa: 3 menit, 0 detik.
+2025-10-31 06:56:10 [INFO]: [COUNTDOWN] Waktu tersisa: 2 menit, 50 detik.
+2025-10-31 06:56:20 [INFO]: [COUNTDOWN] Waktu tersisa: 2 menit, 40 detik.
+2025-10-31 06:56:30 [INFO]: [COUNTDOWN] Waktu tersisa: 2 menit, 30 detik.
+2025-10-31 06:56:40 [INFO]: [COUNTDOWN] Waktu tersisa: 2 menit, 20 detik.
+2025-10-31 06:56:50 [INFO]: [COUNTDOWN] Waktu tersisa: 2 menit, 10 detik.
+2025-10-31 06:57:00 [INFO]: [COUNTDOWN] Waktu tersisa: 2 menit, 0 detik.
+2025-10-31 06:57:10 [INFO]: [COUNTDOWN] Waktu tersisa: 1 menit, 50 detik.
+2025-10-31 06:57:20 [INFO]: [COUNTDOWN] Waktu tersisa: 1 menit, 40 detik.
+2025-10-31 06:57:30 [INFO]: [COUNTDOWN] Waktu tersisa: 1 menit, 30 detik.
+2025-10-31 06:57:40 [INFO]: [COUNTDOWN] Waktu tersisa: 1 menit, 20 detik.
+2025-10-31 06:57:50 [INFO]: [COUNTDOWN] Waktu tersisa: 1 menit, 10 detik.
+2025-10-31 06:58:00 [INFO]: [COUNTDOWN] Waktu tersisa: 1 menit, 0 detik.
+2025-10-31 06:58:01 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 59 detik. SIAP!
+2025-10-31 06:58:02 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 58 detik. SIAP!
+2025-10-31 06:58:03 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 57 detik. SIAP!
+2025-10-31 06:58:04 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 56 detik. SIAP!
+2025-10-31 06:58:05 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 55 detik. SIAP!
+2025-10-31 06:58:06 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 54 detik. SIAP!
+2025-10-31 06:58:07 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 53 detik. SIAP!
+2025-10-31 06:58:08 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 52 detik. SIAP!
+2025-10-31 06:58:09 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 51 detik. SIAP!
+2025-10-31 06:58:10 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 50 detik. SIAP!
+2025-10-31 06:58:11 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 49 detik. SIAP!
+2025-10-31 06:58:12 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 48 detik. SIAP!
+2025-10-31 06:58:13 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 47 detik. SIAP!
+2025-10-31 06:58:14 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 46 detik. SIAP!
+2025-10-31 06:58:15 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 45 detik. SIAP!
+2025-10-31 06:58:16 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 44 detik. SIAP!
+2025-10-31 06:58:17 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 43 detik. SIAP!
+2025-10-31 06:58:18 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 42 detik. SIAP!
+2025-10-31 06:58:19 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 41 detik. SIAP!
+2025-10-31 06:58:20 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 40 detik. SIAP!
+2025-10-31 06:58:21 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 39 detik. SIAP!
+2025-10-31 06:58:22 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 38 detik. SIAP!
+2025-10-31 06:58:23 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 37 detik. SIAP!
+2025-10-31 06:58:24 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 36 detik. SIAP!
+2025-10-31 06:58:25 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 35 detik. SIAP!
+2025-10-31 06:58:26 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 34 detik. SIAP!
+2025-10-31 06:58:27 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 33 detik. SIAP!
+2025-10-31 06:58:28 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 32 detik. SIAP!
+2025-10-31 06:58:29 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 31 detik. SIAP!
+2025-10-31 06:58:30 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 30 detik. SIAP!
+2025-10-31 06:58:31 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 29 detik. SIAP!
+2025-10-31 06:58:32 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 28 detik. SIAP!
+2025-10-31 06:58:33 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 27 detik. SIAP!
+2025-10-31 06:58:34 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 26 detik. SIAP!
+2025-10-31 06:58:35 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 25 detik. SIAP!
+2025-10-31 06:58:36 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 24 detik. SIAP!
+2025-10-31 06:58:37 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 23 detik. SIAP!
+2025-10-31 06:58:38 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 22 detik. SIAP!
+2025-10-31 06:58:39 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 21 detik. SIAP!
+2025-10-31 06:58:40 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 20 detik. SIAP!
+2025-10-31 06:58:41 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 19 detik. SIAP!
+2025-10-31 06:58:42 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 18 detik. SIAP!
+2025-10-31 06:58:43 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 17 detik. SIAP!
+2025-10-31 06:58:44 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 16 detik. SIAP!
+2025-10-31 06:58:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 15 detik. SIAP!
+2025-10-31 06:58:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 14 detik. SIAP!
+2025-10-31 06:58:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-31 06:58:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-31 06:58:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-31 06:58:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-31 06:58:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-31 06:58:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 06:58:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 06:58:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 06:58:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 06:58:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 06:58:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 06:58:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 06:58:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 06:59:00 [INFO]: =================================================
+2025-10-31 06:59:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 06:59:00! Menjalankan Antam War Paralel...
+2025-10-31 06:59:00 [INFO]: =================================================
+2025-10-31 06:59:00 [INFO]: [PARALLEL] Starting 4 jobs concurrently...
+2025-10-31 06:59:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 06:59:00 [INFO]: [JOB] Starting job for NIK: 3175012408990001
+2025-10-31 06:59:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175012408990001
+2025-10-31 06:59:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 06:59:00 [INFO]: [JOB] Starting job for NIK: 3175032103820005
+2025-10-31 06:59:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175032103820005
+2025-10-31 06:59:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 06:59:00 [INFO]: [JOB] Starting job for NIK: 3275122503900001
+2025-10-31 06:59:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3275122503900001
+2025-10-31 06:59:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 06:59:00 [INFO]: [JOB] Starting job for NIK: 3175076410840002
+2025-10-31 06:59:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175076410840002
+2025-10-31 06:59:00 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 06:59:04 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 06:59:04 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 06:59:04 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 06:59:04 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 06:59:34 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 06:59:34 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 06:59:39 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175032103820005
+2025-10-31 06:59:40 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:00:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175012408990001: Navigation timeout of 60000 ms exceeded
+2025-10-31 07:00:04 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:00:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175076410840002: Navigation timeout of 60000 ms exceeded
+2025-10-31 07:00:04 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:00:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3275122503900001: Navigation timeout of 60000 ms exceeded
+2025-10-31 07:00:04 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:00:07 [WARN]: [RETRY] Attempt 2/5 for NIK: 3275122503900001
+2025-10-31 07:00:09 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175076410840002
+2025-10-31 07:00:09 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:00:09 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175012408990001
+2025-10-31 07:00:11 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:00:11 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:00:39 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3275122503900001: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:00:39 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:00:40 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175032103820005: Navigation timeout of 60000 ms exceeded
+2025-10-31 07:00:40 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:00:41 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175012408990001: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:00:41 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:00:41 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:00:41 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:00:42 [WARN]: [RETRY] Attempt 3/5 for NIK: 3275122503900001
+2025-10-31 07:00:43 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:00:44 [WARN]: [RETRY] Attempt 3/5 for NIK: 3175032103820005
+2025-10-31 07:00:44 [WARN]: [RETRY] Attempt 3/5 for NIK: 3175012408990001
+2025-10-31 07:00:46 [WARN]: [RETRY] Attempt 3/5 for NIK: 3175076410840002
+2025-10-31 07:00:46 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:00:46 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:00:47 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:01:13 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3275122503900001: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:01:13 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:01:17 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:01:17 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:01:17 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:01:17 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:01:18 [WARN]: [RETRY] Attempt 4/5 for NIK: 3275122503900001
+2025-10-31 07:01:19 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:01:20 [WARN]: [RETRY] Attempt 4/5 for NIK: 3175076410840002
+2025-10-31 07:01:21 [WARN]: [RETRY] Attempt 4/5 for NIK: 3175032103820005
+2025-10-31 07:01:22 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:01:23 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:01:46 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175012408990001: Navigation timeout of 60000 ms exceeded
+2025-10-31 07:01:46 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:01:49 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3275122503900001: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:01:49 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:01:51 [WARN]: [RETRY] Attempt 4/5 for NIK: 3175012408990001
+2025-10-31 07:01:52 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:01:52 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:01:53 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:01:53 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:01:53 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:01:53 [WARN]: [RETRY] Attempt 5/5 for NIK: 3275122503900001
+2025-10-31 07:01:55 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:01:57 [WARN]: [RETRY] Attempt 5/5 for NIK: 3175032103820005
+2025-10-31 07:01:57 [WARN]: [RETRY] Attempt 5/5 for NIK: 3175076410840002
+2025-10-31 07:02:02 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:02:02 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:02:23 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175012408990001: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:02:23 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:02:25 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3275122503900001: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:02:25 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3275122503900001. Stopping.
+2025-10-31 07:02:26 [INFO]: [JOB] Browser closed for NIK: 3275122503900001
+2025-10-31 07:02:26 [WARN]: [RETRY] Attempt 5/5 for NIK: 3175012408990001
+2025-10-31 07:02:28 [INFO]: [RETRY] Navigating to https://antributikserpong.com/...
+2025-10-31 07:02:30 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 07:02:30 [INFO]: [JOB] Finished job for NIK: 3275122503900001
+2025-10-31 07:02:32 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:02:32 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175032103820005. Stopping.
+2025-10-31 07:02:32 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:02:32 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175076410840002. Stopping.
+2025-10-31 07:02:32 [INFO]: [JOB] Browser closed for NIK: 3175076410840002
+2025-10-31 07:02:33 [INFO]: [JOB] Browser closed for NIK: 3175032103820005
+2025-10-31 07:02:33 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 07:02:33 [INFO]: [JOB] Finished job for NIK: 3175076410840002
+2025-10-31 07:02:33 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 07:02:33 [INFO]: [JOB] Finished job for NIK: 3175032103820005
+2025-10-31 07:03:28 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175012408990001: Navigation timeout of 60000 ms exceeded
+2025-10-31 07:03:28 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175012408990001. Stopping.
+2025-10-31 07:03:29 [INFO]: [JOB] Browser closed for NIK: 3175012408990001
+2025-10-31 07:03:29 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 07:03:29 [INFO]: [JOB] Finished job for NIK: 3175012408990001
+2025-10-31 07:03:29 [INFO]: [PARALLEL] All concurrent jobs completed.
+2025-10-31 07:03:29 [INFO]: [SCHEDULING] Selesai mengeksekusi semua job.
+2025-10-31 07:03:29 [INFO]: [CLI] All JSON user jobs completed (after scheduling).
+2025-10-31 07:07:37 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 07:21:57 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 07:21:58 [INFO]: Database pendaftaran masih kosong.
+2025-10-31 07:22:05 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 07:22:07 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/users_war_30okt.json
+2025-10-31 07:22:13 [WARN]: =================================================
+2025-10-31 07:22:13 [WARN]: [SCHEDULING] Mode JSON File: users_war_30okt.json (PARALEL) dipilih.
+2025-10-31 07:22:13 [WARN]: [SCHEDULING] Total NIK: 4
+2025-10-31 07:22:13 [WARN]: [SCHEDULING] URL Tujuan: https://antrigrahadipta.com/
+2025-10-31 07:22:13 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 07.30.00 WIB
+2025-10-31 07:22:13 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 7 menit, 46 detik.
+2025-10-31 07:22:13 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 07:22:13 [WARN]: =================================================
+2025-10-31 07:22:19 [INFO]: [COUNTDOWN] Waktu tersisa: 7 menit, 40 detik.
+2025-10-31 07:22:29 [INFO]: [COUNTDOWN] Waktu tersisa: 7 menit, 30 detik.
+2025-10-31 07:22:39 [INFO]: [COUNTDOWN] Waktu tersisa: 7 menit, 20 detik.
+2025-10-31 07:22:49 [INFO]: [COUNTDOWN] Waktu tersisa: 7 menit, 10 detik.
+2025-10-31 07:22:59 [INFO]: [COUNTDOWN] Waktu tersisa: 7 menit, 0 detik.
+2025-10-31 07:23:09 [INFO]: [COUNTDOWN] Waktu tersisa: 6 menit, 50 detik.
+2025-10-31 07:23:19 [INFO]: [COUNTDOWN] Waktu tersisa: 6 menit, 40 detik.
+2025-10-31 07:23:29 [INFO]: [COUNTDOWN] Waktu tersisa: 6 menit, 30 detik.
+2025-10-31 07:23:39 [INFO]: [COUNTDOWN] Waktu tersisa: 6 menit, 20 detik.
+2025-10-31 07:23:49 [INFO]: [COUNTDOWN] Waktu tersisa: 6 menit, 10 detik.
+2025-10-31 07:23:59 [INFO]: [COUNTDOWN] Waktu tersisa: 6 menit, 0 detik.
+2025-10-31 07:24:09 [INFO]: [COUNTDOWN] Waktu tersisa: 5 menit, 50 detik.
+2025-10-31 07:24:19 [INFO]: [COUNTDOWN] Waktu tersisa: 5 menit, 40 detik.
+2025-10-31 07:24:29 [INFO]: [COUNTDOWN] Waktu tersisa: 5 menit, 30 detik.
+2025-10-31 07:24:39 [INFO]: [COUNTDOWN] Waktu tersisa: 5 menit, 20 detik.
+2025-10-31 07:24:49 [INFO]: [COUNTDOWN] Waktu tersisa: 5 menit, 10 detik.
+2025-10-31 07:24:59 [INFO]: [COUNTDOWN] Waktu tersisa: 5 menit, 0 detik.
+2025-10-31 07:25:09 [INFO]: [COUNTDOWN] Waktu tersisa: 4 menit, 50 detik.
+2025-10-31 07:25:19 [INFO]: [COUNTDOWN] Waktu tersisa: 4 menit, 40 detik.
+2025-10-31 07:25:29 [INFO]: [COUNTDOWN] Waktu tersisa: 4 menit, 30 detik.
+2025-10-31 07:25:39 [INFO]: [COUNTDOWN] Waktu tersisa: 4 menit, 20 detik.
+2025-10-31 07:25:49 [INFO]: [COUNTDOWN] Waktu tersisa: 4 menit, 10 detik.
+2025-10-31 07:25:59 [INFO]: [COUNTDOWN] Waktu tersisa: 4 menit, 0 detik.
+2025-10-31 07:26:09 [INFO]: [COUNTDOWN] Waktu tersisa: 3 menit, 50 detik.
+2025-10-31 07:26:19 [INFO]: [COUNTDOWN] Waktu tersisa: 3 menit, 40 detik.
+2025-10-31 07:26:29 [INFO]: [COUNTDOWN] Waktu tersisa: 3 menit, 30 detik.
+2025-10-31 07:26:39 [INFO]: [COUNTDOWN] Waktu tersisa: 3 menit, 20 detik.
+2025-10-31 07:26:49 [INFO]: [COUNTDOWN] Waktu tersisa: 3 menit, 10 detik.
+2025-10-31 07:26:59 [INFO]: [COUNTDOWN] Waktu tersisa: 3 menit, 0 detik.
+2025-10-31 07:27:09 [INFO]: [COUNTDOWN] Waktu tersisa: 2 menit, 50 detik.
+2025-10-31 07:27:19 [INFO]: [COUNTDOWN] Waktu tersisa: 2 menit, 40 detik.
+2025-10-31 07:27:29 [INFO]: [COUNTDOWN] Waktu tersisa: 2 menit, 30 detik.
+2025-10-31 07:27:39 [INFO]: [COUNTDOWN] Waktu tersisa: 2 menit, 20 detik.
+2025-10-31 07:27:49 [INFO]: [COUNTDOWN] Waktu tersisa: 2 menit, 10 detik.
+2025-10-31 07:27:59 [INFO]: [COUNTDOWN] Waktu tersisa: 2 menit, 0 detik.
+2025-10-31 07:28:10 [INFO]: [COUNTDOWN] Waktu tersisa: 1 menit, 50 detik.
+2025-10-31 07:28:20 [INFO]: [COUNTDOWN] Waktu tersisa: 1 menit, 40 detik.
+2025-10-31 07:28:30 [INFO]: [COUNTDOWN] Waktu tersisa: 1 menit, 30 detik.
+2025-10-31 07:28:40 [INFO]: [COUNTDOWN] Waktu tersisa: 1 menit, 20 detik.
+2025-10-31 07:28:50 [INFO]: [COUNTDOWN] Waktu tersisa: 1 menit, 10 detik.
+2025-10-31 07:29:00 [INFO]: [COUNTDOWN] Waktu tersisa: 1 menit, 0 detik.
+2025-10-31 07:29:01 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 59 detik. SIAP!
+2025-10-31 07:29:02 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 58 detik. SIAP!
+2025-10-31 07:29:03 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 57 detik. SIAP!
+2025-10-31 07:29:04 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 56 detik. SIAP!
+2025-10-31 07:29:05 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 55 detik. SIAP!
+2025-10-31 07:29:06 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 54 detik. SIAP!
+2025-10-31 07:29:07 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 53 detik. SIAP!
+2025-10-31 07:29:08 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 52 detik. SIAP!
+2025-10-31 07:29:09 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 51 detik. SIAP!
+2025-10-31 07:29:10 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 50 detik. SIAP!
+2025-10-31 07:29:11 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 49 detik. SIAP!
+2025-10-31 07:29:12 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 48 detik. SIAP!
+2025-10-31 07:29:13 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 47 detik. SIAP!
+2025-10-31 07:29:14 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 46 detik. SIAP!
+2025-10-31 07:29:15 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 45 detik. SIAP!
+2025-10-31 07:29:16 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 44 detik. SIAP!
+2025-10-31 07:29:17 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 43 detik. SIAP!
+2025-10-31 07:29:18 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 42 detik. SIAP!
+2025-10-31 07:29:19 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 41 detik. SIAP!
+2025-10-31 07:29:20 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 40 detik. SIAP!
+2025-10-31 07:29:21 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 39 detik. SIAP!
+2025-10-31 07:29:22 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 38 detik. SIAP!
+2025-10-31 07:29:23 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 37 detik. SIAP!
+2025-10-31 07:29:24 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 36 detik. SIAP!
+2025-10-31 07:29:25 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 35 detik. SIAP!
+2025-10-31 07:29:26 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 34 detik. SIAP!
+2025-10-31 07:29:27 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 33 detik. SIAP!
+2025-10-31 07:29:28 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 32 detik. SIAP!
+2025-10-31 07:29:29 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 31 detik. SIAP!
+2025-10-31 07:29:30 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 30 detik. SIAP!
+2025-10-31 07:29:31 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 29 detik. SIAP!
+2025-10-31 07:29:32 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 28 detik. SIAP!
+2025-10-31 07:29:33 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 27 detik. SIAP!
+2025-10-31 07:29:34 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 26 detik. SIAP!
+2025-10-31 07:29:35 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 25 detik. SIAP!
+2025-10-31 07:29:36 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 24 detik. SIAP!
+2025-10-31 07:29:37 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 23 detik. SIAP!
+2025-10-31 07:29:38 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 22 detik. SIAP!
+2025-10-31 07:29:39 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 21 detik. SIAP!
+2025-10-31 07:29:40 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 20 detik. SIAP!
+2025-10-31 07:29:41 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 19 detik. SIAP!
+2025-10-31 07:29:42 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 18 detik. SIAP!
+2025-10-31 07:29:43 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 17 detik. SIAP!
+2025-10-31 07:29:44 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 16 detik. SIAP!
+2025-10-31 07:29:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 15 detik. SIAP!
+2025-10-31 07:29:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 14 detik. SIAP!
+2025-10-31 07:29:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-31 07:29:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-31 07:29:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-31 07:29:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-31 07:29:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-31 07:29:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 07:29:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 07:29:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 07:29:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 07:29:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 07:29:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 07:29:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 07:29:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 07:30:00 [INFO]: =================================================
+2025-10-31 07:30:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 07:30:00! Menjalankan Antam War Paralel...
+2025-10-31 07:30:00 [INFO]: =================================================
+2025-10-31 07:30:00 [INFO]: [PARALLEL] Starting 4 jobs concurrently...
+2025-10-31 07:30:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 07:30:00 [INFO]: [JOB] Starting job for NIK: 3175012408990001
+2025-10-31 07:30:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175012408990001
+2025-10-31 07:30:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 07:30:00 [INFO]: [JOB] Starting job for NIK: 3175032103820005
+2025-10-31 07:30:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175032103820005
+2025-10-31 07:30:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 07:30:00 [INFO]: [JOB] Starting job for NIK: 3275122503900001
+2025-10-31 07:30:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3275122503900001
+2025-10-31 07:30:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 07:30:00 [INFO]: [JOB] Starting job for NIK: 3175076410840002
+2025-10-31 07:30:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175076410840002
+2025-10-31 07:30:00 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 07:30:03 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:30:03 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:30:04 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:30:04 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:30:33 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:30:33 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:30:34 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175012408990001: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:30:34 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:30:34 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:30:34 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:30:37 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175012408990001
+2025-10-31 07:30:38 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175032103820005
+2025-10-31 07:30:38 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175076410840002
+2025-10-31 07:30:39 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:30:40 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:30:40 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:31:09 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175012408990001: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:31:09 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:31:10 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:31:10 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:31:13 [WARN]: [RETRY] Attempt 3/5 for NIK: 3175012408990001
+2025-10-31 07:31:14 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:31:15 [WARN]: [RETRY] Attempt 3/5 for NIK: 3175032103820005
+2025-10-31 07:31:16 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:31:34 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 07:31:34 [INFO]: [RETRY] Form loaded. Starting filling process...
+2025-10-31 07:31:34 [INFO]: [FORM] Starting form automation...
+2025-10-31 07:31:34 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-31 07:31:36 [INFO]: [INPUT] Typing Name: Supriyadi
+2025-10-31 07:31:36 [INFO]: [INPUT] Typing NIK: 3275122503900001
+2025-10-31 07:31:37 [INFO]: [INPUT] Typing Phone: 081298820233
+2025-10-31 07:31:38 [INFO]: [INPUT] Clicking KTP agreement checkbox (#check)...
+2025-10-31 07:31:38 [INFO]: [INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...
+2025-10-31 07:31:39 [INFO]: [CAPTCHA] Reading static Captcha text...
+2025-10-31 07:31:39 [INFO]: [CAPTCHA] Text found: JP7LcZ2O
+2025-10-31 07:31:39 [INFO]: [CAPTCHA] Typing Captcha answer...
+2025-10-31 07:31:41 [INFO]: [FORM] Clicking submit button...
+2025-10-31 07:31:44 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175012408990001: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:31:44 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:31:46 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:31:46 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:31:47 [WARN]: [RETRY] Attempt 4/5 for NIK: 3175012408990001
+2025-10-31 07:31:48 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:31:50 [WARN]: [RETRY] Attempt 4/5 for NIK: 3175032103820005
+2025-10-31 07:31:51 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:32:12 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 07:32:18 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175012408990001: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:32:18 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:32:23 [WARN]: [RETRY] Attempt 5/5 for NIK: 3175012408990001
+2025-10-31 07:32:24 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:32:32 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175076410840002: Waiting for selector `#name` failed
+2025-10-31 07:32:32 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:32:36 [WARN]: [RETRY] Attempt 3/5 for NIK: 3175076410840002
+2025-10-31 07:32:37 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:33:07 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:33:07 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:33:10 [WARN]: [RETRY] Attempt 4/5 for NIK: 3175076410840002
+2025-10-31 07:33:11 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:33:42 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:33:42 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:33:45 [WARN]: [RETRY] Attempt 5/5 for NIK: 3175076410840002
+2025-10-31 07:33:47 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:33:51 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175032103820005: Navigation timeout of 120000 ms exceeded
+2025-10-31 07:33:51 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:33:56 [WARN]: [RETRY] Attempt 5/5 for NIK: 3175032103820005
+2025-10-31 07:33:57 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:34:15 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 07:34:17 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:34:17 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175076410840002. Stopping.
+2025-10-31 07:34:17 [INFO]: [JOB] Browser closed for NIK: 3175076410840002
+2025-10-31 07:34:19 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 07:34:19 [INFO]: [JOB] Finished job for NIK: 3175076410840002
+2025-10-31 07:34:27 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:34:27 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175032103820005. Stopping.
+2025-10-31 07:34:28 [INFO]: [JOB] Browser closed for NIK: 3175032103820005
+2025-10-31 07:34:28 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 07:34:28 [INFO]: [JOB] Finished job for NIK: 3175032103820005
+2025-10-31 07:34:35 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175012408990001: Waiting for selector `#name` failed
+2025-10-31 07:34:35 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175012408990001. Stopping.
+2025-10-31 07:34:35 [INFO]: [JOB] Browser closed for NIK: 3175012408990001
+2025-10-31 07:34:35 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 07:34:35 [INFO]: [JOB] Finished job for NIK: 3175012408990001
+2025-10-31 07:34:44 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3275122503900001: Runtime.callFunctionOn timed out. Increase the 'protocolTimeout' setting in launch/connect calls for a higher timeout if needed.
+2025-10-31 07:34:44 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:34:47 [WARN]: [RETRY] Attempt 2/5 for NIK: 3275122503900001
+2025-10-31 07:34:48 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:36:31 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 07:36:51 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3275122503900001: Waiting for selector `#name` failed
+2025-10-31 07:36:51 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:36:55 [WARN]: [RETRY] Attempt 3/5 for NIK: 3275122503900001
+2025-10-31 07:36:56 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:38:36 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 07:38:57 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3275122503900001: Waiting for selector `#name` failed
+2025-10-31 07:38:57 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:39:00 [WARN]: [RETRY] Attempt 4/5 for NIK: 3275122503900001
+2025-10-31 07:39:20 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 07:41:21 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3275122503900001: Navigation timeout of 120000 ms exceeded
+2025-10-31 07:41:21 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 07:41:27 [WARN]: [RETRY] Attempt 5/5 for NIK: 3275122503900001
+2025-10-31 07:41:32 [INFO]: [RETRY] Navigating to https://antrigrahadipta.com/...
+2025-10-31 09:52:09 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 09:52:09 [ERROR]: [FATAL] Gagal mengambil data dari Laravel API. Pastikan 'php artisan serve' berjalan.
+2025-10-31 09:52:09 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
+2025-10-31 09:52:32 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 09:53:36 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 09:53:37 [INFO]: Database pendaftaran masih kosong.
+2025-10-31 09:54:10 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 09:54:16 [INFO]: [CONFIG] URL tujuan diatur ke: file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html
+2025-10-31 09:54:20 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 09:54:24 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/users_war_30okt.json
+2025-10-31 09:54:32 [WARN]: =================================================
+2025-10-31 09:54:32 [WARN]: [SCHEDULING] Mode JSON File: users_war_30okt.json (PARALEL) dipilih.
+2025-10-31 09:54:32 [WARN]: [SCHEDULING] Total NIK: 4
+2025-10-31 09:54:32 [WARN]: [SCHEDULING] URL Tujuan: file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html
+2025-10-31 09:54:32 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 09.55.00 WIB
+2025-10-31 09:54:32 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 27 detik.
+2025-10-31 09:54:32 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 09:54:32 [WARN]: =================================================
+2025-10-31 09:54:33 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 26 detik. SIAP!
+2025-10-31 09:54:34 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 25 detik. SIAP!
+2025-10-31 09:54:35 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 24 detik. SIAP!
+2025-10-31 09:54:36 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 23 detik. SIAP!
+2025-10-31 09:54:37 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 22 detik. SIAP!
+2025-10-31 09:54:38 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 21 detik. SIAP!
+2025-10-31 09:54:39 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 20 detik. SIAP!
+2025-10-31 09:54:40 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 19 detik. SIAP!
+2025-10-31 09:54:41 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 18 detik. SIAP!
+2025-10-31 09:54:42 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 17 detik. SIAP!
+2025-10-31 09:54:43 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 16 detik. SIAP!
+2025-10-31 09:54:44 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 15 detik. SIAP!
+2025-10-31 09:54:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 14 detik. SIAP!
+2025-10-31 09:54:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-31 09:54:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-31 09:54:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-31 09:54:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-31 09:54:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-31 09:54:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 09:54:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 09:54:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 09:54:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 09:54:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 09:54:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 09:54:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 09:54:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 09:54:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 09:55:00 [INFO]: =================================================
+2025-10-31 09:55:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 09:55:00! Menjalankan Antam War Paralel...
+2025-10-31 09:55:00 [INFO]: =================================================
+2025-10-31 09:55:00 [INFO]: [PARALLEL] Starting 4 jobs concurrently...
+2025-10-31 09:55:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 09:55:00 [INFO]: [JOB] Starting job for NIK: 3175012408990001
+2025-10-31 09:55:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175012408990001
+2025-10-31 09:55:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 09:55:00 [INFO]: [JOB] Starting job for NIK: 3175032103820005
+2025-10-31 09:55:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175032103820005
+2025-10-31 09:55:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 09:55:00 [INFO]: [JOB] Starting job for NIK: 3275122503900001
+2025-10-31 09:55:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3275122503900001
+2025-10-31 09:55:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 09:55:00 [INFO]: [JOB] Starting job for NIK: 3175076410840002
+2025-10-31 09:55:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175076410840002
+2025-10-31 09:55:06 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-31 09:55:06 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-31 09:55:06 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-31 09:55:06 [INFO]: [RETRY] Navigating to file:///home/novalftr/nftr/antam-bot-war/bot/mockup_form.html...
+2025-10-31 09:55:09 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 09:55:09 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 09:55:09 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 09:55:09 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 09:55:09 [INFO]: [RETRY] Form loaded. Starting filling process...
+2025-10-31 09:55:09 [INFO]: [FORM] Starting form automation...
+2025-10-31 09:55:09 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-31 09:55:09 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 09:55:09 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 09:55:09 [INFO]: [RETRY] Form loaded. Starting filling process...
+2025-10-31 09:55:09 [INFO]: [FORM] Starting form automation...
+2025-10-31 09:55:09 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-31 09:55:09 [INFO]: [RETRY] Form loaded. Starting filling process...
+2025-10-31 09:55:09 [INFO]: [FORM] Starting form automation...
+2025-10-31 09:55:09 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-31 09:55:10 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 09:55:10 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 09:55:10 [INFO]: [RETRY] Form loaded. Starting filling process...
+2025-10-31 09:55:10 [INFO]: [FORM] Starting form automation...
+2025-10-31 09:55:10 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-31 09:55:10 [INFO]: [INPUT] Typing Name: Siti Nurlaila
+2025-10-31 09:55:10 [INFO]: [INPUT] Typing Name: Ricky Christianto
+2025-10-31 09:55:11 [INFO]: [INPUT] Typing Name: Aris Hartono
+2025-10-31 09:55:11 [INFO]: [INPUT] Typing NIK: 3175076410840002
+2025-10-31 09:55:11 [INFO]: [INPUT] Typing NIK: 3175012408990001
+2025-10-31 09:55:11 [INFO]: [INPUT] Typing Name: Supriyadi
+2025-10-31 09:55:12 [INFO]: [INPUT] Typing NIK: 3175032103820005
+2025-10-31 09:55:12 [INFO]: [INPUT] Typing NIK: 3275122503900001
+2025-10-31 09:55:12 [INFO]: [INPUT] Typing Phone: 081229137342
+2025-10-31 09:55:12 [INFO]: [INPUT] Typing Phone: 081291032574
+2025-10-31 09:55:12 [INFO]: [INPUT] Typing Phone: 081211430924
+2025-10-31 09:55:13 [INFO]: [INPUT] Typing Phone: 081298820233
+2025-10-31 09:55:13 [INFO]: [INPUT] Clicking KTP agreement checkbox (#check)...
+2025-10-31 09:55:13 [INFO]: [INPUT] Clicking KTP agreement checkbox (#check)...
+2025-10-31 09:55:13 [INFO]: [INPUT] Clicking KTP agreement checkbox (#check)...
+2025-10-31 09:55:13 [INFO]: [INPUT] Clicking KTP agreement checkbox (#check)...
+2025-10-31 09:55:14 [INFO]: [INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...
+2025-10-31 09:55:14 [INFO]: [INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...
+2025-10-31 09:55:14 [INFO]: [INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...
+2025-10-31 09:55:14 [INFO]: [INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...
+2025-10-31 09:55:14 [INFO]: [CAPTCHA] Reading static Captcha text...
+2025-10-31 09:55:14 [INFO]: [CAPTCHA] Text found: 24IPNlUs
+2025-10-31 09:55:14 [INFO]: [CAPTCHA] Typing Captcha answer...
+2025-10-31 09:55:14 [INFO]: [CAPTCHA] Reading static Captcha text...
+2025-10-31 09:55:14 [INFO]: [CAPTCHA] Text found: 24IPNlUs
+2025-10-31 09:55:14 [INFO]: [CAPTCHA] Typing Captcha answer...
+2025-10-31 09:55:15 [INFO]: [CAPTCHA] Reading static Captcha text...
+2025-10-31 09:55:15 [INFO]: [CAPTCHA] Text found: 24IPNlUs
+2025-10-31 09:55:15 [INFO]: [CAPTCHA] Typing Captcha answer...
+2025-10-31 09:55:15 [INFO]: [CAPTCHA] Reading static Captcha text...
+2025-10-31 09:55:15 [INFO]: [CAPTCHA] Text found: 24IPNlUs
+2025-10-31 09:55:15 [INFO]: [CAPTCHA] Typing Captcha answer...
+2025-10-31 09:55:16 [INFO]: [FORM] Clicking submit button...
+2025-10-31 09:55:16 [INFO]: [FORM] Clicking submit button...
+2025-10-31 09:55:16 [INFO]: [FORM] Clicking submit button...
+2025-10-31 09:55:16 [INFO]: [FORM] Clicking submit button...
+2025-10-31 09:55:22 [INFO]: [JOB] Browser closed for NIK: 3175012408990001
+2025-10-31 09:55:22 [INFO]: [JOB] Browser closed for NIK: 3175032103820005
+2025-10-31 09:55:22 [INFO]: [JOB] Browser closed for NIK: 3275122503900001
+2025-10-31 09:55:23 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 09:55:23 [INFO]: [JOB] Finished job for NIK: 3175012408990001
+2025-10-31 09:55:23 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 09:55:23 [INFO]: [JOB] Finished job for NIK: 3175032103820005
+2025-10-31 09:55:23 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 09:55:23 [INFO]: [JOB] Finished job for NIK: 3275122503900001
+2025-10-31 09:55:23 [INFO]: [JOB] Browser closed for NIK: 3175076410840002
+2025-10-31 09:55:23 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 09:55:23 [INFO]: [JOB] Finished job for NIK: 3175076410840002
+2025-10-31 09:55:23 [INFO]: [PARALLEL] All concurrent jobs completed.
+2025-10-31 09:55:23 [INFO]: [SCHEDULING] Selesai mengeksekusi semua job.
+2025-10-31 09:55:23 [INFO]: [CLI] All JSON user jobs completed (after scheduling).
+2025-10-31 09:55:49 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 10:06:26 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 11:33:20 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 11:34:14 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 11:34:26 [INFO]: [CONFIG] URL kustom diatur ke: http://127.0.0.1:9090/slow
+2025-10-31 11:34:58 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 11:35:29 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 11:35:53 [INFO]: [CONFIG] URL kustom diatur ke: http://127.0.0.1:9090/slow
+2025-10-31 11:35:57 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 11:36:00 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/1.json
+2025-10-31 11:36:28 [WARN]: =================================================
+2025-10-31 11:36:28 [WARN]: [SCHEDULING] Mode JSON File: 1.json (PARALEL) dipilih.
+2025-10-31 11:36:28 [WARN]: [SCHEDULING] Total NIK: 1
+2025-10-31 11:36:28 [WARN]: [SCHEDULING] URL Tujuan: http://127.0.0.1:9090/slow
+2025-10-31 11:36:28 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 11.37.00 WIB
+2025-10-31 11:36:28 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 31 detik.
+2025-10-31 11:36:28 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 11:36:28 [WARN]: =================================================
+2025-10-31 11:36:29 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 30 detik. SIAP!
+2025-10-31 11:36:30 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 29 detik. SIAP!
+2025-10-31 11:36:31 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 28 detik. SIAP!
+2025-10-31 11:36:32 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 27 detik. SIAP!
+2025-10-31 11:36:33 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 26 detik. SIAP!
+2025-10-31 11:36:34 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 25 detik. SIAP!
+2025-10-31 11:36:35 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 24 detik. SIAP!
+2025-10-31 11:36:36 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 23 detik. SIAP!
+2025-10-31 11:36:37 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 22 detik. SIAP!
+2025-10-31 11:36:38 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 21 detik. SIAP!
+2025-10-31 11:36:39 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 20 detik. SIAP!
+2025-10-31 11:36:40 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 19 detik. SIAP!
+2025-10-31 11:36:41 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 18 detik. SIAP!
+2025-10-31 11:36:42 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 17 detik. SIAP!
+2025-10-31 11:36:43 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 16 detik. SIAP!
+2025-10-31 11:36:44 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 15 detik. SIAP!
+2025-10-31 11:36:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 14 detik. SIAP!
+2025-10-31 11:36:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-31 11:36:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-31 11:36:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-31 11:36:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-31 11:36:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-31 11:36:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 11:36:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 11:36:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 11:36:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 11:36:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 11:36:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 11:36:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 11:36:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 11:36:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 11:37:00 [INFO]: =================================================
+2025-10-31 11:37:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 11:37:00! Menjalankan Antam War Paralel...
+2025-10-31 11:37:00 [INFO]: =================================================
+2025-10-31 11:37:00 [INFO]: [PARALLEL] Starting 1 jobs concurrently...
+2025-10-31 11:37:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 11:37:00 [INFO]: [JOB] Starting job for NIK: 3174085901790005
+2025-10-31 11:37:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3174085901790005
+2025-10-31 11:37:04 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/slow...
+2025-10-31 11:37:34 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 30000 ms exceeded
+2025-10-31 11:37:34 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 11:37:38 [WARN]: [RETRY] Attempt 2/5 for NIK: 3174085901790005
+2025-10-31 11:37:40 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/slow...
+2025-10-31 11:38:10 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 30000 ms exceeded
+2025-10-31 11:38:10 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 11:38:14 [WARN]: [RETRY] Attempt 3/5 for NIK: 3174085901790005
+2025-10-31 11:38:16 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/slow...
+2025-10-31 11:38:46 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 30000 ms exceeded
+2025-10-31 11:38:46 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 11:38:50 [WARN]: [RETRY] Attempt 4/5 for NIK: 3174085901790005
+2025-10-31 11:38:51 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/slow...
+2025-10-31 11:39:21 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 30000 ms exceeded
+2025-10-31 11:39:21 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 11:39:25 [WARN]: [RETRY] Attempt 5/5 for NIK: 3174085901790005
+2025-10-31 11:39:27 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/slow...
+2025-10-31 11:39:57 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 30000 ms exceeded
+2025-10-31 11:39:57 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 11:39:57 [INFO]: [JOB] Browser closed for NIK: 3174085901790005
+2025-10-31 11:39:58 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 12:17:31 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 12:18:47 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 12:18:47 [INFO]: Database pendaftaran masih kosong.
+2025-10-31 12:19:22 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 12:19:26 [INFO]: [CONFIG] URL tujuan diatur ke: http://127.0.0.1:9090/503
+2025-10-31 12:19:28 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 12:19:39 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/1.json
+2025-10-31 12:19:45 [WARN]: =================================================
+2025-10-31 12:19:45 [WARN]: [SCHEDULING] Mode JSON File: 1.json (PARALEL) dipilih.
+2025-10-31 12:19:45 [WARN]: [SCHEDULING] Total NIK: 1
+2025-10-31 12:19:45 [WARN]: [SCHEDULING] URL Tujuan: http://127.0.0.1:9090/503
+2025-10-31 12:19:45 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 12.20.00 WIB
+2025-10-31 12:19:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 14 detik.
+2025-10-31 12:19:45 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 12:19:45 [WARN]: =================================================
+2025-10-31 12:19:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-31 12:19:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-31 12:19:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-31 12:19:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-31 12:19:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-31 12:19:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 12:19:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 12:19:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 12:19:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 12:19:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 12:19:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 12:19:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 12:19:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 12:19:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 12:20:00 [INFO]: =================================================
+2025-10-31 12:20:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 12:20:00! Menjalankan Antam War Paralel...
+2025-10-31 12:20:00 [INFO]: =================================================
+2025-10-31 12:20:00 [INFO]: [PARALLEL] Starting 1 jobs concurrently...
+2025-10-31 12:20:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 12:20:00 [INFO]: [JOB] Starting job for NIK: 3174085901790005
+2025-10-31 12:20:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3174085901790005
+2025-10-31 12:20:02 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 12:20:03 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 12:20:03 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 12:20:03 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:20:08 [WARN]: [RETRY] Attempt 2/5 for NIK: 3174085901790005
+2025-10-31 12:20:09 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 12:20:10 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 12:20:10 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 12:20:10 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:20:15 [WARN]: [RETRY] Attempt 3/5 for NIK: 3174085901790005
+2025-10-31 12:20:16 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 12:20:17 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 12:20:17 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 12:20:17 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:20:21 [WARN]: [RETRY] Attempt 4/5 for NIK: 3174085901790005
+2025-10-31 12:20:23 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 12:20:23 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 12:20:23 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 12:20:23 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:20:28 [WARN]: [RETRY] Attempt 5/5 for NIK: 3174085901790005
+2025-10-31 12:20:30 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 12:20:30 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 12:20:30 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 12:20:30 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 12:20:31 [INFO]: [JOB] Browser closed for NIK: 3174085901790005
+2025-10-31 12:20:31 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 12:20:31 [INFO]: [JOB] Finished job for NIK: 3174085901790005
+2025-10-31 12:20:31 [INFO]: [PARALLEL] All concurrent jobs completed.
+2025-10-31 12:20:31 [INFO]: [SCHEDULING] Selesai mengeksekusi semua job.
+2025-10-31 12:20:31 [INFO]: [CLI] All JSON user jobs completed (after scheduling).
+2025-10-31 12:28:47 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 12:28:57 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 12:29:06 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 12:29:10 [INFO]: [CONFIG] URL tujuan diatur ke: http://127.0.0.1:9090/500
+2025-10-31 12:29:13 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 12:29:15 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/1.json
+2025-10-31 12:29:20 [WARN]: =================================================
+2025-10-31 12:29:20 [WARN]: [SCHEDULING] Mode JSON File: 1.json (PARALEL) dipilih.
+2025-10-31 12:29:20 [WARN]: [SCHEDULING] Total NIK: 1
+2025-10-31 12:29:20 [WARN]: [SCHEDULING] URL Tujuan: http://127.0.0.1:9090/500
+2025-10-31 12:29:20 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 12.30.00 WIB
+2025-10-31 12:29:20 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 39 detik.
+2025-10-31 12:29:20 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 12:29:20 [WARN]: =================================================
+2025-10-31 12:29:21 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 38 detik. SIAP!
+2025-10-31 12:29:22 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 37 detik. SIAP!
+2025-10-31 12:29:23 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 36 detik. SIAP!
+2025-10-31 12:29:24 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 35 detik. SIAP!
+2025-10-31 12:29:25 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 34 detik. SIAP!
+2025-10-31 12:29:26 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 33 detik. SIAP!
+2025-10-31 12:29:27 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 32 detik. SIAP!
+2025-10-31 12:29:28 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 31 detik. SIAP!
+2025-10-31 12:29:29 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 30 detik. SIAP!
+2025-10-31 12:29:30 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 29 detik. SIAP!
+2025-10-31 12:29:31 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 28 detik. SIAP!
+2025-10-31 12:29:32 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 27 detik. SIAP!
+2025-10-31 12:29:33 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 26 detik. SIAP!
+2025-10-31 12:29:34 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 25 detik. SIAP!
+2025-10-31 12:29:35 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 24 detik. SIAP!
+2025-10-31 12:29:36 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 23 detik. SIAP!
+2025-10-31 12:29:37 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 22 detik. SIAP!
+2025-10-31 12:29:38 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 21 detik. SIAP!
+2025-10-31 12:29:39 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 20 detik. SIAP!
+2025-10-31 12:29:40 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 19 detik. SIAP!
+2025-10-31 12:29:41 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 18 detik. SIAP!
+2025-10-31 12:29:42 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 17 detik. SIAP!
+2025-10-31 12:29:43 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 16 detik. SIAP!
+2025-10-31 12:29:44 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 15 detik. SIAP!
+2025-10-31 12:29:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 14 detik. SIAP!
+2025-10-31 12:29:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-31 12:29:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-31 12:29:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-31 12:29:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-31 12:29:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-31 12:29:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 12:29:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 12:29:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 12:29:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 12:29:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 12:29:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 12:29:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 12:29:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 12:29:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 12:30:00 [INFO]: =================================================
+2025-10-31 12:30:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 12:30:00! Menjalankan Antam War Paralel...
+2025-10-31 12:30:00 [INFO]: =================================================
+2025-10-31 12:30:00 [INFO]: [PARALLEL] Starting 1 jobs concurrently...
+2025-10-31 12:30:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 12:30:00 [INFO]: [JOB] Starting job for NIK: 3174085901790005
+2025-10-31 12:30:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3174085901790005
+2025-10-31 12:30:04 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:30:04 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 12:30:04 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 12:30:24 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:30:24 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:30:29 [WARN]: [RETRY] Attempt 2/5 for NIK: 3174085901790005
+2025-10-31 12:30:31 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:30:32 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 12:30:32 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 12:30:52 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:30:52 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:30:56 [WARN]: [RETRY] Attempt 3/5 for NIK: 3174085901790005
+2025-10-31 12:30:59 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:31:03 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 12:31:03 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 12:31:23 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:31:23 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:31:27 [WARN]: [RETRY] Attempt 4/5 for NIK: 3174085901790005
+2025-10-31 12:31:29 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:31:30 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 12:31:30 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 12:31:50 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:31:50 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:31:54 [WARN]: [RETRY] Attempt 5/5 for NIK: 3174085901790005
+2025-10-31 12:31:56 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:31:56 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 12:31:56 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 12:32:16 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:32:16 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 12:32:17 [INFO]: [JOB] Browser closed for NIK: 3174085901790005
+2025-10-31 12:32:17 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 12:32:17 [ERROR]: Status API: 422
+2025-10-31 12:32:17 [ERROR]: Validation Errors:
+2025-10-31 12:32:17 [INFO]: [JOB] Finished job for NIK: 3174085901790005
+2025-10-31 12:32:17 [INFO]: [PARALLEL] All concurrent jobs completed.
+2025-10-31 12:32:17 [INFO]: [SCHEDULING] Selesai mengeksekusi semua job.
+2025-10-31 12:32:17 [INFO]: [CLI] All JSON user jobs completed (after scheduling).
+2025-10-31 12:34:28 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 12:34:38 [INFO]: [CONFIG] URL tujuan diatur ke: http://127.0.0.1:9090/
+2025-10-31 12:34:42 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 12:34:44 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/1.json
+2025-10-31 12:34:49 [WARN]: =================================================
+2025-10-31 12:34:49 [WARN]: [SCHEDULING] Mode JSON File: 1.json (PARALEL) dipilih.
+2025-10-31 12:34:49 [WARN]: [SCHEDULING] Total NIK: 1
+2025-10-31 12:34:49 [WARN]: [SCHEDULING] URL Tujuan: http://127.0.0.1:9090/
+2025-10-31 12:34:49 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 12.35.00 WIB
+2025-10-31 12:34:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 10 detik.
+2025-10-31 12:34:49 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 12:34:49 [WARN]: =================================================
+2025-10-31 12:34:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-31 12:34:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 12:34:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 12:34:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 12:34:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 12:34:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 12:34:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 12:34:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 12:34:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 12:34:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 12:35:00 [INFO]: =================================================
+2025-10-31 12:35:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 12:35:00! Menjalankan Antam War Paralel...
+2025-10-31 12:35:00 [INFO]: =================================================
+2025-10-31 12:35:00 [INFO]: [PARALLEL] Starting 1 jobs concurrently...
+2025-10-31 12:35:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 12:35:00 [INFO]: [JOB] Starting job for NIK: 3174085901790005
+2025-10-31 12:35:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3174085901790005
+2025-10-31 12:35:01 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/...
+2025-10-31 12:35:03 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 12:35:03 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 12:35:03 [INFO]: [RETRY] Form loaded. Starting filling process...
+2025-10-31 12:35:03 [INFO]: [FORM] Starting form automation...
+2025-10-31 12:35:03 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-31 12:35:05 [INFO]: [INPUT] Typing Name: Femmy Rimbafa
+2025-10-31 12:35:05 [INFO]: [INPUT] Typing NIK: 3174085901790005
+2025-10-31 12:35:06 [INFO]: [INPUT] Typing Phone: 082299339795
+2025-10-31 12:35:07 [INFO]: [INPUT] Clicking KTP agreement checkbox (#check)...
+2025-10-31 12:35:07 [INFO]: [INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...
+2025-10-31 12:35:08 [INFO]: [CAPTCHA] Reading static Captcha text...
+2025-10-31 12:35:08 [INFO]: [CAPTCHA] Text found: 24IPNlUs
+2025-10-31 12:35:08 [INFO]: [CAPTCHA] Typing Captcha answer...
+2025-10-31 12:35:10 [INFO]: [FORM] Clicking submit button...
+2025-10-31 12:35:16 [INFO]: [RESULT] Success detected using new logic (#ticket-number-display).
+2025-10-31 12:35:17 [INFO]: [JOB] Browser closed for NIK: 3174085901790005
+2025-10-31 12:35:17 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 12:35:17 [ERROR]: Status API: 422
+2025-10-31 12:35:17 [ERROR]: Validation Errors:
+2025-10-31 12:35:17 [INFO]: [JOB] Finished job for NIK: 3174085901790005
+2025-10-31 12:35:17 [INFO]: [PARALLEL] All concurrent jobs completed.
+2025-10-31 12:35:17 [INFO]: [SCHEDULING] Selesai mengeksekusi semua job.
+2025-10-31 12:35:17 [INFO]: [CLI] All JSON user jobs completed (after scheduling).
+2025-10-31 12:40:22 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 12:40:53 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 12:40:56 [INFO]: [CONFIG] URL tujuan diatur ke: http://127.0.0.1:9090/500
+2025-10-31 12:40:59 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 12:41:03 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/1.json
+2025-10-31 12:41:13 [WARN]: =================================================
+2025-10-31 12:41:13 [WARN]: [SCHEDULING] Mode JSON File: 1.json (PARALEL) dipilih.
+2025-10-31 12:41:13 [WARN]: [SCHEDULING] Total NIK: 1
+2025-10-31 12:41:13 [WARN]: [SCHEDULING] URL Tujuan: http://127.0.0.1:9090/500
+2025-10-31 12:41:13 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 12.42.00 WIB
+2025-10-31 12:41:13 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 46 detik.
+2025-10-31 12:41:13 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 12:41:13 [WARN]: =================================================
+2025-10-31 12:41:14 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 45 detik. SIAP!
+2025-10-31 12:41:15 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 44 detik. SIAP!
+2025-10-31 12:41:16 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 43 detik. SIAP!
+2025-10-31 12:41:17 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 42 detik. SIAP!
+2025-10-31 12:41:18 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 41 detik. SIAP!
+2025-10-31 12:41:19 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 40 detik. SIAP!
+2025-10-31 12:41:20 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 39 detik. SIAP!
+2025-10-31 12:41:21 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 38 detik. SIAP!
+2025-10-31 12:41:22 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 37 detik. SIAP!
+2025-10-31 12:41:23 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 36 detik. SIAP!
+2025-10-31 12:41:24 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 35 detik. SIAP!
+2025-10-31 12:41:25 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 34 detik. SIAP!
+2025-10-31 12:41:26 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 33 detik. SIAP!
+2025-10-31 12:41:27 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 32 detik. SIAP!
+2025-10-31 12:41:28 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 31 detik. SIAP!
+2025-10-31 12:41:29 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 30 detik. SIAP!
+2025-10-31 12:41:30 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 29 detik. SIAP!
+2025-10-31 12:41:31 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 28 detik. SIAP!
+2025-10-31 12:41:32 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 27 detik. SIAP!
+2025-10-31 12:41:33 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 26 detik. SIAP!
+2025-10-31 12:41:34 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 25 detik. SIAP!
+2025-10-31 12:41:35 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 24 detik. SIAP!
+2025-10-31 12:41:36 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 23 detik. SIAP!
+2025-10-31 12:41:37 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 22 detik. SIAP!
+2025-10-31 12:41:38 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 21 detik. SIAP!
+2025-10-31 12:41:39 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 20 detik. SIAP!
+2025-10-31 12:41:40 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 19 detik. SIAP!
+2025-10-31 12:41:41 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 18 detik. SIAP!
+2025-10-31 12:41:42 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 17 detik. SIAP!
+2025-10-31 12:41:43 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 16 detik. SIAP!
+2025-10-31 12:41:44 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 15 detik. SIAP!
+2025-10-31 12:41:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 14 detik. SIAP!
+2025-10-31 12:41:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-31 12:41:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-31 12:41:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-31 12:41:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-31 12:41:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-31 12:41:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 12:41:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 12:41:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 12:41:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 12:41:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 12:41:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 12:41:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 12:41:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 12:41:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 12:42:00 [INFO]: =================================================
+2025-10-31 12:42:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 12:42:00! Menjalankan Antam War Paralel...
+2025-10-31 12:42:00 [INFO]: =================================================
+2025-10-31 12:42:00 [INFO]: [PARALLEL] Starting 1 jobs concurrently...
+2025-10-31 12:42:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 12:42:00 [INFO]: [JOB] Starting job for NIK: 3174085901790005
+2025-10-31 12:42:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3174085901790005
+2025-10-31 12:42:01 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:42:02 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 12:42:02 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 12:42:22 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:42:22 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:42:26 [WARN]: [RETRY] Attempt 2/5 for NIK: 3174085901790005
+2025-10-31 12:42:27 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:42:28 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 12:42:28 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 12:42:48 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:42:48 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:42:52 [WARN]: [RETRY] Attempt 3/5 for NIK: 3174085901790005
+2025-10-31 12:42:53 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:42:54 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 12:42:54 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 12:43:14 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:43:14 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:43:18 [WARN]: [RETRY] Attempt 4/5 for NIK: 3174085901790005
+2025-10-31 12:43:19 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:43:20 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 12:43:20 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 12:43:40 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:43:40 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:43:44 [WARN]: [RETRY] Attempt 5/5 for NIK: 3174085901790005
+2025-10-31 12:43:45 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:43:46 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 12:43:46 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 12:44:06 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:44:06 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 12:44:06 [INFO]: [JOB] Browser closed for NIK: 3174085901790005
+2025-10-31 12:44:07 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 12:44:18 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 12:44:21 [INFO]: [CONFIG] URL tujuan diatur ke: http://127.0.0.1:9090/500
+2025-10-31 12:44:25 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 12:44:27 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/1.json
+2025-10-31 12:44:33 [WARN]: =================================================
+2025-10-31 12:44:33 [WARN]: [SCHEDULING] Mode JSON File: 1.json (PARALEL) dipilih.
+2025-10-31 12:44:33 [WARN]: [SCHEDULING] Total NIK: 1
+2025-10-31 12:44:33 [WARN]: [SCHEDULING] URL Tujuan: http://127.0.0.1:9090/500
+2025-10-31 12:44:33 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 12.45.00 WIB
+2025-10-31 12:44:33 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 26 detik.
+2025-10-31 12:44:33 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 12:44:33 [WARN]: =================================================
+2025-10-31 12:44:34 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 25 detik. SIAP!
+2025-10-31 12:44:35 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 24 detik. SIAP!
+2025-10-31 12:44:36 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 23 detik. SIAP!
+2025-10-31 12:44:37 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 22 detik. SIAP!
+2025-10-31 12:44:38 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 21 detik. SIAP!
+2025-10-31 12:44:39 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 20 detik. SIAP!
+2025-10-31 12:44:40 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 19 detik. SIAP!
+2025-10-31 12:44:41 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 18 detik. SIAP!
+2025-10-31 12:44:42 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 17 detik. SIAP!
+2025-10-31 12:44:43 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 16 detik. SIAP!
+2025-10-31 12:44:44 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 15 detik. SIAP!
+2025-10-31 12:44:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 14 detik. SIAP!
+2025-10-31 12:44:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-31 12:44:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-31 12:44:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-31 12:44:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-31 12:44:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-31 12:44:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 12:44:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 12:44:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 12:44:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 12:44:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 12:44:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 12:44:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 12:44:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 12:44:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 12:45:00 [INFO]: =================================================
+2025-10-31 12:45:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 12:45:00! Menjalankan Antam War Paralel...
+2025-10-31 12:45:00 [INFO]: =================================================
+2025-10-31 12:45:00 [INFO]: [PARALLEL] Starting 1 jobs concurrently...
+2025-10-31 12:45:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 12:45:00 [INFO]: [JOB] Starting job for NIK: 3174085901790005
+2025-10-31 12:45:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3174085901790005
+2025-10-31 12:45:01 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:45:02 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 500 internal server error)
+2025-10-31 12:45:02 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 500 internal server error
+2025-10-31 12:45:02 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:45:06 [WARN]: [RETRY] Attempt 2/5 for NIK: 3174085901790005
+2025-10-31 12:45:07 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:45:08 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 500 internal server error)
+2025-10-31 12:45:08 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 500 internal server error
+2025-10-31 12:45:08 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:45:12 [WARN]: [RETRY] Attempt 3/5 for NIK: 3174085901790005
+2025-10-31 12:45:13 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:45:14 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 500 internal server error)
+2025-10-31 12:45:14 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 500 internal server error
+2025-10-31 12:45:14 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:45:18 [WARN]: [RETRY] Attempt 4/5 for NIK: 3174085901790005
+2025-10-31 12:45:19 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:45:20 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 500 internal server error)
+2025-10-31 12:45:20 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 500 internal server error
+2025-10-31 12:45:20 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 12:45:25 [WARN]: [RETRY] Attempt 5/5 for NIK: 3174085901790005
+2025-10-31 12:45:26 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/500...
+2025-10-31 12:45:27 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 500 internal server error)
+2025-10-31 12:45:27 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 500 internal server error
+2025-10-31 12:45:27 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 12:45:27 [INFO]: [JOB] Browser closed for NIK: 3174085901790005
+2025-10-31 12:45:27 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 12:45:27 [ERROR]: Status API: 422
+2025-10-31 12:45:27 [ERROR]: Validation Errors:
+2025-10-31 12:45:27 [INFO]: [JOB] Finished job for NIK: 3174085901790005
+2025-10-31 12:45:27 [INFO]: [PARALLEL] All concurrent jobs completed.
+2025-10-31 12:45:27 [INFO]: [SCHEDULING] Selesai mengeksekusi semua job.
+2025-10-31 12:45:27 [INFO]: [CLI] All JSON user jobs completed (after scheduling).
+2025-10-31 12:48:30 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 13:13:08 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 13:13:08 [INFO]: Database pendaftaran masih kosong.
+2025-10-31 13:13:14 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 13:13:24 [INFO]: [CONFIG] URL tujuan diatur ke: http://127.0.0.1:9090/503
+2025-10-31 13:13:28 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 13:13:30 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/1.json
+2025-10-31 13:13:36 [ERROR]: =================================================
+2025-10-31 13:13:36 [ERROR]: [SCHEDULING] Waktu target 12:14:00 WIB sudah lewat.
+2025-10-31 13:13:36 [ERROR]: Waktu target harus di hari ini dan belum terlewat.
+2025-10-31 13:13:36 [ERROR]: =================================================
+2025-10-31 13:13:36 [INFO]: [CLI] All JSON user jobs completed (after scheduling).
+2025-10-31 13:13:44 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 13:13:45 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/1.json
+2025-10-31 13:13:50 [WARN]: =================================================
+2025-10-31 13:13:50 [WARN]: [SCHEDULING] Mode JSON File: 1.json (PARALEL) dipilih.
+2025-10-31 13:13:50 [WARN]: [SCHEDULING] Total NIK: 1
+2025-10-31 13:13:50 [WARN]: [SCHEDULING] URL Tujuan: http://127.0.0.1:9090/503
+2025-10-31 13:13:50 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 13.14.00 WIB
+2025-10-31 13:13:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 9 detik.
+2025-10-31 13:13:50 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 13:13:50 [WARN]: =================================================
+2025-10-31 13:13:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 13:13:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 13:13:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 13:13:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 13:13:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 13:13:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 13:13:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 13:13:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 13:13:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 13:14:00 [INFO]: =================================================
+2025-10-31 13:14:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 13:14:00! Menjalankan Antam War Paralel...
+2025-10-31 13:14:00 [INFO]: =================================================
+2025-10-31 13:14:00 [INFO]: [PARALLEL] Starting 1 jobs concurrently...
+2025-10-31 13:14:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 13:14:00 [INFO]: [JOB] Starting job for NIK: 3174085901790005
+2025-10-31 13:14:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3174085901790005
+2025-10-31 13:14:03 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:14:04 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:14:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 13:14:04 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:14:07 [WARN]: [RETRY] Attempt 2/5 for NIK: 3174085901790005
+2025-10-31 13:14:09 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:14:09 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:14:09 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 13:14:09 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:14:13 [WARN]: [RETRY] Attempt 3/5 for NIK: 3174085901790005
+2025-10-31 13:14:14 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:14:15 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:14:15 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 13:14:15 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:14:18 [WARN]: [RETRY] Attempt 4/5 for NIK: 3174085901790005
+2025-10-31 13:14:20 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:14:21 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:14:21 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 13:14:21 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:14:25 [WARN]: [RETRY] Attempt 5/5 for NIK: 3174085901790005
+2025-10-31 13:14:26 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:14:27 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:14:27 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 13:14:27 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 13:14:27 [INFO]: [JOB] Browser closed for NIK: 3174085901790005
+2025-10-31 13:14:27 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 13:14:27 [INFO]: [JOB] Finished job for NIK: 3174085901790005
+2025-10-31 13:14:27 [INFO]: [PARALLEL] All concurrent jobs completed.
+2025-10-31 13:14:27 [INFO]: [SCHEDULING] Selesai mengeksekusi semua job.
+2025-10-31 13:14:27 [INFO]: [CLI] All JSON user jobs completed (after scheduling).
+2025-10-31 13:14:37 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 13:14:50 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 13:14:53 [INFO]: [CONFIG] URL tujuan diatur ke: http://127.0.0.1:9090/
+2025-10-31 13:14:57 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 13:14:59 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/1.json
+2025-10-31 13:15:05 [WARN]: =================================================
+2025-10-31 13:15:05 [WARN]: [SCHEDULING] Mode JSON File: 1.json (PARALEL) dipilih.
+2025-10-31 13:15:05 [WARN]: [SCHEDULING] Total NIK: 1
+2025-10-31 13:15:05 [WARN]: [SCHEDULING] URL Tujuan: http://127.0.0.1:9090/
+2025-10-31 13:15:05 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 13.16.00 WIB
+2025-10-31 13:15:05 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 54 detik.
+2025-10-31 13:15:05 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 13:15:05 [WARN]: =================================================
+2025-10-31 13:15:06 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 53 detik. SIAP!
+2025-10-31 13:15:07 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 52 detik. SIAP!
+2025-10-31 13:15:08 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 51 detik. SIAP!
+2025-10-31 13:15:09 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 50 detik. SIAP!
+2025-10-31 13:15:10 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 49 detik. SIAP!
+2025-10-31 13:15:11 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 48 detik. SIAP!
+2025-10-31 13:15:12 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 47 detik. SIAP!
+2025-10-31 13:15:13 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 46 detik. SIAP!
+2025-10-31 13:15:14 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 45 detik. SIAP!
+2025-10-31 13:15:15 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 44 detik. SIAP!
+2025-10-31 13:15:16 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 43 detik. SIAP!
+2025-10-31 13:15:17 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 42 detik. SIAP!
+2025-10-31 13:15:18 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 41 detik. SIAP!
+2025-10-31 13:15:19 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 40 detik. SIAP!
+2025-10-31 13:15:20 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 39 detik. SIAP!
+2025-10-31 13:15:21 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 38 detik. SIAP!
+2025-10-31 13:15:22 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 37 detik. SIAP!
+2025-10-31 13:15:23 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 36 detik. SIAP!
+2025-10-31 13:15:24 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 35 detik. SIAP!
+2025-10-31 13:15:25 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 34 detik. SIAP!
+2025-10-31 13:15:26 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 33 detik. SIAP!
+2025-10-31 13:15:27 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 32 detik. SIAP!
+2025-10-31 13:15:28 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 31 detik. SIAP!
+2025-10-31 13:15:29 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 30 detik. SIAP!
+2025-10-31 13:15:30 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 29 detik. SIAP!
+2025-10-31 13:15:31 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 28 detik. SIAP!
+2025-10-31 13:15:32 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 27 detik. SIAP!
+2025-10-31 13:15:33 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 26 detik. SIAP!
+2025-10-31 13:15:34 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 25 detik. SIAP!
+2025-10-31 13:15:35 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 24 detik. SIAP!
+2025-10-31 13:15:36 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 23 detik. SIAP!
+2025-10-31 13:15:37 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 22 detik. SIAP!
+2025-10-31 13:15:38 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 21 detik. SIAP!
+2025-10-31 13:15:39 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 20 detik. SIAP!
+2025-10-31 13:15:40 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 19 detik. SIAP!
+2025-10-31 13:15:41 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 18 detik. SIAP!
+2025-10-31 13:15:42 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 17 detik. SIAP!
+2025-10-31 13:15:43 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 16 detik. SIAP!
+2025-10-31 13:15:44 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 15 detik. SIAP!
+2025-10-31 13:15:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 14 detik. SIAP!
+2025-10-31 13:15:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-31 13:15:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-31 13:15:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-31 13:15:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-31 13:15:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-31 13:15:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 13:15:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 13:15:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 13:15:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 13:15:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 13:15:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 13:15:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 13:15:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 13:15:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 13:16:00 [INFO]: =================================================
+2025-10-31 13:16:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 13:16:00! Menjalankan Antam War Paralel...
+2025-10-31 13:16:00 [INFO]: =================================================
+2025-10-31 13:16:00 [INFO]: [PARALLEL] Starting 1 jobs concurrently...
+2025-10-31 13:16:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 13:16:00 [INFO]: [JOB] Starting job for NIK: 3174085901790005
+2025-10-31 13:16:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3174085901790005
+2025-10-31 13:16:01 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/...
+2025-10-31 13:16:03 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 13:16:03 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 13:16:03 [INFO]: [RETRY] Form loaded. Starting filling process...
+2025-10-31 13:16:03 [INFO]: [FORM] Starting form automation...
+2025-10-31 13:16:03 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-31 13:16:05 [INFO]: [INPUT] Typing Name: Femmy Rimbafa
+2025-10-31 13:16:05 [INFO]: [INPUT] Typing NIK: 3174085901790005
+2025-10-31 13:16:06 [INFO]: [INPUT] Typing Phone: 082299339795
+2025-10-31 13:16:06 [INFO]: [INPUT] Clicking KTP agreement checkbox (#check)...
+2025-10-31 13:16:07 [INFO]: [INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...
+2025-10-31 13:16:08 [INFO]: [CAPTCHA] Reading static Captcha text...
+2025-10-31 13:16:08 [INFO]: [CAPTCHA] Text found: 24IPNlUs
+2025-10-31 13:16:08 [INFO]: [CAPTCHA] Typing Captcha answer...
+2025-10-31 13:16:10 [INFO]: [FORM] Clicking submit button...
+2025-10-31 13:16:15 [INFO]: [RESULT] Success detected using new logic (#ticket-number-display).
+2025-10-31 13:16:16 [INFO]: [JOB] Browser closed for NIK: 3174085901790005
+2025-10-31 13:16:16 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 13:16:16 [INFO]: [JOB] Finished job for NIK: 3174085901790005
+2025-10-31 13:16:16 [INFO]: [PARALLEL] All concurrent jobs completed.
+2025-10-31 13:16:16 [INFO]: [SCHEDULING] Selesai mengeksekusi semua job.
+2025-10-31 13:16:16 [INFO]: [CLI] All JSON user jobs completed (after scheduling).
+2025-10-31 13:16:24 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 13:19:36 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 13:20:04 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 13:20:09 [INFO]: [CONFIG] URL tujuan diatur ke: http://127.0.0.1:9090/
+2025-10-31 13:20:12 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 13:20:13 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/users_war_30okt.json
+2025-10-31 13:20:25 [WARN]: =================================================
+2025-10-31 13:20:25 [WARN]: [SCHEDULING] Mode JSON File: users_war_30okt.json (PARALEL) dipilih.
+2025-10-31 13:20:25 [WARN]: [SCHEDULING] Total NIK: 4
+2025-10-31 13:20:25 [WARN]: [SCHEDULING] URL Tujuan: http://127.0.0.1:9090/
+2025-10-31 13:20:25 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 13.21.00 WIB
+2025-10-31 13:20:25 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 34 detik.
+2025-10-31 13:20:25 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 13:20:25 [WARN]: =================================================
+2025-10-31 13:20:26 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 33 detik. SIAP!
+2025-10-31 13:20:27 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 32 detik. SIAP!
+2025-10-31 13:20:28 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 31 detik. SIAP!
+2025-10-31 13:20:29 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 30 detik. SIAP!
+2025-10-31 13:20:30 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 29 detik. SIAP!
+2025-10-31 13:20:31 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 28 detik. SIAP!
+2025-10-31 13:20:32 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 27 detik. SIAP!
+2025-10-31 13:20:33 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 26 detik. SIAP!
+2025-10-31 13:20:34 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 25 detik. SIAP!
+2025-10-31 13:20:35 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 24 detik. SIAP!
+2025-10-31 13:20:36 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 23 detik. SIAP!
+2025-10-31 13:20:37 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 22 detik. SIAP!
+2025-10-31 13:20:38 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 21 detik. SIAP!
+2025-10-31 13:20:39 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 20 detik. SIAP!
+2025-10-31 13:20:40 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 19 detik. SIAP!
+2025-10-31 13:20:41 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 18 detik. SIAP!
+2025-10-31 13:20:42 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 17 detik. SIAP!
+2025-10-31 13:20:43 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 16 detik. SIAP!
+2025-10-31 13:20:44 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 15 detik. SIAP!
+2025-10-31 13:20:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 14 detik. SIAP!
+2025-10-31 13:20:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-31 13:20:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-31 13:20:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-31 13:20:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-31 13:20:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-31 13:20:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 13:20:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 13:20:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 13:20:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 13:20:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 13:20:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 13:20:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 13:20:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 13:20:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 13:21:00 [INFO]: =================================================
+2025-10-31 13:21:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 13:21:00! Menjalankan Antam War Paralel...
+2025-10-31 13:21:00 [INFO]: =================================================
+2025-10-31 13:21:00 [INFO]: [PARALLEL] Starting 4 jobs concurrently...
+2025-10-31 13:21:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 13:21:00 [INFO]: [JOB] Starting job for NIK: 3175012408990001
+2025-10-31 13:21:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175012408990001
+2025-10-31 13:21:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 13:21:00 [INFO]: [JOB] Starting job for NIK: 3175032103820005
+2025-10-31 13:21:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175032103820005
+2025-10-31 13:21:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 13:21:00 [INFO]: [JOB] Starting job for NIK: 3275122503900001
+2025-10-31 13:21:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3275122503900001
+2025-10-31 13:21:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 13:21:00 [INFO]: [JOB] Starting job for NIK: 3175076410840002
+2025-10-31 13:21:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175076410840002
+2025-10-31 13:21:03 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/...
+2025-10-31 13:21:04 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/...
+2025-10-31 13:21:04 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/...
+2025-10-31 13:21:04 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/...
+2025-10-31 13:21:05 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 13:21:05 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 13:21:06 [INFO]: [RETRY] Form loaded. Starting filling process...
+2025-10-31 13:21:06 [INFO]: [FORM] Starting form automation...
+2025-10-31 13:21:06 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-31 13:21:07 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 13:21:07 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 13:21:07 [INFO]: [RETRY] Form loaded. Starting filling process...
+2025-10-31 13:21:07 [INFO]: [FORM] Starting form automation...
+2025-10-31 13:21:07 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-31 13:21:07 [INFO]: [INPUT] Typing Name: Supriyadi
+2025-10-31 13:21:08 [INFO]: [INPUT] Typing NIK: 3275122503900001
+2025-10-31 13:21:08 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 13:21:08 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 13:21:08 [INFO]: [RETRY] Form loaded. Starting filling process...
+2025-10-31 13:21:08 [INFO]: [FORM] Starting form automation...
+2025-10-31 13:21:08 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-31 13:21:08 [INFO]: [INPUT] Typing Phone: 081298820233
+2025-10-31 13:21:09 [INFO]: [RETRY] Page loaded, title OK. Checking for form...
+2025-10-31 13:21:09 [INFO]: [RETRY] Waiting for form selector '#name'...
+2025-10-31 13:21:09 [INFO]: [RETRY] Form loaded. Starting filling process...
+2025-10-31 13:21:09 [INFO]: [FORM] Starting form automation...
+2025-10-31 13:21:09 [INFO]: [BEHAVIOUR] Simulating initial scroll...
+2025-10-31 13:21:09 [INFO]: [INPUT] Typing Name: Aris Hartono
+2025-10-31 13:21:09 [INFO]: [INPUT] Clicking KTP agreement checkbox (#check)...
+2025-10-31 13:21:09 [INFO]: [INPUT] Typing NIK: 3175032103820005
+2025-10-31 13:21:10 [INFO]: [INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...
+2025-10-31 13:21:10 [INFO]: [INPUT] Typing Name: Siti Nurlaila
+2025-10-31 13:21:10 [INFO]: [INPUT] Typing Phone: 081211430924
+2025-10-31 13:21:10 [INFO]: [INPUT] Typing Name: Ricky Christianto
+2025-10-31 13:21:11 [INFO]: [INPUT] Typing NIK: 3175076410840002
+2025-10-31 13:21:11 [INFO]: [INPUT] Clicking KTP agreement checkbox (#check)...
+2025-10-31 13:21:11 [INFO]: [CAPTCHA] Reading static Captcha text...
+2025-10-31 13:21:11 [INFO]: [CAPTCHA] Text found: 24IPNlUs
+2025-10-31 13:21:11 [INFO]: [CAPTCHA] Typing Captcha answer...
+2025-10-31 13:21:11 [INFO]: [INPUT] Typing NIK: 3175012408990001
+2025-10-31 13:21:11 [INFO]: [INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...
+2025-10-31 13:21:12 [INFO]: [INPUT] Typing Phone: 081291032574
+2025-10-31 13:21:12 [INFO]: [INPUT] Typing Phone: 081229137342
+2025-10-31 13:21:12 [INFO]: [INPUT] Clicking KTP agreement checkbox (#check)...
+2025-10-31 13:21:12 [INFO]: [CAPTCHA] Reading static Captcha text...
+2025-10-31 13:21:12 [INFO]: [INPUT] Clicking KTP agreement checkbox (#check)...
+2025-10-31 13:21:12 [INFO]: [CAPTCHA] Text found: 24IPNlUs
+2025-10-31 13:21:12 [INFO]: [CAPTCHA] Typing Captcha answer...
+2025-10-31 13:21:13 [INFO]: [FORM] Clicking submit button...
+2025-10-31 13:21:13 [INFO]: [INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...
+2025-10-31 13:21:13 [INFO]: [INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...
+2025-10-31 13:21:13 [INFO]: [CAPTCHA] Reading static Captcha text...
+2025-10-31 13:21:13 [INFO]: [CAPTCHA] Text found: 24IPNlUs
+2025-10-31 13:21:13 [INFO]: [CAPTCHA] Typing Captcha answer...
+2025-10-31 13:21:14 [INFO]: [CAPTCHA] Reading static Captcha text...
+2025-10-31 13:21:14 [INFO]: [CAPTCHA] Text found: 24IPNlUs
+2025-10-31 13:21:14 [INFO]: [CAPTCHA] Typing Captcha answer...
+2025-10-31 13:21:14 [INFO]: [FORM] Clicking submit button...
+2025-10-31 13:21:15 [INFO]: [FORM] Clicking submit button...
+2025-10-31 13:21:16 [INFO]: [FORM] Clicking submit button...
+2025-10-31 13:21:18 [INFO]: [RESULT] Success detected using new logic (#ticket-number-display).
+2025-10-31 13:21:18 [INFO]: [JOB] Browser closed for NIK: 3275122503900001
+2025-10-31 13:21:18 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 13:21:18 [INFO]: [JOB] Finished job for NIK: 3275122503900001
+2025-10-31 13:21:21 [INFO]: [RESULT] Success detected using new logic (#ticket-number-display).
+2025-10-31 13:21:21 [INFO]: [JOB] Browser closed for NIK: 3175032103820005
+2025-10-31 13:21:21 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 13:21:21 [INFO]: [JOB] Finished job for NIK: 3175032103820005
+2025-10-31 13:21:21 [INFO]: [RESULT] Success detected using new logic (#ticket-number-display).
+2025-10-31 13:21:21 [INFO]: [JOB] Browser closed for NIK: 3175076410840002
+2025-10-31 13:21:21 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 13:21:21 [INFO]: [JOB] Finished job for NIK: 3175076410840002
+2025-10-31 13:21:23 [INFO]: [RESULT] Success detected using new logic (#ticket-number-display).
+2025-10-31 13:21:23 [INFO]: [JOB] Browser closed for NIK: 3175012408990001
+2025-10-31 13:21:23 [INFO]: [SUCCESS] Result sent to Laravel. ID:
+2025-10-31 13:21:23 [INFO]: [JOB] Finished job for NIK: 3175012408990001
+2025-10-31 13:21:23 [INFO]: [PARALLEL] All concurrent jobs completed.
+2025-10-31 13:21:23 [INFO]: [SCHEDULING] Selesai mengeksekusi semua job.
+2025-10-31 13:21:23 [INFO]: [CLI] All JSON user jobs completed (after scheduling).
+2025-10-31 13:21:32 [INFO]: 
+--- STATUS PENDAFTARAN ---
+2025-10-31 13:21:56 [INFO]: 
+--- PILIH BUTIK ANTAM ---
+2025-10-31 13:22:06 [INFO]: [CONFIG] URL tujuan diatur ke: http://127.0.0.1:9090/503
+2025-10-31 13:22:10 [INFO]: 
+--- INPUT JSON FILE ---
+2025-10-31 13:22:13 [INFO]: [CLI] Reading user data from: /home/novalftr/nftr/antam-bot-war/bot/data/json/users_war_30okt.json
+2025-10-31 13:22:19 [WARN]: =================================================
+2025-10-31 13:22:19 [WARN]: [SCHEDULING] Mode JSON File: users_war_30okt.json (PARALEL) dipilih.
+2025-10-31 13:22:19 [WARN]: [SCHEDULING] Total NIK: 4
+2025-10-31 13:22:19 [WARN]: [SCHEDULING] URL Tujuan: http://127.0.0.1:9090/503
+2025-10-31 13:22:19 [WARN]: [SCHEDULING] Bot akan dieksekusi tepat pada: 13.23.00 WIB
+2025-10-31 13:22:19 [WARN]: [COUNTDOWN] Waktu tersisa: 0 jam, 0 menit, 40 detik.
+2025-10-31 13:22:19 [WARN]: JANGAN TUTUP TERMINAL INI. Bot dalam mode SIAGA!
+2025-10-31 13:22:19 [WARN]: =================================================
+2025-10-31 13:22:20 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 39 detik. SIAP!
+2025-10-31 13:22:21 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 38 detik. SIAP!
+2025-10-31 13:22:22 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 37 detik. SIAP!
+2025-10-31 13:22:23 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 36 detik. SIAP!
+2025-10-31 13:22:24 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 35 detik. SIAP!
+2025-10-31 13:22:25 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 34 detik. SIAP!
+2025-10-31 13:22:26 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 33 detik. SIAP!
+2025-10-31 13:22:27 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 32 detik. SIAP!
+2025-10-31 13:22:28 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 31 detik. SIAP!
+2025-10-31 13:22:29 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 30 detik. SIAP!
+2025-10-31 13:22:30 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 29 detik. SIAP!
+2025-10-31 13:22:31 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 28 detik. SIAP!
+2025-10-31 13:22:32 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 27 detik. SIAP!
+2025-10-31 13:22:33 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 26 detik. SIAP!
+2025-10-31 13:22:34 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 25 detik. SIAP!
+2025-10-31 13:22:35 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 24 detik. SIAP!
+2025-10-31 13:22:36 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 23 detik. SIAP!
+2025-10-31 13:22:37 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 22 detik. SIAP!
+2025-10-31 13:22:38 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 21 detik. SIAP!
+2025-10-31 13:22:39 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 20 detik. SIAP!
+2025-10-31 13:22:40 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 19 detik. SIAP!
+2025-10-31 13:22:41 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 18 detik. SIAP!
+2025-10-31 13:22:42 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 17 detik. SIAP!
+2025-10-31 13:22:43 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 16 detik. SIAP!
+2025-10-31 13:22:44 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 15 detik. SIAP!
+2025-10-31 13:22:45 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 14 detik. SIAP!
+2025-10-31 13:22:46 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 13 detik. SIAP!
+2025-10-31 13:22:47 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 12 detik. SIAP!
+2025-10-31 13:22:48 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 11 detik. SIAP!
+2025-10-31 13:22:49 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 10 detik. SIAP!
+2025-10-31 13:22:50 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 9 detik. SIAP!
+2025-10-31 13:22:51 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 8 detik. SIAP!
+2025-10-31 13:22:52 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 7 detik. SIAP!
+2025-10-31 13:22:53 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 6 detik. SIAP!
+2025-10-31 13:22:54 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 5 detik. SIAP!
+2025-10-31 13:22:55 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 4 detik. SIAP!
+2025-10-31 13:22:56 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 3 detik. SIAP!
+2025-10-31 13:22:57 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 2 detik. SIAP!
+2025-10-31 13:22:58 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 1 detik. SIAP!
+2025-10-31 13:22:59 [WARN]: [COUNTDOWN] Waktu tersisa: 0 menit, 0 detik. SIAP!
+2025-10-31 13:23:00 [INFO]: =================================================
+2025-10-31 13:23:00 [INFO]: [SCHEDULING] WAKTU EKSEKUSI TEPAT 13:23:00! Menjalankan Antam War Paralel...
+2025-10-31 13:23:00 [INFO]: =================================================
+2025-10-31 13:23:00 [INFO]: [PARALLEL] Starting 4 jobs concurrently...
+2025-10-31 13:23:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 13:23:00 [INFO]: [JOB] Starting job for NIK: 3175012408990001
+2025-10-31 13:23:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175012408990001
+2025-10-31 13:23:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 13:23:00 [INFO]: [JOB] Starting job for NIK: 3175032103820005
+2025-10-31 13:23:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175032103820005
+2025-10-31 13:23:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 13:23:00 [INFO]: [JOB] Starting job for NIK: 3275122503900001
+2025-10-31 13:23:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3275122503900001
+2025-10-31 13:23:00 [INFO]: [DATE] War date set to: 2025-10-31
+2025-10-31 13:23:00 [INFO]: [JOB] Starting job for NIK: 3175076410840002
+2025-10-31 13:23:00 [WARN]: [RETRY] Attempt 1/5 for NIK: 3175076410840002
+2025-10-31 13:23:02 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:23:03 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:23:03 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:23:03 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:23:04 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:23:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175076410840002: Server error page detected: 503 service unavailable
+2025-10-31 13:23:04 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:23:04 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:23:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175012408990001: Server error page detected: 503 service unavailable
+2025-10-31 13:23:04 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:23:04 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:23:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3275122503900001: Server error page detected: 503 service unavailable
+2025-10-31 13:23:04 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:23:05 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:23:05 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032103820005: Server error page detected: 503 service unavailable
+2025-10-31 13:23:05 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:23:08 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175076410840002
+2025-10-31 13:23:08 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175012408990001
+2025-10-31 13:23:09 [WARN]: [RETRY] Attempt 2/5 for NIK: 3175032103820005
+2025-10-31 13:23:09 [WARN]: [RETRY] Attempt 2/5 for NIK: 3275122503900001
+2025-10-31 13:23:13 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:23:13 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:23:13 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:23:14 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:23:16 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:23:16 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175032103820005: Server error page detected: 503 service unavailable
+2025-10-31 13:23:16 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:23:16 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:23:16 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175076410840002: Server error page detected: 503 service unavailable
+2025-10-31 13:23:16 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:23:16 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:23:16 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175012408990001: Server error page detected: 503 service unavailable
+2025-10-31 13:23:16 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:23:17 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:23:17 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3275122503900001: Server error page detected: 503 service unavailable
+2025-10-31 13:23:17 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:23:19 [WARN]: [RETRY] Attempt 3/5 for NIK: 3175076410840002
+2025-10-31 13:23:20 [WARN]: [RETRY] Attempt 3/5 for NIK: 3275122503900001
+2025-10-31 13:23:20 [WARN]: [RETRY] Attempt 3/5 for NIK: 3175012408990001
+2025-10-31 13:23:21 [WARN]: [RETRY] Attempt 3/5 for NIK: 3175032103820005
+2025-10-31 13:24:52 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3275122503900001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:25:00 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:25:08 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175012408990001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:25:10 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:25:14 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175032103820005: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:25:15 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:25:19 [WARN]: [RETRY] Attempt 4/5 for NIK: 3275122503900001
+2025-10-31 13:25:19 [WARN]: [RETRY] Attempt 4/5 for NIK: 3175012408990001
+2025-10-31 13:25:20 [WARN]: [RETRY] Attempt 4/5 for NIK: 3175032103820005
+2025-10-31 13:25:53 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3275122503900001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:25:57 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:26:01 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175012408990001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:26:03 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:26:09 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175032103820005: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:26:10 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:26:10 [WARN]: [RETRY] Attempt 5/5 for NIK: 3275122503900001
+2025-10-31 13:26:11 [WARN]: [RETRY] Attempt 5/5 for NIK: 3175012408990001
+2025-10-31 13:26:13 [WARN]: [RETRY] Attempt 5/5 for NIK: 3175032103820005
+2025-10-31 13:26:45 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3275122503900001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:26:49 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3275122503900001. Stopping.
+2025-10-31 13:27:00 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175012408990001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:27:02 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175012408990001. Stopping.
+2025-10-31 13:27:06 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175076410840002: Navigation timeout of 30000 ms exceeded
+2025-10-31 13:27:06 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:27:06 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175032103820005: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:27:06 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175032103820005. Stopping.
+2025-10-31 13:27:09 [INFO]: [JOB] Browser closed for NIK: 3175032103820005
+2025-10-31 13:27:09 [INFO]: [JOB] Browser closed for NIK: 3175012408990001
+2025-10-31 13:27:09 [INFO]: [JOB] Browser closed for NIK: 3275122503900001
+2025-10-31 13:27:10 [WARN]: [RETRY] Attempt 4/5 for NIK: 3175076410840002
+2025-10-31 13:27:14 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 13:27:14 [ERROR]: Status API: 422
+2025-10-31 13:27:14 [ERROR]: [NIK WARNING] NIK 3175032103820005 ditolak API (422: sudah terdaftar). Mengirim ulang data sebagai RIWAYAT GAGAL.
+2025-10-31 13:27:15 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 13:27:15 [ERROR]: Status API: 422
+2025-10-31 13:27:15 [ERROR]: [NIK WARNING] NIK 3175012408990001 ditolak API (422: sudah terdaftar). Mengirim ulang data sebagai RIWAYAT GAGAL.
+2025-10-31 13:27:15 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 13:27:15 [ERROR]: Status API: 422
+2025-10-31 13:27:15 [ERROR]: [NIK WARNING] NIK 3275122503900001 ditolak API (422: sudah terdaftar). Mengirim ulang data sebagai RIWAYAT GAGAL.
+2025-10-31 13:27:15 [ERROR]: [FATAL] Gagal menyimpan riwayat NIK ke Laravel (meski sudah diganti key).
+2025-10-31 13:27:15 [ERROR]: Error details: Request failed with status code 422
+2025-10-31 13:27:15 [INFO]: [JOB] Finished job for NIK: 3175032103820005
+2025-10-31 13:27:15 [ERROR]: [FATAL] Gagal menyimpan riwayat NIK ke Laravel (meski sudah diganti key).
+2025-10-31 13:27:15 [ERROR]: Error details: Request failed with status code 422
+2025-10-31 13:27:15 [INFO]: [JOB] Finished job for NIK: 3175012408990001
+2025-10-31 13:27:15 [ERROR]: [FATAL] Gagal menyimpan riwayat NIK ke Laravel (meski sudah diganti key).
+2025-10-31 13:27:15 [ERROR]: Error details: Request failed with status code 422
+2025-10-31 13:27:15 [INFO]: [JOB] Finished job for NIK: 3275122503900001
+2025-10-31 13:27:20 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:27:22 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:27:22 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175076410840002: Server error page detected: 503 service unavailable
+2025-10-31 13:27:22 [INFO]: [RETRY] Waiting 3-5 seconds before next attempt...
+2025-10-31 13:27:25 [WARN]: [RETRY] Attempt 5/5 for NIK: 3175076410840002
+2025-10-31 13:27:37 [INFO]: [RETRY] Navigating to http://127.0.0.1:9090/503...
+2025-10-31 13:27:41 [WARN]: [RETRY] Server returned error page (502/503). Retrying... (Title: 503 service unavailable)
+2025-10-31 13:27:41 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175076410840002: Server error page detected: 503 service unavailable
+2025-10-31 13:27:41 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175076410840002. Stopping.
+2025-10-31 13:27:42 [INFO]: [JOB] Browser closed for NIK: 3175076410840002
+2025-10-31 13:27:44 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 13:27:44 [ERROR]: Status API: 422
+2025-10-31 13:27:44 [ERROR]: [NIK WARNING] NIK 3175076410840002 ditolak API (422: sudah terdaftar). Mengirim ulang data sebagai RIWAYAT GAGAL.
+2025-10-31 13:27:44 [ERROR]: [FATAL] Gagal menyimpan riwayat NIK ke Laravel (meski sudah diganti key).
+2025-10-31 13:27:44 [ERROR]: Error details: Request failed with status code 422
+2025-10-31 13:27:44 [INFO]: [JOB] Finished job for NIK: 3175076410840002
+2025-10-31 13:27:44 [INFO]: [PARALLEL] All concurrent jobs completed.
+2025-10-31 13:27:44 [INFO]: [SCHEDULING] Selesai mengeksekusi semua job.
+2025-10-31 13:27:44 [INFO]: [CLI] All JSON user jobs completed (after scheduling).
+2025-10-31 13:28:01 [INFO]: 
+--- STATUS PENDAFTARAN ---

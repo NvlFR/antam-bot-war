@@ -63,3 +63,146 @@
 2025-10-30 23:41:50 [ERROR]: Status API: 422
 2025-10-30 23:41:50 [ERROR]: Validation Errors:
 2025-10-30 23:42:07 [ERROR]: [ERROR] Pilihan atau format URL tidak valid.
+2025-10-31 06:59:34 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:00:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175012408990001: Navigation timeout of 60000 ms exceeded
+2025-10-31 07:00:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175076410840002: Navigation timeout of 60000 ms exceeded
+2025-10-31 07:00:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3275122503900001: Navigation timeout of 60000 ms exceeded
+2025-10-31 07:00:39 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3275122503900001: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:00:40 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175032103820005: Navigation timeout of 60000 ms exceeded
+2025-10-31 07:00:41 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175012408990001: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:00:41 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:01:13 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3275122503900001: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:01:17 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:01:17 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:01:46 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175012408990001: Navigation timeout of 60000 ms exceeded
+2025-10-31 07:01:49 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3275122503900001: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:01:52 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:01:53 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:02:23 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175012408990001: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:02:25 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3275122503900001: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:02:25 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3275122503900001. Stopping.
+2025-10-31 07:02:32 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:02:32 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175032103820005. Stopping.
+2025-10-31 07:02:32 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antributikserpong.com/
+2025-10-31 07:02:32 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175076410840002. Stopping.
+2025-10-31 07:03:28 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175012408990001: Navigation timeout of 60000 ms exceeded
+2025-10-31 07:03:28 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175012408990001. Stopping.
+2025-10-31 07:30:33 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:30:34 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175012408990001: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:30:34 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:31:09 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175012408990001: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:31:10 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:31:44 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175012408990001: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:31:46 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:32:18 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175012408990001: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:32:32 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175076410840002: Waiting for selector `#name` failed
+2025-10-31 07:33:07 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:33:42 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:33:51 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175032103820005: Navigation timeout of 120000 ms exceeded
+2025-10-31 07:34:17 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175076410840002: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:34:17 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175076410840002. Stopping.
+2025-10-31 07:34:27 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175032103820005: net::ERR_TIMED_OUT at https://antrigrahadipta.com/
+2025-10-31 07:34:27 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175032103820005. Stopping.
+2025-10-31 07:34:35 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175012408990001: Waiting for selector `#name` failed
+2025-10-31 07:34:35 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175012408990001. Stopping.
+2025-10-31 07:34:44 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3275122503900001: Runtime.callFunctionOn timed out. Increase the 'protocolTimeout' setting in launch/connect calls for a higher timeout if needed.
+2025-10-31 07:36:51 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3275122503900001: Waiting for selector `#name` failed
+2025-10-31 07:38:57 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3275122503900001: Waiting for selector `#name` failed
+2025-10-31 07:41:21 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3275122503900001: Navigation timeout of 120000 ms exceeded
+2025-10-31 09:52:09 [ERROR]: [FATAL] Gagal mengambil data dari Laravel API. Pastikan 'php artisan serve' berjalan.
+2025-10-31 09:52:09 [ERROR]: Error details: connect ECONNREFUSED 127.0.0.1:8000
+2025-10-31 11:35:18 [ERROR]: [VALIDASI] Pilihan tidak valid.
+2025-10-31 11:37:34 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 30000 ms exceeded
+2025-10-31 11:38:10 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 30000 ms exceeded
+2025-10-31 11:38:46 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 30000 ms exceeded
+2025-10-31 11:39:21 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 30000 ms exceeded
+2025-10-31 11:39:57 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 30000 ms exceeded
+2025-10-31 11:39:57 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 12:20:03 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 12:20:10 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 12:20:17 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 12:20:23 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 12:20:30 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 12:20:30 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 12:30:24 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:30:52 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:31:23 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:31:50 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:32:16 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:32:16 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 12:32:17 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 12:32:17 [ERROR]: Status API: 422
+2025-10-31 12:32:17 [ERROR]: Validation Errors:
+2025-10-31 12:35:17 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 12:35:17 [ERROR]: Status API: 422
+2025-10-31 12:35:17 [ERROR]: Validation Errors:
+2025-10-31 12:42:22 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:42:48 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:43:14 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:43:40 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:44:06 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Waiting for selector `#name` failed
+2025-10-31 12:44:06 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 12:44:07 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 12:45:02 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 500 internal server error
+2025-10-31 12:45:08 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 500 internal server error
+2025-10-31 12:45:14 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 500 internal server error
+2025-10-31 12:45:20 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 500 internal server error
+2025-10-31 12:45:27 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 500 internal server error
+2025-10-31 12:45:27 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 12:45:27 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 12:45:27 [ERROR]: Status API: 422
+2025-10-31 12:45:27 [ERROR]: Validation Errors:
+2025-10-31 13:13:36 [ERROR]: =================================================
+2025-10-31 13:13:36 [ERROR]: [SCHEDULING] Waktu target 12:14:00 WIB sudah lewat.
+2025-10-31 13:13:36 [ERROR]: Waktu target harus di hari ini dan belum terlewat.
+2025-10-31 13:13:36 [ERROR]: =================================================
+2025-10-31 13:14:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 13:14:09 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 13:14:15 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 13:14:21 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 13:14:27 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 13:14:27 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 13:23:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175076410840002: Server error page detected: 503 service unavailable
+2025-10-31 13:23:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175012408990001: Server error page detected: 503 service unavailable
+2025-10-31 13:23:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3275122503900001: Server error page detected: 503 service unavailable
+2025-10-31 13:23:05 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032103820005: Server error page detected: 503 service unavailable
+2025-10-31 13:23:16 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175032103820005: Server error page detected: 503 service unavailable
+2025-10-31 13:23:16 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175076410840002: Server error page detected: 503 service unavailable
+2025-10-31 13:23:16 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175012408990001: Server error page detected: 503 service unavailable
+2025-10-31 13:23:17 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3275122503900001: Server error page detected: 503 service unavailable
+2025-10-31 13:24:52 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3275122503900001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:25:08 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175012408990001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:25:14 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175032103820005: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:25:53 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3275122503900001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:26:01 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175012408990001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:26:09 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175032103820005: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:26:45 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3275122503900001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:26:49 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3275122503900001. Stopping.
+2025-10-31 13:27:00 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175012408990001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:27:02 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175012408990001. Stopping.
+2025-10-31 13:27:06 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175076410840002: Navigation timeout of 30000 ms exceeded
+2025-10-31 13:27:06 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175032103820005: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:27:06 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175032103820005. Stopping.
+2025-10-31 13:27:14 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 13:27:14 [ERROR]: Status API: 422
+2025-10-31 13:27:14 [ERROR]: [NIK WARNING] NIK 3175032103820005 ditolak API (422: sudah terdaftar). Mengirim ulang data sebagai RIWAYAT GAGAL.
+2025-10-31 13:27:15 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 13:27:15 [ERROR]: Status API: 422
+2025-10-31 13:27:15 [ERROR]: [NIK WARNING] NIK 3175012408990001 ditolak API (422: sudah terdaftar). Mengirim ulang data sebagai RIWAYAT GAGAL.
+2025-10-31 13:27:15 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 13:27:15 [ERROR]: Status API: 422
+2025-10-31 13:27:15 [ERROR]: [NIK WARNING] NIK 3275122503900001 ditolak API (422: sudah terdaftar). Mengirim ulang data sebagai RIWAYAT GAGAL.
+2025-10-31 13:27:15 [ERROR]: [FATAL] Gagal menyimpan riwayat NIK ke Laravel (meski sudah diganti key).
+2025-10-31 13:27:15 [ERROR]: Error details: Request failed with status code 422
+2025-10-31 13:27:15 [ERROR]: [FATAL] Gagal menyimpan riwayat NIK ke Laravel (meski sudah diganti key).
+2025-10-31 13:27:15 [ERROR]: Error details: Request failed with status code 422
+2025-10-31 13:27:15 [ERROR]: [FATAL] Gagal menyimpan riwayat NIK ke Laravel (meski sudah diganti key).
+2025-10-31 13:27:15 [ERROR]: Error details: Request failed with status code 422
+2025-10-31 13:27:22 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175076410840002: Server error page detected: 503 service unavailable
+2025-10-31 13:27:41 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175076410840002: Server error page detected: 503 service unavailable
+2025-10-31 13:27:41 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175076410840002. Stopping.
+2025-10-31 13:27:44 [ERROR]: [FATAL] Failed to send result to Laravel. Check DB/Validation.
+2025-10-31 13:27:44 [ERROR]: Status API: 422
+2025-10-31 13:27:44 [ERROR]: [NIK WARNING] NIK 3175076410840002 ditolak API (422: sudah terdaftar). Mengirim ulang data sebagai RIWAYAT GAGAL.
+2025-10-31 13:27:44 [ERROR]: [FATAL] Gagal menyimpan riwayat NIK ke Laravel (meski sudah diganti key).
+2025-10-31 13:27:44 [ERROR]: Error details: Request failed with status code 422
