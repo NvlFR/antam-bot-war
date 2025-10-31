@@ -40,5 +40,8 @@ bot/node_modules/
 bot/logs/
 bot/screenshots/
 bot/data/json/
+bot/data/csv/
+
 # Jika wa-worker punya node_modules sendiri
 bot/wa-worker/node_modules/
+bot/wa-worker/baileys_auth_info/
