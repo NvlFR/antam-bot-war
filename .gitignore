@@ -39,6 +39,6 @@ backend/Homestead.yaml
 bot/node_modules/
 bot/logs/
 bot/screenshots/
-
+bot/data/json/
 # Jika wa-worker punya node_modules sendiri
 bot/wa-worker/node_modules/
