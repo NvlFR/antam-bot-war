@@ -206,3 +206,48 @@
 2025-10-31 13:27:44 [ERROR]: [NIK WARNING] NIK 3175076410840002 ditolak API (422: sudah terdaftar). Mengirim ulang data sebagai RIWAYAT GAGAL.
 2025-10-31 13:27:44 [ERROR]: [FATAL] Gagal menyimpan riwayat NIK ke Laravel (meski sudah diganti key).
 2025-10-31 13:27:44 [ERROR]: Error details: Request failed with status code 422
+2025-10-31 13:54:10 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175076410840002: Server error page detected: 503 service unavailable
+2025-10-31 13:54:10 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175012408990001: Server error page detected: 503 service unavailable
+2025-10-31 13:54:10 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3275122503900001: Server error page detected: 503 service unavailable
+2025-10-31 13:54:38 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032103820005: Navigation timeout of 30000 ms exceeded
+2025-10-31 13:55:04 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3275122503900001: Navigation timeout of 30000 ms exceeded
+2025-10-31 13:55:06 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175012408990001: Navigation timeout of 30000 ms exceeded
+2025-10-31 13:55:40 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175032103820005: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:55:44 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175076410840002: Navigation timeout of 30000 ms exceeded
+2025-10-31 13:55:52 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3275122503900001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:57:05 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175012408990001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:57:43 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175012408990001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:58:28 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175012408990001: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 13:58:51 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175012408990001. Stopping.
+2025-10-31 14:04:57 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175076410840002: Target.setDiscoverTargets timed out. Increase the 'protocolTimeout' setting in launch/connect calls for a higher timeout if needed.
+2025-10-31 14:05:00 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3275122503900001: Target.setDiscoverTargets timed out. Increase the 'protocolTimeout' setting in launch/connect calls for a higher timeout if needed.
+2025-10-31 14:06:37 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175032103820005: Navigation timeout of 30000 ms exceeded
+2025-10-31 14:07:42 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175076410840002: Timed out after waiting 30000ms
+2025-10-31 14:07:51 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175032103820005: Timed out after 30000 ms while waiting for the WS endpoint URL to appear in stdout!
+2025-10-31 17:14:04 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 17:14:10 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 17:14:44 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 30000 ms exceeded
+2025-10-31 17:15:19 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3174085901790005: Navigation timeout of 30000 ms exceeded
+2025-10-31 17:15:25 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3174085901790005: Server error page detected: 503 service unavailable
+2025-10-31 17:15:25 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3174085901790005. Stopping.
+2025-10-31 17:22:06 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032103820005: Server error page detected: 503 service unavailable
+2025-10-31 17:22:06 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3275122503900001: Server error page detected: 503 service unavailable
+2025-10-31 17:22:06 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175012408990001: Server error page detected: 503 service unavailable
+2025-10-31 17:22:13 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3275122503900001: Server error page detected: 503 service unavailable
+2025-10-31 17:22:43 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175032103820005: Navigation timeout of 30000 ms exceeded
+2025-10-31 17:22:48 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175032103820005: Server error page detected: 503 service unavailable
+2025-10-31 17:22:49 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3275122503900001: Navigation timeout of 30000 ms exceeded
+2025-10-31 17:22:55 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175032103820005: Server error page detected: 503 service unavailable
+2025-10-31 17:22:56 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3275122503900001: Server error page detected: 503 service unavailable
+2025-10-31 17:23:31 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175032103820005: Navigation timeout of 30000 ms exceeded
+2025-10-31 17:23:31 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175032103820005. Stopping.
+2025-10-31 17:30:05 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175032103820005: Server error page detected: 503 service unavailable
+2025-10-31 17:30:06 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175076410840002: Server error page detected: 503 service unavailable
+2025-10-31 17:30:06 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3275122503900001: Server error page detected: 503 service unavailable
+2025-10-31 17:30:14 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175076410840002: Server error page detected: 503 service unavailable
+2025-10-31 17:30:15 [ERROR]: [ATTEMPT 2] Failed to load form or complete filling for NIK 3175032103820005: Server error page detected: 503 service unavailable
+2025-10-31 17:30:21 [ERROR]: [ATTEMPT 3] Failed to load form or complete filling for NIK 3175032103820005: Server error page detected: 503 service unavailable
+2025-10-31 17:30:27 [ERROR]: [ATTEMPT 4] Failed to load form or complete filling for NIK 3175032103820005: Server error page detected: 503 service unavailable
+2025-10-31 17:30:33 [ERROR]: [ATTEMPT 5] Failed to load form or complete filling for NIK 3175032103820005: Server error page detected: 503 service unavailable
+2025-10-31 17:30:33 [ERROR]: [CRITICAL ERROR] Max retries reached for NIK 3175032103820005. Stopping.
+2025-10-31 17:30:33 [ERROR]: [ATTEMPT 1] Failed to load form or complete filling for NIK 3175012408990001: Navigation timeout of 30000 ms exceeded

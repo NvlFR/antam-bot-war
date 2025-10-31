@@ -1,25 +1,44 @@
-/bot/2.json
-/bot/20.json
-/bot/1.json
-/bot/users.json
-/bot/users.csv
-/bot/wa-worker/baileys_auth_info
-/bot/logs/bot-combined.log
-/bot/logs/bot-error.log
-/bot/node_modules
-/.txt
-/data.html
-/t.html
-bot/logs/bot-combined.log
-bot/logs/bot-error.log
-bot/node_modules
+# ==================================
+# General / OS / Editor
+# ==================================
+.DS_Store
+.vscode/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.idea/
 
-
-.txt
-data.html
+# ==================================
+# Project Root Files (Arsip/Sampah)
+# ==================================
+arsip/
 t.html
-/bot
-/bot
-/bot/data/json
-/bot/logs
-/bot/logs
+data.html
+analysis/
+
+# ==================================
+# Laravel (di folder /backend)
+# ==================================
+backend/node_modules/
+backend/public/build/
+backend/public/hot
+backend/public/storage
+backend/storage/
+!backend/storage/.gitignore
+backend/vendor/
+backend/.env
+backend/.env.backup
+backend/.phpunit.result.cache
+backend/Homestead.json
+backend/Homestead.yaml
+
+# ==================================
+# Node.js Bot (di folder /bot)
+# ==================================
+bot/node_modules/
+bot/logs/
+bot/screenshots/
+
+# Jika wa-worker punya node_modules sendiri
+bot/wa-worker/node_modules/
