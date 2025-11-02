@@ -10,11 +10,7 @@ const figlet = require("figlet");
 const chalk = require("chalk");
 const pLimit = require("p-limit").default;
 
-// --- PERBAIKAN: HAPUS PUPPETEER DARI SINI ---
-// const puppeteer = require("puppeteer-extra");
-// const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-// puppeteer.use(StealthPlugin());
-// --- SELESAI PERBAIKAN ---
+// --- HAPUS PUPPETEER DARI SINI ---
 
 const {
   state,
@@ -27,16 +23,19 @@ const { randomDelay } = require("./utils");
 const { displayStatus } = require("./api");
 const { runAntamWar } = require("./bot");
 
-const limit = pLimit(1); // Atur limit konkurensi (1 untuk IP HP)
+// --- PERUBAHAN BESAR: Sesuaikan limit dengan jumlah proxy Anda ---
+// Jika Anda punya 10 proxy, atur ke 10. Jika 50, atur ke 50.
+// Jangan lebih tinggi dari jumlah proxy Anda.
+const limit = pLimit(10);
+// --- SELESAI PERUBAHAN ---
 
-// --- PERBAIKAN: 'runAllJobsInParallel' TIDAK butuh browser ---
 async function runAllJobsInParallel(userList) {
   logger.info(
-    `[PARALLEL] Starting ${userList.length} jobs with a concurrency limit of 1...`
+    `[PARALLEL] Starting ${userList.length} jobs with a concurrency limit of 10...`
   );
 
   const tasks = userList.map((userData) => {
-    // Panggil runAntamWar tanpa 'browser'
+    // Panggil runAntamWar (mode otomatis)
     return limit(() => runAntamWar(userData, state.currentAntamURL)).catch(
       (e) => {
         logger.error(
@@ -51,10 +50,6 @@ async function runAllJobsInParallel(userList) {
   logger.info("[PARALLEL] All concurrent jobs completed.");
 }
 
-// --- PERBAIKAN: 'runWarExecution' DIHAPUS ---
-// Fungsi ini tidak perlu lagi karena logikanya ada di 'runAllJobsInParallel'
-
-// --- PERBAIKAN: 'scheduleAntamWar' disederhanakan ---
 async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   const now = new Date();
   const targetTime = new Date(
@@ -75,7 +70,6 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
     return;
   }
 
-  // (Logika Countdown... tidak berubah)
   const hours = Math.floor(timeUntilTarget / (1000 * 60 * 60));
   const minutes = Math.floor(
     (timeUntilTarget % (1000 * 60 * 60)) / (1000 * 60)
@@ -129,21 +123,18 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
       clearInterval(countdownInterval);
     }
   }, 1000);
-  // --- Akhir Logika Countdown ---
 
-  // Hapus semua logika try/catch/finally Browser Pool
   await new Promise((resolve) =>
     setTimeout(() => {
       logger.info("=================================================");
       logger.info("[SCHEDULING] WAKTU EKSEKUSI TEPAT! Menjalankan War...");
       logger.info("=================================================");
-      resolve(runAllJobsInParallel(userList)); // Panggil langsung
+      resolve(runAllJobsInParallel(userList));
     }, timeUntilTarget)
   );
 
   logger.info("[SCHEDULING] Selesai mengeksekusi semua job.");
 }
-// --- SELESAI PERBAIKAN ---
 
 async function loadDataAndGetList(dataType) {
   const FOLDER_PATH =
@@ -287,8 +278,11 @@ async function processManualInput() {
     branch_selector: branch_selector || state.currentBranchSelector,
   };
   logger.info(`[MANUAL] Starting single job for NIK: ${userData.nik}`);
-  await runAntamWar(userData, state.currentAntamURL);
+
+  // Kirim 'false' (otomatis) untuk mode manual
+  await runAntamWar(userData, state.currentAntamURL, false);
 }
+
 async function processUserData() {
   logger.info("\n--- INPUT JSON FILE (TIMER) ---");
   const data = await loadDataAndGetList("json");
@@ -355,6 +349,7 @@ async function processCSVData() {
     `CSV File: ${data.selectedFile}`
   );
 }
+
 async function processDataWithMonitor() {
   logger.info("\n--- SIAGA (TUNGGU SINYAL MONITOR) ---");
   console.log("Pilih file data yang ingin disiagakan:");
@@ -400,7 +395,6 @@ async function processDataWithMonitor() {
   if (fs.existsSync(constants.SIGNAL_FILE_PATH)) {
     fs.unlinkSync(constants.SIGNAL_FILE_PATH);
   }
-  // --- PERBAIKAN: Panggil runAllJobsInParallel ---
   await runAllJobsInParallel(data.userList);
 }
 
@@ -474,12 +468,13 @@ function setBranch() {
         `[CONFIG] Cabang default diatur ke: ${state.currentBranch}`
       )
     );
-
     saveState();
   } else {
     logger.warn("[CONFIG] Input tidak valid. Pengaturan cabang tidak diubah.");
   }
 }
+
+// --- HAPUS FUNGSI 'toggleRunMode' ---
 
 async function showBanner() {
   return new Promise((resolve, reject) => {
@@ -503,6 +498,7 @@ async function showBanner() {
   });
 }
 
+// --- PERUBAHAN: TAMPILAN MENU UTAMA (Final) ---
 async function displayMainMenu() {
   let continueLoop = true;
   while (continueLoop) {
@@ -515,11 +511,15 @@ async function displayMainMenu() {
     });
     console.log(chalk.cyanBright(titleBox));
 
+    // Mode selalu otomatis
+    const modeText = chalk.greenBright("OTOMATIS (Full Bot)");
+
     const statusBox = boxen(
       chalk.yellow("KONFIGURASI SAAT INI:\n") +
         `URL Target : ${chalk.magentaBright(state.currentAntamURL)}\n` +
         `Cabang     : ${chalk.magentaBright(state.currentBranch)}\n` +
-        `Selector   : ${chalk.magentaBright(state.currentBranchSelector)}`,
+        `Selector   : ${chalk.magentaBright(state.currentBranchSelector)}\n` +
+        `Mode       : ${modeText}`, // <-- Selalu Otomatis
       {
         padding: 0.5,
         borderColor: "gray",
@@ -562,7 +562,7 @@ async function displayMainMenu() {
     console.log(chalk.cyanBright("5.") + " 📋 Tampilkan Status Registrasi");
     console.log(chalk.cyanBright("6.") + " 🏢 Ganti Butik (URL Target)");
     console.log(chalk.cyanBright("7.") + " ⚙️ Ganti Cabang (Branch Default)");
-    console.log(chalk.cyanBright("8.") + " 🚪 Keluar");
+    console.log(chalk.cyanBright("8.") + " 🚪 Keluar"); // <-- Exit jadi 8
 
     console.log(
       gradient("yellow", "green")("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
@@ -593,7 +593,7 @@ async function displayMainMenu() {
       case "7":
         setBranch();
         break;
-      case "8":
+      case "8": // <-- Exit jadi 8
         console.log(
           gradient(
             "red",
@@ -613,6 +613,7 @@ async function displayMainMenu() {
     }
   }
 }
+// --- SELESAI PERUBAHAN ---
 
 module.exports = {
   displayMainMenu,

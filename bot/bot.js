@@ -1,59 +1,54 @@
 // bot/bot.js
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+const Captcha = require("2captcha"); // <-- Diaktifkan
 const logger = require("./logger");
 const { sendRegistrationResult } = require("./api");
 const { randomDelay, getTodayDateString } = require("./utils");
-// --- PERUBAHAN: Impor getRandomUserAgent ---
-const { constants, getRandomProxy, getRandomUserAgent } = require("./config");
+const {
+  state, // <-- Kita butuh 'state' untuk API Key
+  constants,
+  getRandomProxy,
+  getRandomUserAgent,
+} = require("./config");
+const chalk = require("chalk");
 
 puppeteer.use(StealthPlugin());
 
-// (Fungsi handleFormFilling tidak berubah, salin fungsi Anda yang ada di sini)
-async function handleFormFilling(page, data) {
+// --- FUNGSI HANDLEFORMFILLING (DENGAN 2CAPTCHA AKTIF) ---
+async function handleFormFilling(page, data, antamURL) {
   logger.info("[FORM] Starting form automation...");
 
-  // 1. SCROLL ALAMI
+  // 1. (Tidak Berubah) Scroll dan Isi Form
   logger.info("[BEHAVIOUR] Simulating initial scroll...");
   await page.evaluate(() => {
     window.scrollBy(0, 500 + Math.floor(Math.random() * 200));
   });
   await randomDelay(1000, 2000);
-
-  // 2. MENGISI INPUT UTAMA
   logger.info(`[INPUT] Typing Name: ${data.name}`);
   await page.type("#name", data.name, { delay: randomDelay(50, 150) });
   await randomDelay(300, 700);
-
   logger.info(`[INPUT] Typing NIK: ${data.nik}`);
   await page.type("#ktp", data.nik, { delay: randomDelay(50, 150) });
   await randomDelay(300, 700);
-
   logger.info(`[INPUT] Typing Phone: ${data.phone_number}`);
   await page.type("#phone_number", data.phone_number, {
     delay: randomDelay(50, 150),
   });
   await randomDelay(300, 700);
-
-  // 3. MENGKLIK CHECKBOX PERSETUJUAN
   logger.info("[INPUT] Clicking KTP agreement checkbox (#check)...");
   await page.click("#check");
   await randomDelay(500, 800);
-
   logger.info("[INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...");
   await page.click("#check_2");
   await randomDelay(500, 1000);
 
-  // 4. MEMBACA DAN MENGISI CAPTCHA TEKS
-  logger.info("[CAPTCHA] Reading static Captcha text...");
-  let captchaText = "";
+  // 2. (Tidak Berubah) Isi Captcha Teks (jika ada)
   try {
-    captchaText = await page.$eval("#captcha-box", (el) =>
+    const captchaText = await page.$eval("#captcha-box", (el) =>
       el.textContent.trim()
     );
     logger.info(`[CAPTCHA] Text found: ${captchaText}`);
-
-    logger.info("[CAPTCHA] Typing Captcha answer...");
     await page.type("#captcha_input", captchaText, {
       delay: randomDelay(100, 250),
     });
@@ -64,13 +59,80 @@ async function handleFormFilling(page, data) {
     );
   }
 
+  // --- LOGIKA BARU: SOLVE RECAPTCHA ---
+  let solutionToken = null;
+
+  // Cek jika API Key ada DAN ini bukan file mockup
+  if (state.TWO_CAPTCHA_API_KEY && !antamURL.startsWith("file://")) {
+    try {
+      logger.warn("[CAPTCHA] Mencoba mengambil reCAPTCHA site-key...");
+
+      const pageHtml = await page.content();
+      const siteKeyMatch = pageHtml.match(/grecaptcha.execute\('([^']+)'/);
+
+      if (!siteKeyMatch || !siteKeyMatch[1]) {
+        throw new Error("Tidak dapat menemukan reCAPTCHA site-key di halaman.");
+      }
+
+      const siteKey = siteKeyMatch[1];
+      logger.info(
+        `[CAPTCHA] Site-key ditemukan: ${siteKey.substring(0, 10)}...`
+      );
+
+      const solver = new Captcha.Solver(state.TWO_CAPTCHA_API_KEY);
+      logger.warn(
+        "[CAPTCHA] Mengirim permintaan ke 2Captcha... Ini mungkin perlu waktu (15-45 detik)..."
+      );
+
+      const res = await solver.recaptcha(siteKey, antamURL);
+      solutionToken = res.data; // Ini adalah token solusinya
+      logger.info(chalk.greenBright("[CAPTCHA] SOLUSI DITERIMA!"));
+    } catch (err) {
+      logger.error(
+        `[FATAL CAPTCHA] Gagal menyelesaikan reCAPTCHA: ${err.message}`
+      );
+      return { status: "FAILED_CAPTCHA", ticket_number: null };
+    }
+  } else if (!antamURL.startsWith("file://")) {
+    logger.error(
+      "[FATAL CAPTCHA] TWO_CAPTCHA_API_KEY tidak diatur. Tidak bisa melanjutkan."
+    );
+    return { status: "FAILED_CAPTCHA", ticket_number: null };
+  } else {
+    logger.info("[MOCKUP] Melewatkan solver reCAPTCHA untuk file mockup.");
+  }
+  // --- SELESAI LOGIKA RECAPTCHA ---
+
   // 5. SUBMIT FORM
-  logger.info("[FORM] Clicking submit button...");
-  await page.click('button[type="submit"]');
 
-  await randomDelay(5000, 7000);
+  if (solutionToken) {
+    // A. JIKA DAPAT TOKEN (LIVE MODE)
+    logger.info("[FORM] Memasukkan token reCAPTCHA ke dalam form...");
+    await page.evaluate((token) => {
+      const recaptchaInput = document.createElement("input");
+      recaptchaInput.setAttribute("type", "hidden");
+      recaptchaInput.setAttribute("name", "g-recaptcha-response");
+      recaptchaInput.setAttribute("value", token);
+      document.querySelector("form").appendChild(recaptchaInput);
+    }, solutionToken);
 
-  // 6. DETEKSI HASIL
+    logger.info("[FORM] Mengirim form (submit) secara manual...");
+    await page.evaluate(() => {
+      document.querySelector("form").submit();
+    });
+  } else if (antamURL.startsWith("file://")) {
+    // B. JIKA INI MOCKUP FILE
+    logger.info("[MOCKUP] Mengklik tombol submit (simulasi)...");
+    await page.click('button[type="submit"]');
+  }
+
+  // Tunggu halaman baru setelah submit
+  await page.waitForNavigation({ timeout: 15000 });
+  logger.info(
+    "[FORM] Halaman baru terdeteksi setelah submit. Menganalisis hasil..."
+  );
+
+  // 6. DETEKSI HASIL (Tidak berubah)
   let ticketNumber = null;
   try {
     ticketNumber = await page.$eval("#ticket-number-display", (el) =>
@@ -91,7 +153,6 @@ async function handleFormFilling(page, data) {
         );
         return successEl ? successEl.textContent : null;
       });
-
       if (successIndicator) {
         const ticketNumberMatch = successIndicator.match(
           /Nomor Antrian Anda\s*:?\s*([A-Z0-9]+)/i
@@ -104,20 +165,14 @@ async function handleFormFilling(page, data) {
         }
       }
     } catch (evalError) {
-      logger.error(
-        `[RESULT] Fallback H4 logic also failed: ${evalError.message}`
-      );
+      /* ... */
     }
   }
 
   if (ticketNumber) {
-    return {
-      status: "SUCCESS",
-      ticket_number: ticketNumber,
-    };
+    return { status: "SUCCESS", ticket_number: ticketNumber };
   } else {
     const genericErrorMessage = await page.$eval("body", (el) => el.innerText);
-
     if (
       genericErrorMessage.includes("STOK TIDAK TERSEDIA") ||
       genericErrorMessage.includes("stok sudah habis")
@@ -129,7 +184,6 @@ async function handleFormFilling(page, data) {
       logger.error("[RESULT] FAILED: Gagal karena NIK SUDAH TERDAFTAR.");
       return { status: "FAILED_ALREADY_REGISTERED", ticket_number: null };
     }
-
     const errorCheck1 = await page.evaluate(
       () =>
         document.querySelector("#error-check") &&
@@ -140,41 +194,29 @@ async function handleFormFilling(page, data) {
         document.querySelector("#error-check2") &&
         !document.querySelector("#error-check2").classList.contains("d-none")
     );
-
     if (errorCheck1 || errorCheck2) {
-      logger.error(
-        "[RESULT] FAILED: Checkbox error shown or Captcha/NIK/Phone is wrong."
-      );
+      logger.error("[RESULT] FAILED: Checkbox error shown...");
       return { status: "FAILED_VALIDATION", ticket_number: null };
     }
-
-    logger.error(
-      "[RESULT] FAILED: No success indicator found. Probably server overload/error or form not submitted."
-    );
+    logger.error("[RESULT] FAILED: No success indicator found.");
     return { status: "FAILED_UNKNOWN", ticket_number: null };
   }
 }
-// --- (Akhir fungsi handleFormFilling) ---
+// --- SELESAI FUNGSI HANDLEFORMFILLING ---
 
+// --- FUNGSI RUNANTAMWAR (Final) ---
 async function runAntamWar(userData, antamURL) {
+  // Hapus flag 'isSemiAuto'
   let browser;
   let page;
 
   const now = new Date();
   const localWarTime = new Intl.DateTimeFormat("sv-SE", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
     timeZone: "Asia/Jakarta",
   })
     .format(now)
     .replace(/-/g, "-")
     .replace(" ", " ");
-
   const todayDate = getTodayDateString();
   userData.purchase_date = todayDate;
   logger.info(`[DATE] War date set to: ${userData.purchase_date}`);
@@ -190,15 +232,18 @@ async function runAntamWar(userData, antamURL) {
   let success = false;
   let attempt = 0;
 
-  while (attempt < constants.MAX_RETRIES && !success) {
+  // Selalu gunakan MAX_RETRIES dari config
+  const maxRetries = constants.MAX_RETRIES;
+
+  while (attempt < maxRetries && !success) {
     attempt++;
     logger.warn(
-      `[RETRY] Attempt ${attempt}/${constants.MAX_RETRIES} for NIK: ${userData.nik}`
+      `[RETRY] Attempt ${attempt}/${maxRetries} for NIK: ${userData.nik}`
     );
 
     try {
       const launchOptions = {
-        headless: true,
+        headless: true, // Selalu headless (otomatis)
         ignoreHTTPSErrors: true,
         args: [
           "--no-sandbox",
@@ -219,13 +264,11 @@ async function runAntamWar(userData, antamURL) {
       page = await browser.newPage();
       await page.setViewport({ width: 1366, height: 768 });
 
-      // --- PERUBAHAN: Gunakan User-Agent Acak ---
       const userAgent = getRandomUserAgent();
       logger.info(
         `[CONFIG] Using User-Agent: ${userAgent.substring(0, 40)}...`
       );
       await page.setUserAgent(userAgent);
-      // --- SELESAI PERUBAHAN ---
 
       logger.info(`[RETRY] Navigating to ${antamURL}...`);
       await page.goto(antamURL, {
@@ -257,7 +300,9 @@ async function runAntamWar(userData, antamURL) {
       await page.waitForSelector("#name", { timeout: 20000 });
       logger.info("[RETRY] Form loaded. Starting filling process...");
 
-      const resultFromForm = await handleFormFilling(page, userData);
+      // Kirim 'antamURL' ke handleFormFilling untuk solver
+      const resultFromForm = await handleFormFilling(page, userData, antamURL);
+
       const finalPageContent = await page.content();
 
       registrationResult = {
@@ -268,17 +313,31 @@ async function runAntamWar(userData, antamURL) {
         },
       };
 
-      success = true;
+      if (registrationResult.status === "SUCCESS") {
+        success = true;
+      } else {
+        if (registrationResult.status === "FAILED_CAPTCHA") {
+          logger.error(
+            "[CRITICAL] Captcha failed, stopping retries for this NIK."
+          );
+          attempt = constants.MAX_RETRIES; // Paksa loop berhenti
+        }
+        throw new Error(
+          `Form filling failed with status: ${registrationResult.status}`
+        );
+      }
     } catch (error) {
       logger.error(
         `[ATTEMPT ${attempt}] Failed to load form or complete filling for NIK ${userData.nik}: ${error.message}`
       );
 
-      if (attempt === constants.MAX_RETRIES) {
+      if (attempt === maxRetries) {
         logger.error(
           `[CRITICAL ERROR] Max retries reached for NIK ${userData.nik}. Stopping.`
         );
-        registrationResult.status = "FAILED";
+        if (registrationResult.status === "FAILED") {
+          registrationResult.status = "FAILED_MAX_RETRIES";
+        }
         registrationResult.raw_response = {
           error: `Max retries reached: ${error.message}`,
         };
@@ -288,7 +347,7 @@ async function runAntamWar(userData, antamURL) {
       }
     } finally {
       if (browser) {
-        if (success || attempt === constants.MAX_RETRIES) {
+        if (success || attempt >= maxRetries) {
           try {
             await browser.close();
             logger.info(`[JOB] Browser closed for NIK: ${userData.nik}`);
