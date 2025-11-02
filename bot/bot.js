@@ -196,12 +196,13 @@ async function handleFormFilling(page, data, antamURL) {
 // --- SELESAI FUNGSI HANDLEFORMFILLING ---
 
 // --- FUNGSI RUNANTAMWAR (Final - Versi Pool + Auth) ---
-// --- PERUBAHAN BESAR: Menerima 'browser' DAN 'proxyCredentials' ---
+// --- PERUBAHAN 1: Menerima 'jobInfo' ---
 async function runAntamWar(
   userData,
   antamURL,
   browser,
-  proxyCredentials = null
+  proxyCredentials = null,
+  jobInfo = { number: 1, total: 1 } // <-- INI DIA
 ) {
   let page;
 
@@ -222,7 +223,10 @@ async function runAntamWar(
 
   const todayDate = getTodayDateString();
   userData.purchase_date = todayDate;
-  logger.info(`[DATE] War date set to: ${userData.purchase_date}`);
+
+  // --- PERUBAHAN 2: Buat prefix log ---
+  const jobPrefix = `[Job ${jobInfo.number}/${jobInfo.total} | NIK: ${userData.nik}]`;
+  // --- SELESAI PERUBAHAN ---
 
   let registrationResult = {
     status: "FAILED",
@@ -231,37 +235,35 @@ async function runAntamWar(
     war_time: localWarTime,
   };
 
-  logger.info(`[JOB] Starting job for NIK: ${userData.nik}`);
+  // --- PERUBAHAN 3: Ganti semua log di bawah ini ---
+  logger.info(chalk.cyanBright(`${jobPrefix} Starting job...`));
   let success = false;
   let attempt = 0;
   const maxRetries = constants.MAX_RETRIES;
 
   while (attempt < maxRetries && !success) {
     attempt++;
-    logger.warn(
-      `[RETRY] Attempt ${attempt}/${maxRetries} for NIK: ${userData.nik}`
-    );
+    logger.warn(`${jobPrefix} [RETRY] Attempt ${attempt}/${maxRetries}`);
 
     try {
-      // --- PERUBAHAN: Hapus launch, hanya buat 'page' ---
       page = await browser.newPage();
       await page.setViewport({ width: 1366, height: 768 });
-      // --- SELESAI PERUBAHAN ---
 
-      // --- PERUBAHAN: Terapkan Autentikasi Proxy PER HALAMAN ---
       if (proxyCredentials) {
-        logger.info(`[PROXY] Authenticating page for NIK: ${userData.nik}`);
+        logger.info(`${jobPrefix} [PROXY] Authenticating page...`);
         await page.authenticate(proxyCredentials);
       }
-      // --- SELESAI PERUBAHAN ---
 
       const userAgent = getRandomUserAgent();
       logger.info(
-        `[CONFIG] Using User-Agent: ${userAgent.substring(0, 40)}...`
+        `${jobPrefix} [CONFIG] Using User-Agent: ${userAgent.substring(
+          0,
+          40
+        )}...`
       );
       await page.setUserAgent(userAgent);
 
-      logger.info(`[RETRY] Navigating to ${antamURL}...`);
+      logger.info(`${jobPrefix} [RETRY] Navigating to ${antamURL}...`);
       await page.goto(antamURL, {
         waitUntil: "networkidle2",
         timeout: 30000,
@@ -281,15 +283,19 @@ async function runAntamWar(
         pageContentCheck.includes("service unavailable")
       ) {
         logger.warn(
-          `[RETRY] Server returned error page (502/503). Retrying... (Title: ${pageTitle})`
+          `${jobPrefix} [RETRY] Server returned error page (502/503). Retrying... (Title: ${pageTitle})`
         );
         throw new Error(`Server error page detected: ${pageTitle}`);
       }
-      logger.info("[RETRY] Page loaded, title OK. Checking for form...");
+      logger.info(
+        `${jobPrefix} [RETRY] Page loaded, title OK. Checking for form...`
+      );
 
-      logger.info("[RETRY] Waiting for form selector '#name'...");
+      logger.info(`${jobPrefix} [RETRY] Waiting for form selector '#name'...`);
       await page.waitForSelector("#name", { timeout: 20000 });
-      logger.info("[RETRY] Form loaded. Starting filling process...");
+      logger.info(
+        `${jobPrefix} [RETRY] Form loaded. Starting filling process...`
+      );
 
       const resultFromForm = await handleFormFilling(page, userData, antamURL);
 
@@ -308,7 +314,7 @@ async function runAntamWar(
       } else {
         if (registrationResult.status === "FAILED_CAPTCHA") {
           logger.error(
-            "[CRITICAL] Captcha failed, stopping retries for this NIK."
+            `${jobPrefix} [CRITICAL] Captcha failed, stopping retries.`
           );
           attempt = constants.MAX_RETRIES;
         }
@@ -318,12 +324,12 @@ async function runAntamWar(
       }
     } catch (error) {
       logger.error(
-        `[ATTEMPT ${attempt}] Failed to load form or complete filling for NIK ${userData.nik}: ${error.message}`
+        `${jobPrefix} [ATTEMPT ${attempt}] Failed: ${error.message}`
       );
 
       if (attempt === maxRetries) {
         logger.error(
-          `[CRITICAL ERROR] Max retries reached for NIK ${userData.nik}. Stopping.`
+          `${jobPrefix} [CRITICAL ERROR] Max retries reached. Stopping.`
         );
         if (registrationResult.status === "FAILED") {
           registrationResult.status = "FAILED_MAX_RETRIES";
@@ -332,28 +338,25 @@ async function runAntamWar(
           error: `Max retries reached: ${error.message}`,
         };
       } else {
-        logger.info("[RETRY] Waiting 3-5 seconds before next attempt...");
+        logger.info(`${jobPrefix} [RETRY] Waiting 3-5 seconds...`);
         await randomDelay(3000, 5000);
       }
     } finally {
-      // --- PERUBAHAN: Kita HANYA menutup 'page' ---
       if (page) {
         try {
           await page.close();
-          logger.info(`[JOB] Page closed for NIK: ${userData.nik}`);
+          logger.info(`${jobPrefix} [JOB] Page closed.`);
         } catch (e) {
           logger.warn(
-            `[JOB] Failed to close page, maybe already closed: ${e.message}`
+            `${jobPrefix} [JOB] Failed to close page, maybe already closed: ${e.message}`
           );
         }
       }
-      // 'browser' akan ditutup oleh cli.js
-      // --- SELESAI PERUBAHAN ---
     }
   }
 
   await sendRegistrationResult({ ...userData, ...registrationResult });
-  logger.info(`[JOB] Finished job for NIK: ${userData.nik}`);
+  logger.info(chalk.cyanBright(`${jobPrefix} Finished job.`));
   return registrationResult;
 }
 

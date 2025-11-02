@@ -1,7 +1,7 @@
 // bot/cli.js
 const fs = require("fs");
 const path = require("path");
-const { URL } = require("url"); // <-- Impor URL parser
+const { URL } = require("url");
 const csv = require("csv-parser");
 const prompt = require("prompt-sync")({ sigint: true });
 const logger = require("./logger");
@@ -27,19 +27,33 @@ const { displayStatus } = require("./api");
 const { runAntamWar } = require("./bot");
 
 // --- Sesuaikan limit Anda di sini ---
-const limit = pLimit(55);
+const limit = pLimit(10);
 // --- SELESAI ---
 
-// --- PERUBAHAN: 'runAllJobsInParallel' sekarang menerima 'browser' dan 'credentials' ---
+// --- PERUBAHAN: 'runAllJobsInParallel' sekarang mengirim 'jobInfo' (index/total) ---
 async function runAllJobsInParallel(userList, browser, proxyCredentials) {
+  const totalJobs = userList.length; // <-- Ambil total job
   logger.info(
-    `[PARALLEL] Starting ${userList.length} jobs with a concurrency limit of 10...`
+    `[PARALLEL] Starting ${totalJobs} jobs with a concurrency limit of 10...`
   );
 
-  const tasks = userList.map((userData) => {
-    // Kirim 'browser' DAN 'credentials' ke worker
+  const tasks = userList.map((userData, index) => {
+    // <-- Ambil 'index'
+    // Buat objek info pekerjaan
+    const jobInfo = {
+      number: index + 1, // (index + 1) agar mulai dari 1, bukan 0
+      total: totalJobs,
+    };
+
+    // Kirim 'jobInfo' ke worker
     return limit(() =>
-      runAntamWar(userData, state.currentAntamURL, browser, proxyCredentials)
+      runAntamWar(
+        userData,
+        state.currentAntamURL,
+        browser,
+        proxyCredentials,
+        jobInfo
+      )
     ).catch((e) => {
       logger.error(
         `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
@@ -53,7 +67,6 @@ async function runAllJobsInParallel(userList, browser, proxyCredentials) {
 }
 // --- SELESAI PERUBAHAN ---
 
-// --- PERUBAHAN: 'runWarExecution' untuk mengelola Browser Pool + Auth ---
 async function runWarExecution(userList, dataMode) {
   logger.info(`[EKSEKUSI] Memulai eksekusi perang untuk: ${dataMode}`);
   let browser;
@@ -71,7 +84,6 @@ async function runWarExecution(userList, dataMode) {
       defaultViewport: null,
     };
 
-    // --- LOGIKA PARSING PROXY BARU ---
     let proxyCredentials = null;
     const proxyString = getRandomProxy();
 
@@ -96,10 +108,9 @@ async function runWarExecution(userList, dataMode) {
             `[FATAL] Format proxy di 'proxies.json' salah: ${e.message}`
           )
         );
-        return; // Hentikan eksekusi jika proxy salah
+        return;
       }
     }
-    // --- SELESAI LOGIKA PROXY ---
 
     logger.info("[BROWSER POOL] Meluncurkan browser bersama...");
     browser = await puppeteer.launch(launchOptions);
@@ -122,7 +133,6 @@ async function runWarExecution(userList, dataMode) {
     }
   }
 }
-// --- SELESAI FUNGSI ---
 
 async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   const now = new Date();
@@ -314,6 +324,7 @@ async function loadDataAndGetList(dataType) {
 
 // --- FUNGSI MENU ---
 
+// --- PERUBAHAN: 'processManualInput' sekarang mengirim 'jobInfo' ---
 async function processManualInput() {
   logger.info("\n--- MODE INPUT MANUAL ---");
   const name = prompt("Masukkan Nama: ");
@@ -351,7 +362,6 @@ async function processManualInput() {
   };
   logger.info(`[MANUAL] Starting single job for NIK: ${userData.nik}`);
 
-  // --- PERUBAHAN: Mode manual sekarang identik dengan runWarExecution ---
   let browser;
   try {
     const launchOptions = {
@@ -394,12 +404,16 @@ async function processManualInput() {
 
     browser = await puppeteer.launch(launchOptions);
 
-    // Kirim browser yang sudah hidup DAN kredensialnya
+    // Buat jobInfo untuk mode manual (1 dari 1)
+    const jobInfo = { number: 1, total: 1 };
+
+    // Kirim browser, kredensial, DAN jobInfo
     await runAntamWar(
       userData,
       state.currentAntamURL,
       browser,
-      proxyCredentials
+      proxyCredentials,
+      jobInfo
     );
   } catch (err) {
     logger.error(`[MANUAL] Gagal menjalankan job: ${err.message}`);
@@ -409,8 +423,8 @@ async function processManualInput() {
       logger.info("[MANUAL] Browser manual ditutup.");
     }
   }
-  // --- SELESAI PERUBAHAN ---
 }
+// --- SELESAI PERUBAHAN ---
 
 async function processUserData() {
   logger.info("\n--- INPUT JSON FILE (TIMER) ---");
@@ -479,7 +493,6 @@ async function processCSVData() {
   );
 }
 
-// --- PERUBAHAN: 'processDataWithMonitor' memanggil 'runWarExecution' ---
 async function processDataWithMonitor() {
   logger.info("\n--- SIAGA (TUNGGU SINYAL MONITOR) ---");
   console.log("Pilih file data yang ingin disiagakan:");
@@ -525,10 +538,8 @@ async function processDataWithMonitor() {
   if (fs.existsSync(constants.SIGNAL_FILE_PATH)) {
     fs.unlinkSync(constants.SIGNAL_FILE_PATH);
   }
-  // Panggil 'runWarExecution' yang baru
   await runWarExecution(data.userList, `MONITOR SIGNAL (${data.selectedFile})`);
 }
-// --- SELESAI PERUBAHAN ---
 
 function setAntamURL() {
   // (Fungsi ini tidak berubah)
