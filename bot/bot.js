@@ -1,5 +1,5 @@
 // bot/bot.js
-const puppeteer = require("puppeteer-extra"); // Kita masih butuh ini untuk 'StealthPlugin'
+const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const Captcha = require("2captcha");
 const logger = require("./logger");
@@ -8,23 +8,23 @@ const { randomDelay, getTodayDateString } = require("./utils");
 const {
   state,
   constants,
-  getRandomProxy, // Kita tidak lagi butuh getRandomProxy di sini
+  // Kita tidak lagi butuh getRandomProxy di sini
   getRandomUserAgent,
 } = require("./config");
 const chalk = require("chalk");
 
 puppeteer.use(StealthPlugin()); // Terapkan stealth ke puppeteer
 
-// (Fungsi handleFormFilling tidak berubah, tetap sama persis)
+// (FungSI handleFormFilling TIDAK BERUBAH SAMA SEKALI)
 async function handleFormFilling(page, data, antamURL) {
   logger.info("[FORM] Starting form automation...");
-
-  // 1. (Tidak Berubah) Scroll dan Isi Form
+  // 1. SCROLL ALAMI
   logger.info("[BEHAVIOUR] Simulating initial scroll...");
   await page.evaluate(() => {
     window.scrollBy(0, 500 + Math.floor(Math.random() * 200));
   });
   await randomDelay(1000, 2000);
+  // 2. MENGISI INPUT UTAMA
   logger.info(`[INPUT] Typing Name: ${data.name}`);
   await page.type("#name", data.name, { delay: randomDelay(50, 150) });
   await randomDelay(300, 700);
@@ -36,14 +36,14 @@ async function handleFormFilling(page, data, antamURL) {
     delay: randomDelay(50, 150),
   });
   await randomDelay(300, 700);
+  // 3. MENGKLIK CHECKBOX
   logger.info("[INPUT] Clicking KTP agreement checkbox (#check)...");
   await page.click("#check");
   await randomDelay(500, 800);
   logger.info("[INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...");
   await page.click("#check_2");
   await randomDelay(500, 1000);
-
-  // 2. (Tidak Berubah) Isi Captcha Teks (jika ada)
+  // 4. CAPTCHA TEKS
   try {
     const captchaText = await page.$eval("#captcha-box", (el) =>
       el.textContent.trim()
@@ -195,10 +195,14 @@ async function handleFormFilling(page, data, antamURL) {
 }
 // --- SELESAI FUNGSI HANDLEFORMFILLING ---
 
-// --- FUNGSI RUNANTAMWAR (Final - Versi Pool) ---
-// --- PERUBAHAN BESAR: Sekarang menerima 'browser' ---
-async function runAntamWar(userData, antamURL, browser) {
-  // 'browser' sekarang adalah parameter, 'puppeteer.launch' dihapus
+// --- FUNGSI RUNANTAMWAR (Final - Versi Pool + Auth) ---
+// --- PERUBAHAN BESAR: Menerima 'browser' DAN 'proxyCredentials' ---
+async function runAntamWar(
+  userData,
+  antamURL,
+  browser,
+  proxyCredentials = null
+) {
   let page;
 
   const now = new Date();
@@ -239,12 +243,18 @@ async function runAntamWar(userData, antamURL, browser) {
     );
 
     try {
-      // --- PERUBAHAN: Hapus launchOptions, proxy, dan launch ---
-      // --- Kita hanya membuat 'page' (tab) baru ---
+      // --- PERUBAHAN: Hapus launch, hanya buat 'page' ---
       page = await browser.newPage();
       await page.setViewport({ width: 1366, height: 768 });
+      // --- SELESAI PERUBAHAN ---
 
-      // --- Rotasi User-Agent tetap di sini (ini per-tab) ---
+      // --- PERUBAHAN: Terapkan Autentikasi Proxy PER HALAMAN ---
+      if (proxyCredentials) {
+        logger.info(`[PROXY] Authenticating page for NIK: ${userData.nik}`);
+        await page.authenticate(proxyCredentials);
+      }
+      // --- SELESAI PERUBAHAN ---
+
       const userAgent = getRandomUserAgent();
       logger.info(
         `[CONFIG] Using User-Agent: ${userAgent.substring(0, 40)}...`
@@ -326,7 +336,7 @@ async function runAntamWar(userData, antamURL, browser) {
         await randomDelay(3000, 5000);
       }
     } finally {
-      // --- PERUBAHAN: Kita HANYA menutup 'page', BUKAN 'browser' ---
+      // --- PERUBAHAN: Kita HANYA menutup 'page' ---
       if (page) {
         try {
           await page.close();

@@ -1,6 +1,7 @@
 // bot/cli.js
 const fs = require("fs");
 const path = require("path");
+const { URL } = require("url"); // <-- Impor URL parser
 const csv = require("csv-parser");
 const prompt = require("prompt-sync")({ sigint: true });
 const logger = require("./logger");
@@ -10,11 +11,9 @@ const figlet = require("figlet");
 const chalk = require("chalk");
 const pLimit = require("p-limit").default;
 
-// --- PERUBAHAN: Kembalikan puppeteer ke CLI ---
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 puppeteer.use(StealthPlugin());
-// --- SELESAI PERUBAHAN ---
 
 const {
   state,
@@ -28,19 +27,19 @@ const { displayStatus } = require("./api");
 const { runAntamWar } = require("./bot");
 
 // --- Sesuaikan limit Anda di sini ---
-const limit = pLimit(10);
+const limit = pLimit(55);
 // --- SELESAI ---
 
-// --- PERUBAHAN: 'runAllJobsInParallel' sekarang menerima 'browser' ---
-async function runAllJobsInParallel(userList, browser) {
+// --- PERUBAHAN: 'runAllJobsInParallel' sekarang menerima 'browser' dan 'credentials' ---
+async function runAllJobsInParallel(userList, browser, proxyCredentials) {
   logger.info(
     `[PARALLEL] Starting ${userList.length} jobs with a concurrency limit of 10...`
   );
 
   const tasks = userList.map((userData) => {
-    // Kirim 'browser' yang sudah ada ke worker
+    // Kirim 'browser' DAN 'credentials' ke worker
     return limit(() =>
-      runAntamWar(userData, state.currentAntamURL, browser)
+      runAntamWar(userData, state.currentAntamURL, browser, proxyCredentials)
     ).catch((e) => {
       logger.error(
         `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
@@ -54,13 +53,11 @@ async function runAllJobsInParallel(userList, browser) {
 }
 // --- SELESAI PERUBAHAN ---
 
-// --- FUNGSI BARU: 'runWarExecution' untuk mengelola Browser Pool ---
-// (Ini adalah gabungan dari 'schedule' dan 'monitor')
+// --- PERUBAHAN: 'runWarExecution' untuk mengelola Browser Pool + Auth ---
 async function runWarExecution(userList, dataMode) {
   logger.info(`[EKSEKUSI] Memulai eksekusi perang untuk: ${dataMode}`);
   let browser;
   try {
-    // Tentukan launchOptions DI SINI (satu kali)
     const launchOptions = {
       headless: true,
       ignoreHTTPSErrors: true,
@@ -74,11 +71,35 @@ async function runWarExecution(userList, dataMode) {
       defaultViewport: null,
     };
 
-    // Ambil proxy DI SINI (satu kali)
-    const proxy = getRandomProxy();
-    if (proxy) {
-      launchOptions.args.push(`--proxy-server=${proxy}`);
+    // --- LOGIKA PARSING PROXY BARU ---
+    let proxyCredentials = null;
+    const proxyString = getRandomProxy();
+
+    if (proxyString) {
+      try {
+        const proxyUrl = new URL(proxyString);
+        const proxyServerString = `${proxyUrl.protocol}//${proxyUrl.hostname}:${proxyUrl.port}`;
+
+        launchOptions.args.push(`--proxy-server=${proxyServerString}`);
+
+        proxyCredentials = {
+          username: proxyUrl.username,
+          password: proxyUrl.password,
+        };
+
+        logger.info(
+          `[PROXY] Menggunakan gateway: ${proxyUrl.hostname}:${proxyUrl.port}`
+        );
+      } catch (e) {
+        logger.error(
+          chalk.red(
+            `[FATAL] Format proxy di 'proxies.json' salah: ${e.message}`
+          )
+        );
+        return; // Hentikan eksekusi jika proxy salah
+      }
     }
+    // --- SELESAI LOGIKA PROXY ---
 
     logger.info("[BROWSER POOL] Meluncurkan browser bersama...");
     browser = await puppeteer.launch(launchOptions);
@@ -86,14 +107,13 @@ async function runWarExecution(userList, dataMode) {
       "[BROWSER POOL] Browser bersama berhasil diluncurkan. Menjalankan jobs..."
     );
 
-    // Kirim browser yang sudah hidup ke semua job
-    await runAllJobsInParallel(userList, browser);
+    // Kirim browser yang sudah hidup DAN kredensialnya
+    await runAllJobsInParallel(userList, browser, proxyCredentials);
 
     logger.info("[EKSEKUSI] Selesai mengeksekusi semua job.");
   } catch (err) {
     logger.error(`[BROWSER POOL] Gagal meluncurkan browser: ${err.message}`);
   } finally {
-    // Tutup browser HANYA setelah SEMUA job selesai
     if (browser) {
       await browser.close();
       logger.info(
@@ -102,10 +122,9 @@ async function runWarExecution(userList, dataMode) {
     }
   }
 }
-// --- SELESAI FUNGSI BARU ---
+// --- SELESAI FUNGSI ---
 
 async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
-  // (Fungsi ini sekarang JAUH lebih sederhana)
   const now = new Date();
   const targetTime = new Date(
     now.getFullYear(),
@@ -176,13 +195,11 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
     }
   }, 1000);
 
-  // Hapus semua logika 'puppeteer.launch' dari sini
   await new Promise((resolve) =>
     setTimeout(() => {
       logger.info("=================================================");
       logger.info("[SCHEDULING] WAKTU EKSEKUSI TEPAT! Menjalankan War...");
       logger.info("=================================================");
-      // Panggil 'runWarExecution' yang baru
       resolve(runWarExecution(userList, dataMode));
     }, timeUntilTarget)
   );
@@ -297,7 +314,6 @@ async function loadDataAndGetList(dataType) {
 
 // --- FUNGSI MENU ---
 
-// --- PERUBAHAN: 'processManualInput' sekarang juga mengelola browser ---
 async function processManualInput() {
   logger.info("\n--- MODE INPUT MANUAL ---");
   const name = prompt("Masukkan Nama: ");
@@ -335,7 +351,7 @@ async function processManualInput() {
   };
   logger.info(`[MANUAL] Starting single job for NIK: ${userData.nik}`);
 
-  // Mode manual juga harus meluncurkan browsernya sendiri
+  // --- PERUBAHAN: Mode manual sekarang identik dengan runWarExecution ---
   let browser;
   try {
     const launchOptions = {
@@ -350,14 +366,41 @@ async function processManualInput() {
       ],
       defaultViewport: null,
     };
-    const proxy = getRandomProxy();
-    if (proxy) {
-      launchOptions.args.push(`--proxy-server=${proxy}`);
+
+    let proxyCredentials = null;
+    const proxyString = getRandomProxy();
+
+    if (proxyString) {
+      try {
+        const proxyUrl = new URL(proxyString);
+        const proxyServerString = `${proxyUrl.protocol}//${proxyUrl.hostname}:${proxyUrl.port}`;
+        launchOptions.args.push(`--proxy-server=${proxyServerString}`);
+        proxyCredentials = {
+          username: proxyUrl.username,
+          password: proxyUrl.password,
+        };
+        logger.info(
+          `[PROXY] Menggunakan gateway: ${proxyUrl.hostname}:${proxyUrl.port}`
+        );
+      } catch (e) {
+        logger.error(
+          chalk.red(
+            `[FATAL] Format proxy di 'proxies.json' salah: ${e.message}`
+          )
+        );
+        return;
+      }
     }
+
     browser = await puppeteer.launch(launchOptions);
 
-    // Kirim browser yang sudah hidup
-    await runAntamWar(userData, state.currentAntamURL, browser);
+    // Kirim browser yang sudah hidup DAN kredensialnya
+    await runAntamWar(
+      userData,
+      state.currentAntamURL,
+      browser,
+      proxyCredentials
+    );
   } catch (err) {
     logger.error(`[MANUAL] Gagal menjalankan job: ${err.message}`);
   } finally {
@@ -366,8 +409,8 @@ async function processManualInput() {
       logger.info("[MANUAL] Browser manual ditutup.");
     }
   }
+  // --- SELESAI PERUBAHAN ---
 }
-// --- SELESAI PERUBAHAN ---
 
 async function processUserData() {
   logger.info("\n--- INPUT JSON FILE (TIMER) ---");
@@ -565,12 +608,12 @@ function setBranch() {
   }
 }
 
+// --- PERBAIKAN TAMPILAN: Menerapkan 'centering' ---
 async function showBanner() {
-  // (Fungsi ini tidak berubah)
   return new Promise((resolve, reject) => {
     figlet.text("ANTAM BOT WAR", { font: "ANSI Shadow" }, (err, data) => {
       if (err) return reject(err);
-      // console.clear();
+      console.clear();
       const banner = gradient("cyan", "yellow").multiline(data);
       const subtitle = gradient(
         "yellow",
@@ -582,14 +625,25 @@ async function showBanner() {
         borderColor: "yellow",
         align: "center",
       });
-      console.log(chalk.yellowBright(box));
+
+      // Logika Penengah (Centering)
+      const termWidth = process.stdout.columns || 80;
+      const boxWidth = box.split("\n")[0].length;
+      const padding = Math.max(0, Math.floor((termWidth - boxWidth) / 2));
+      const paddingStr = " ".repeat(padding);
+
+      box.split("\n").forEach((line) => {
+        console.log(paddingStr + line);
+      });
+
       resolve();
     });
   });
 }
+// --- SELESAI PERBAIKAN ---
 
+// --- PERBAIKAN TAMPILAN: Menerapkan menu cantik ---
 async function displayMainMenu() {
-  // (Fungsi ini tidak berubah, menu 8 sudah dihapus)
   let continueLoop = true;
   while (continueLoop) {
     const titleBox = boxen("✨ ANTAM BOT WAR MENU ✨", {
@@ -599,18 +653,25 @@ async function displayMainMenu() {
       borderColor: "cyan",
       align: "center",
     });
-    console.log(chalk.cyanBright(titleBox));
+    console.log(titleBox);
 
     const modeText = chalk.greenBright("OTOMATIS (Full Bot)");
 
+    // Kotak status dengan label bold dan padding
     const statusBox = boxen(
-      chalk.yellow("KONFIGURASI SAAT INI:\n") +
-        `URL Target : ${chalk.magentaBright(state.currentAntamURL)}\n` +
-        `Cabang     : ${chalk.magentaBright(state.currentBranch)}\n` +
-        `Selector   : ${chalk.magentaBright(state.currentBranchSelector)}\n` +
-        `Mode       : ${modeText}`,
+      chalk.yellow.bold("KONFIGURASI SAAT INI:\n") +
+        `${chalk.white.bold("URL Target :")} ${chalk.magentaBright(
+          state.currentAntamURL
+        )}\n` +
+        `${chalk.white.bold("Cabang     :")} ${chalk.magentaBright(
+          state.currentBranch
+        )}\n` +
+        `${chalk.white.bold("Selector   :")} ${chalk.magentaBright(
+          state.currentBranchSelector
+        )}\n` +
+        `${chalk.white.bold("Mode       :")} ${modeText}`,
       {
-        padding: 0.5,
+        padding: 1,
         borderColor: "gray",
         borderStyle: "round",
         dimBorder: true,
@@ -628,30 +689,49 @@ async function displayMainMenu() {
       )
     );
 
+    // Logika padding menu agar lurus
+    const menuPadding = 40;
+
     console.log(
       chalk.cyanBright("1.") +
-        " 🧍 Manual Input (1 NIK)         — " +
+        chalk.white(" 🧍 Manual Input (1 NIK)".padEnd(menuPadding)) +
+        "— " +
         chalk.greenBright("EKSEKUSI SEKARANG")
     );
     console.log(
       chalk.cyanBright("2.") +
-        " 🔫 Siaga (Tunggu Sinyal)        — " +
+        chalk.white(" 🔫 Siaga (Tunggu Sinyal)".padEnd(menuPadding)) +
+        "— " +
         chalk.redBright("MODE PERANG UTAMA")
     );
     console.log(
       chalk.cyanBright("3.") +
-        " 🧾 Input JSON File (Timer)      — " +
+        chalk.white(" 🧾 Input JSON File (Timer)".padEnd(menuPadding)) +
+        "— " +
         chalk.yellowBright("JADWALKAN WAKTU")
     );
     console.log(
       chalk.cyanBright("4.") +
-        " 📄 Input CSV File (Timer)       — " +
+        chalk.white(" 📄 Input CSV File (Timer)".padEnd(menuPadding)) +
+        "— " +
         chalk.yellowBright("JADWALKAN WAKTU")
     );
-    console.log(chalk.cyanBright("5.") + " 📋 Tampilkan Status Registrasi");
-    console.log(chalk.cyanBright("6.") + " 🏢 Ganti Butik (URL Target)");
-    console.log(chalk.cyanBright("7.") + " ⚙️ Ganti Cabang (Branch Default)");
-    console.log(chalk.cyanBright("8.") + " 🚪 Keluar");
+    console.log(
+      chalk.cyanBright("5.") +
+        chalk.white(" 📋 Tampilkan Status Registrasi".padEnd(menuPadding))
+    );
+    console.log(
+      chalk.cyanBright("6.") +
+        chalk.white(" 🏢 Ganti Butik (URL Target)".padEnd(menuPadding))
+    );
+    console.log(
+      chalk.cyanBright("7.") +
+        chalk.white(" ⚙️ Ganti Cabang (Branch Default)".padEnd(menuPadding))
+    );
+    console.log(
+      chalk.cyanBright("8.") + chalk.white(" 🚪 Keluar".padEnd(menuPadding))
+    );
+    // --- Selesai Menu ---
 
     console.log(
       gradient("yellow", "green")("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
@@ -702,6 +782,7 @@ async function displayMainMenu() {
     }
   }
 }
+// --- SELESAI PERBAIKAN ---
 
 module.exports = {
   displayMainMenu,
