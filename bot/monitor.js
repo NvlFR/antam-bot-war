@@ -3,7 +3,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs");
 const path = require("path");
-const prompt = require("prompt-sync")({ sigint: true });
+// const prompt = require("prompt-sync")({ sigint: true }); // <-- BARIS INI DIHAPUS
 
 // --- KONFIGURASI ---
 const CONFIG_FILE_PATH = path.join(__dirname, "active_config.json");
@@ -29,7 +29,6 @@ const LIVE_SELECTOR = "#name";
 const POLLING_INTERVAL_MS = 1500; // 1.5 detik
 // ---------------------
 
-// (Sisa file monitor.js tidak berubah)
 const USER_AGENTS = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0",
@@ -75,7 +74,10 @@ const checkSite = async () => {
         `[ERROR] Status: ${error.response.status} (Server mungkin masih down)`
       );
     } else {
-      console.error("\x1b[31m%s\x1b[0m", `[ERROR] Gagal konek: ${error.message}`);
+      console.error(
+        "\x1b[31m%s\x1b[0m",
+        `[ERROR] Gagal konek: ${error.message}`
+      );
     }
   }
 };
@@ -83,7 +85,7 @@ console.clear();
 console.log("=================================");
 console.log(`🔫 MONITOR "PISTOL START" 🔫`);
 console.log("=================================");
-console.log(`Menunggu ${LIVE_SELECTOR} di ${TARGET_URL}`); // <-- Sekarang URL-nya dinamis
+console.log(`Menunggu ${LIVE_SELECTOR} di ${TARGET_URL}`);
 console.log(
   `Skrip ini akan membuat file '${SIGNAL_FILE}' saat form terdeteksi.`
 );

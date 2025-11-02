@@ -1,7 +1,11 @@
+// bot/logger.js
 const winston = require("winston");
 const path = require("path");
+// --- PERUBAHAN 1: Ubah nama impor ---
+const DailyRotateFile = require("winston-daily-rotate-file");
+// --- SELESAI PERUBAHAN ---
 
-// Definisikan format log
+// Definisikan format log (Tidak berubah)
 const logFormat = winston.format.combine(
   winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   winston.format.printf(
@@ -11,22 +15,32 @@ const logFormat = winston.format.combine(
 
 // Konfigurasi Logger
 const logger = winston.createLogger({
-  level: "info", // Level log minimum yang akan dicatat
+  level: "info",
   format: logFormat,
   transports: [
-    // 1. Console Transport (Output ke terminal)
+    // 1. Console Transport (Tidak berubah)
     new winston.transports.Console({
       format: winston.format.colorize({ all: true }),
     }),
 
-    // 2. File Transport (Output ke file log)
-    new winston.transports.File({
-      filename: path.join(__dirname, "logs", "bot-error.log"),
-      level: "error", // Hanya log level error
+    // --- PERUBAHAN 2: Ganti nama constructor ---
+    // 2. File Transport untuk Error
+    new DailyRotateFile({
+      filename: path.join(__dirname, "logs", "bot-error-%DATE%.log"),
+      level: "error",
+      datePattern: "YYYY-MM-DD",
+      zippedArchive: true,
+      maxFiles: "14d",
     }),
-    new winston.transports.File({
-      filename: path.join(__dirname, "logs", "bot-combined.log"), // Semua log
+
+    // 3. File Transport Gabungan
+    new DailyRotateFile({
+      filename: path.join(__dirname, "logs", "bot-combined-%DATE%.log"),
+      datePattern: "YYYY-MM-DD",
+      zippedArchive: true,
+      maxFiles: "14d",
     }),
+    // --- SELESAI PERUBAHAN ---
   ],
 });
 

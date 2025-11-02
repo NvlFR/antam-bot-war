@@ -10,7 +10,11 @@ const figlet = require("figlet");
 const chalk = require("chalk");
 const pLimit = require("p-limit").default;
 
-// --- HAPUS PUPPETEER DARI SINI ---
+// --- PERUBAHAN: Kembalikan puppeteer ke CLI ---
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+puppeteer.use(StealthPlugin());
+// --- SELESAI PERUBAHAN ---
 
 const {
   state,
@@ -23,34 +27,85 @@ const { randomDelay } = require("./utils");
 const { displayStatus } = require("./api");
 const { runAntamWar } = require("./bot");
 
-// --- PERUBAHAN BESAR: Sesuaikan limit dengan jumlah proxy Anda ---
-// Jika Anda punya 10 proxy, atur ke 10. Jika 50, atur ke 50.
-// Jangan lebih tinggi dari jumlah proxy Anda.
+// --- Sesuaikan limit Anda di sini ---
 const limit = pLimit(10);
-// --- SELESAI PERUBAHAN ---
+// --- SELESAI ---
 
-async function runAllJobsInParallel(userList) {
+// --- PERUBAHAN: 'runAllJobsInParallel' sekarang menerima 'browser' ---
+async function runAllJobsInParallel(userList, browser) {
   logger.info(
     `[PARALLEL] Starting ${userList.length} jobs with a concurrency limit of 10...`
   );
 
   const tasks = userList.map((userData) => {
-    // Panggil runAntamWar (mode otomatis)
-    return limit(() => runAntamWar(userData, state.currentAntamURL)).catch(
-      (e) => {
-        logger.error(
-          `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
-        );
-        return { status: "FAILED_CRITICAL", nik: userData.nik };
-      }
-    );
+    // Kirim 'browser' yang sudah ada ke worker
+    return limit(() =>
+      runAntamWar(userData, state.currentAntamURL, browser)
+    ).catch((e) => {
+      logger.error(
+        `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
+      );
+      return { status: "FAILED_CRITICAL", nik: userData.nik };
+    });
   });
 
   await Promise.all(tasks);
   logger.info("[PARALLEL] All concurrent jobs completed.");
 }
+// --- SELESAI PERUBAHAN ---
+
+// --- FUNGSI BARU: 'runWarExecution' untuk mengelola Browser Pool ---
+// (Ini adalah gabungan dari 'schedule' dan 'monitor')
+async function runWarExecution(userList, dataMode) {
+  logger.info(`[EKSEKUSI] Memulai eksekusi perang untuk: ${dataMode}`);
+  let browser;
+  try {
+    // Tentukan launchOptions DI SINI (satu kali)
+    const launchOptions = {
+      headless: true,
+      ignoreHTTPSErrors: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--start-maximized",
+        "--ignore-certificate-errors",
+        "--allow-running-insecure-content",
+      ],
+      defaultViewport: null,
+    };
+
+    // Ambil proxy DI SINI (satu kali)
+    const proxy = getRandomProxy();
+    if (proxy) {
+      launchOptions.args.push(`--proxy-server=${proxy}`);
+    }
+
+    logger.info("[BROWSER POOL] Meluncurkan browser bersama...");
+    browser = await puppeteer.launch(launchOptions);
+    logger.info(
+      "[BROWSER POOL] Browser bersama berhasil diluncurkan. Menjalankan jobs..."
+    );
+
+    // Kirim browser yang sudah hidup ke semua job
+    await runAllJobsInParallel(userList, browser);
+
+    logger.info("[EKSEKUSI] Selesai mengeksekusi semua job.");
+  } catch (err) {
+    logger.error(`[BROWSER POOL] Gagal meluncurkan browser: ${err.message}`);
+  } finally {
+    // Tutup browser HANYA setelah SEMUA job selesai
+    if (browser) {
+      await browser.close();
+      logger.info(
+        "[BROWSER POOL] Semua job paralel selesai. Browser bersama ditutup."
+      );
+    }
+  }
+}
+// --- SELESAI FUNGSI BARU ---
 
 async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
+  // (Fungsi ini sekarang JAUH lebih sederhana)
   const now = new Date();
   const targetTime = new Date(
     now.getFullYear(),
@@ -70,6 +125,7 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
     return;
   }
 
+  // (Logika Countdown... tidak berubah)
   const hours = Math.floor(timeUntilTarget / (1000 * 60 * 60));
   const minutes = Math.floor(
     (timeUntilTarget % (1000 * 60 * 60)) / (1000 * 60)
@@ -82,11 +138,7 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   logger.warn(`[SCHEDULING] Cabang Default: ${state.currentBranch}`);
   if (hasProxies()) {
     logger.warn(
-      `[SCHEDULING] Rotasi Proxy AKTIF. Menggunakan ${
-        constants.MAX_RETRIES
-      } proxy per NIK (total ${
-        userList.length * constants.MAX_RETRIES
-      } percobaan).`
+      `[SCHEDULING] Rotasi Proxy AKTIF. Menggunakan 1 proxy gateway.`
     );
   } else {
     logger.warn(
@@ -124,12 +176,14 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
     }
   }, 1000);
 
+  // Hapus semua logika 'puppeteer.launch' dari sini
   await new Promise((resolve) =>
     setTimeout(() => {
       logger.info("=================================================");
       logger.info("[SCHEDULING] WAKTU EKSEKUSI TEPAT! Menjalankan War...");
       logger.info("=================================================");
-      resolve(runAllJobsInParallel(userList));
+      // Panggil 'runWarExecution' yang baru
+      resolve(runWarExecution(userList, dataMode));
     }, timeUntilTarget)
   );
 
@@ -137,6 +191,7 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
 }
 
 async function loadDataAndGetList(dataType) {
+  // (Fungsi ini tidak berubah)
   const FOLDER_PATH =
     dataType === "json" ? constants.JSON_DIR : constants.CSV_DIR;
   const FILE_EXT = dataType === "json" ? ".json" : ".csv";
@@ -242,6 +297,7 @@ async function loadDataAndGetList(dataType) {
 
 // --- FUNGSI MENU ---
 
+// --- PERUBAHAN: 'processManualInput' sekarang juga mengelola browser ---
 async function processManualInput() {
   logger.info("\n--- MODE INPUT MANUAL ---");
   const name = prompt("Masukkan Nama: ");
@@ -279,9 +335,39 @@ async function processManualInput() {
   };
   logger.info(`[MANUAL] Starting single job for NIK: ${userData.nik}`);
 
-  // Kirim 'false' (otomatis) untuk mode manual
-  await runAntamWar(userData, state.currentAntamURL, false);
+  // Mode manual juga harus meluncurkan browsernya sendiri
+  let browser;
+  try {
+    const launchOptions = {
+      headless: true,
+      ignoreHTTPSErrors: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--start-maximized",
+        "--ignore-certificate-errors",
+        "--allow-running-insecure-content",
+      ],
+      defaultViewport: null,
+    };
+    const proxy = getRandomProxy();
+    if (proxy) {
+      launchOptions.args.push(`--proxy-server=${proxy}`);
+    }
+    browser = await puppeteer.launch(launchOptions);
+
+    // Kirim browser yang sudah hidup
+    await runAntamWar(userData, state.currentAntamURL, browser);
+  } catch (err) {
+    logger.error(`[MANUAL] Gagal menjalankan job: ${err.message}`);
+  } finally {
+    if (browser) {
+      await browser.close();
+      logger.info("[MANUAL] Browser manual ditutup.");
+    }
+  }
 }
+// --- SELESAI PERUBAHAN ---
 
 async function processUserData() {
   logger.info("\n--- INPUT JSON FILE (TIMER) ---");
@@ -350,6 +436,7 @@ async function processCSVData() {
   );
 }
 
+// --- PERUBAHAN: 'processDataWithMonitor' memanggil 'runWarExecution' ---
 async function processDataWithMonitor() {
   logger.info("\n--- SIAGA (TUNGGU SINYAL MONITOR) ---");
   console.log("Pilih file data yang ingin disiagakan:");
@@ -395,10 +482,13 @@ async function processDataWithMonitor() {
   if (fs.existsSync(constants.SIGNAL_FILE_PATH)) {
     fs.unlinkSync(constants.SIGNAL_FILE_PATH);
   }
-  await runAllJobsInParallel(data.userList);
+  // Panggil 'runWarExecution' yang baru
+  await runWarExecution(data.userList, `MONITOR SIGNAL (${data.selectedFile})`);
 }
+// --- SELESAI PERUBAHAN ---
 
 function setAntamURL() {
+  // (Fungsi ini tidak berubah)
   logger.info("\n--- PILIH BUTIK ANTAM (URL) ---");
   const butikOptions = [
     "https://antrigrahadipta.com/",
@@ -444,6 +534,7 @@ function setAntamURL() {
 }
 
 function setBranch() {
+  // (Fungsi ini tidak berubah)
   logger.info("\n--- PENGATURAN CABANG (BRANCH) ---");
   console.log(chalk.yellow(`Cabang Default Saat Ini: ${state.currentBranch}`));
   console.log(
@@ -474,13 +565,12 @@ function setBranch() {
   }
 }
 
-// --- HAPUS FUNGSI 'toggleRunMode' ---
-
 async function showBanner() {
+  // (Fungsi ini tidak berubah)
   return new Promise((resolve, reject) => {
     figlet.text("ANTAM BOT WAR", { font: "ANSI Shadow" }, (err, data) => {
       if (err) return reject(err);
-      console.clear();
+      // console.clear();
       const banner = gradient("cyan", "yellow").multiline(data);
       const subtitle = gradient(
         "yellow",
@@ -498,8 +588,8 @@ async function showBanner() {
   });
 }
 
-// --- PERUBAHAN: TAMPILAN MENU UTAMA (Final) ---
 async function displayMainMenu() {
+  // (Fungsi ini tidak berubah, menu 8 sudah dihapus)
   let continueLoop = true;
   while (continueLoop) {
     const titleBox = boxen("✨ ANTAM BOT WAR MENU ✨", {
@@ -511,7 +601,6 @@ async function displayMainMenu() {
     });
     console.log(chalk.cyanBright(titleBox));
 
-    // Mode selalu otomatis
     const modeText = chalk.greenBright("OTOMATIS (Full Bot)");
 
     const statusBox = boxen(
@@ -519,7 +608,7 @@ async function displayMainMenu() {
         `URL Target : ${chalk.magentaBright(state.currentAntamURL)}\n` +
         `Cabang     : ${chalk.magentaBright(state.currentBranch)}\n` +
         `Selector   : ${chalk.magentaBright(state.currentBranchSelector)}\n` +
-        `Mode       : ${modeText}`, // <-- Selalu Otomatis
+        `Mode       : ${modeText}`,
       {
         padding: 0.5,
         borderColor: "gray",
@@ -562,7 +651,7 @@ async function displayMainMenu() {
     console.log(chalk.cyanBright("5.") + " 📋 Tampilkan Status Registrasi");
     console.log(chalk.cyanBright("6.") + " 🏢 Ganti Butik (URL Target)");
     console.log(chalk.cyanBright("7.") + " ⚙️ Ganti Cabang (Branch Default)");
-    console.log(chalk.cyanBright("8.") + " 🚪 Keluar"); // <-- Exit jadi 8
+    console.log(chalk.cyanBright("8.") + " 🚪 Keluar");
 
     console.log(
       gradient("yellow", "green")("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
@@ -593,7 +682,7 @@ async function displayMainMenu() {
       case "7":
         setBranch();
         break;
-      case "8": // <-- Exit jadi 8
+      case "8":
         console.log(
           gradient(
             "red",
@@ -613,7 +702,6 @@ async function displayMainMenu() {
     }
   }
 }
-// --- SELESAI PERUBAHAN ---
 
 module.exports = {
   displayMainMenu,

@@ -5,7 +5,7 @@ const logger = require("./logger");
 
 const MOCKUP_FILE = path.join(__dirname, "mockup_form.html");
 const LARAVEL_API_URL = "http://127.0.0.1:8000/api";
-const CONFIG_FILE_PATH = path.join(__dirname, "active_config.json"); // <-- File config baru
+const CONFIG_FILE_PATH = path.join(__dirname, "active_config.json");
 
 // --- KONSTANTA (Tidak Berubah) ---
 const constants = {
@@ -25,7 +25,7 @@ const constants = {
   MAX_RETRIES: 5,
 };
 
-// --- STATE (Sekarang dibaca dari file) ---
+// --- STATE (Blok ini telah diperbaiki) ---
 let state = {};
 
 try {
@@ -33,34 +33,50 @@ try {
     const configData = fs.readFileSync(CONFIG_FILE_PATH, "utf8");
     state = JSON.parse(configData);
     logger.info("[CONFIG] Berhasil memuat 'active_config.json'");
+
+    // --- PERBAIKAN: Validasi key yang mungkin hilang ---
+    if (
+      !state.TWO_CAPTCHA_API_KEY ||
+      state.TWO_CAPTCHA_API_KEY === "ISI_KUNCI_API_RAHASIA_ANDA_DI_SINI"
+    ) {
+      logger.warn(
+        "[CONFIG] TWO_CAPTCHA_API_KEY belum diatur. Solver Captcha nonaktif."
+      );
+      state.TWO_CAPTCHA_API_KEY = null;
+    } else {
+      logger.info("[CONFIG] 2Captcha API Key berhasil dimuat.");
+    }
+    // (Kita hapus 'runMode' karena kita sepakat full-otomatis)
+    // --- SELESAI PERBAIKAN ---
   } else {
     logger.warn(
       "[CONFIG] 'active_config.json' tidak ditemukan, gunakan default."
     );
+    // --- PERBAIKAN: Default state harus lengkap ---
     state = {
       currentAntamURL: "https://antrigrahadipta.com/",
       currentBranch: "BUTIK GRAHA DIPTA",
       currentBranchSelector: "GRAHA DIPTA",
+      TWO_CAPTCHA_API_KEY: null, // <-- INI YANG HILANG DARI KODE ANDA
     };
+    // --- SELESAI PERBAIKAN ---
     fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify(state, null, 2));
   }
 } catch (e) {
   logger.error(`[CONFIG] Gagal memuat active_config.json: ${e.message}`);
 }
+// --- SELESAI BLOK PERBAIKAN ---
 
-// --- FUNGSI BARU: Untuk menyimpan state ---
-/**
- * Menyimpan 'state' object saat ini ke 'active_config.json'
- */
 function saveState() {
   try {
-    fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify(state, null, 2));
+    // Kita pastikan 'runMode' tidak ikut tersimpan jika ada
+    const { runMode, ...stateToSave } = state;
+    fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify(stateToSave, null, 2));
     logger.info("[CONFIG] Konfigurasi baru disimpan ke 'active_config.json'.");
   } catch (e) {
     logger.error(`[CONFIG] Gagal menyimpan konfigurasi: ${e.message}`);
   }
 }
-// --- SELESAI FUNGSI BARU ---
 
 // --- DAFTAR USER-AGENT (Tidak Berubah) ---
 const USER_AGENTS = [
@@ -117,7 +133,7 @@ const getRandomUserAgent = () => {
 module.exports = {
   state,
   constants,
-  saveState, // <-- Ekspor fungsi baru
+  saveState,
   getRandomProxy,
   getRandomUserAgent,
   hasProxies: () => proxyList.length > 0,

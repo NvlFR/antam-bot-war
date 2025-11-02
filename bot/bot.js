@@ -1,21 +1,21 @@
 // bot/bot.js
-const puppeteer = require("puppeteer-extra");
+const puppeteer = require("puppeteer-extra"); // Kita masih butuh ini untuk 'StealthPlugin'
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-const Captcha = require("2captcha"); // <-- Diaktifkan
+const Captcha = require("2captcha");
 const logger = require("./logger");
 const { sendRegistrationResult } = require("./api");
 const { randomDelay, getTodayDateString } = require("./utils");
 const {
-  state, // <-- Kita butuh 'state' untuk API Key
+  state,
   constants,
-  getRandomProxy,
+  getRandomProxy, // Kita tidak lagi butuh getRandomProxy di sini
   getRandomUserAgent,
 } = require("./config");
 const chalk = require("chalk");
 
-puppeteer.use(StealthPlugin());
+puppeteer.use(StealthPlugin()); // Terapkan stealth ke puppeteer
 
-// --- FUNGSI HANDLEFORMFILLING (DENGAN 2CAPTCHA AKTIF) ---
+// (Fungsi handleFormFilling tidak berubah, tetap sama persis)
 async function handleFormFilling(page, data, antamURL) {
   logger.info("[FORM] Starting form automation...");
 
@@ -59,33 +59,26 @@ async function handleFormFilling(page, data, antamURL) {
     );
   }
 
-  // --- LOGIKA BARU: SOLVE RECAPTCHA ---
+  // --- LOGIKA RECAPTCHA (Tidak Berubah) ---
   let solutionToken = null;
-
-  // Cek jika API Key ada DAN ini bukan file mockup
   if (state.TWO_CAPTCHA_API_KEY && !antamURL.startsWith("file://")) {
     try {
       logger.warn("[CAPTCHA] Mencoba mengambil reCAPTCHA site-key...");
-
       const pageHtml = await page.content();
       const siteKeyMatch = pageHtml.match(/grecaptcha.execute\('([^']+)'/);
-
       if (!siteKeyMatch || !siteKeyMatch[1]) {
         throw new Error("Tidak dapat menemukan reCAPTCHA site-key di halaman.");
       }
-
       const siteKey = siteKeyMatch[1];
       logger.info(
         `[CAPTCHA] Site-key ditemukan: ${siteKey.substring(0, 10)}...`
       );
-
       const solver = new Captcha.Solver(state.TWO_CAPTCHA_API_KEY);
       logger.warn(
         "[CAPTCHA] Mengirim permintaan ke 2Captcha... Ini mungkin perlu waktu (15-45 detik)..."
       );
-
       const res = await solver.recaptcha(siteKey, antamURL);
-      solutionToken = res.data; // Ini adalah token solusinya
+      solutionToken = res.data;
       logger.info(chalk.greenBright("[CAPTCHA] SOLUSI DITERIMA!"));
     } catch (err) {
       logger.error(
@@ -101,12 +94,9 @@ async function handleFormFilling(page, data, antamURL) {
   } else {
     logger.info("[MOCKUP] Melewatkan solver reCAPTCHA untuk file mockup.");
   }
-  // --- SELESAI LOGIKA RECAPTCHA ---
 
-  // 5. SUBMIT FORM
-
+  // --- SUBMIT FORM & WAIT (Tidak Berubah) ---
   if (solutionToken) {
-    // A. JIKA DAPAT TOKEN (LIVE MODE)
     logger.info("[FORM] Memasukkan token reCAPTCHA ke dalam form...");
     await page.evaluate((token) => {
       const recaptchaInput = document.createElement("input");
@@ -115,19 +105,19 @@ async function handleFormFilling(page, data, antamURL) {
       recaptchaInput.setAttribute("value", token);
       document.querySelector("form").appendChild(recaptchaInput);
     }, solutionToken);
-
     logger.info("[FORM] Mengirim form (submit) secara manual...");
     await page.evaluate(() => {
       document.querySelector("form").submit();
     });
+    logger.info("[FORM] Menunggu navigasi halaman baru...");
+    await page.waitForNavigation({ timeout: 15000 });
   } else if (antamURL.startsWith("file://")) {
-    // B. JIKA INI MOCKUP FILE
     logger.info("[MOCKUP] Mengklik tombol submit (simulasi)...");
     await page.click('button[type="submit"]');
+    logger.info("[MOCKUP] Menunggu delay 5 detik (simulasi)...");
+    await randomDelay(5000, 7000);
   }
 
-  // Tunggu halaman baru setelah submit
-  await page.waitForNavigation({ timeout: 15000 });
   logger.info(
     "[FORM] Halaman baru terdeteksi setelah submit. Menganalisis hasil..."
   );
@@ -172,6 +162,7 @@ async function handleFormFilling(page, data, antamURL) {
   if (ticketNumber) {
     return { status: "SUCCESS", ticket_number: ticketNumber };
   } else {
+    // ... (Sisa logika deteksi FAILED_STOCK, dll. tidak berubah)
     const genericErrorMessage = await page.$eval("body", (el) => el.innerText);
     if (
       genericErrorMessage.includes("STOK TIDAK TERSEDIA") ||
@@ -204,19 +195,27 @@ async function handleFormFilling(page, data, antamURL) {
 }
 // --- SELESAI FUNGSI HANDLEFORMFILLING ---
 
-// --- FUNGSI RUNANTAMWAR (Final) ---
-async function runAntamWar(userData, antamURL) {
-  // Hapus flag 'isSemiAuto'
-  let browser;
+// --- FUNGSI RUNANTAMWAR (Final - Versi Pool) ---
+// --- PERUBAHAN BESAR: Sekarang menerima 'browser' ---
+async function runAntamWar(userData, antamURL, browser) {
+  // 'browser' sekarang adalah parameter, 'puppeteer.launch' dihapus
   let page;
 
   const now = new Date();
   const localWarTime = new Intl.DateTimeFormat("sv-SE", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
     timeZone: "Asia/Jakarta",
   })
     .format(now)
     .replace(/-/g, "-")
     .replace(" ", " ");
+
   const todayDate = getTodayDateString();
   userData.purchase_date = todayDate;
   logger.info(`[DATE] War date set to: ${userData.purchase_date}`);
@@ -231,8 +230,6 @@ async function runAntamWar(userData, antamURL) {
   logger.info(`[JOB] Starting job for NIK: ${userData.nik}`);
   let success = false;
   let attempt = 0;
-
-  // Selalu gunakan MAX_RETRIES dari config
   const maxRetries = constants.MAX_RETRIES;
 
   while (attempt < maxRetries && !success) {
@@ -242,28 +239,12 @@ async function runAntamWar(userData, antamURL) {
     );
 
     try {
-      const launchOptions = {
-        headless: true, // Selalu headless (otomatis)
-        ignoreHTTPSErrors: true,
-        args: [
-          "--no-sandbox",
-          "--disable-setuid-sandbox",
-          "--start-maximized",
-          "--ignore-certificate-errors",
-          "--allow-running-insecure-content",
-        ],
-        defaultViewport: null,
-      };
-
-      const proxy = getRandomProxy();
-      if (proxy) {
-        launchOptions.args.push(`--proxy-server=${proxy}`);
-      }
-
-      browser = await puppeteer.launch(launchOptions);
+      // --- PERUBAHAN: Hapus launchOptions, proxy, dan launch ---
+      // --- Kita hanya membuat 'page' (tab) baru ---
       page = await browser.newPage();
       await page.setViewport({ width: 1366, height: 768 });
 
+      // --- Rotasi User-Agent tetap di sini (ini per-tab) ---
       const userAgent = getRandomUserAgent();
       logger.info(
         `[CONFIG] Using User-Agent: ${userAgent.substring(0, 40)}...`
@@ -300,7 +281,6 @@ async function runAntamWar(userData, antamURL) {
       await page.waitForSelector("#name", { timeout: 20000 });
       logger.info("[RETRY] Form loaded. Starting filling process...");
 
-      // Kirim 'antamURL' ke handleFormFilling untuk solver
       const resultFromForm = await handleFormFilling(page, userData, antamURL);
 
       const finalPageContent = await page.content();
@@ -320,7 +300,7 @@ async function runAntamWar(userData, antamURL) {
           logger.error(
             "[CRITICAL] Captcha failed, stopping retries for this NIK."
           );
-          attempt = constants.MAX_RETRIES; // Paksa loop berhenti
+          attempt = constants.MAX_RETRIES;
         }
         throw new Error(
           `Form filling failed with status: ${registrationResult.status}`
@@ -346,18 +326,19 @@ async function runAntamWar(userData, antamURL) {
         await randomDelay(3000, 5000);
       }
     } finally {
-      if (browser) {
-        if (success || attempt >= maxRetries) {
-          try {
-            await browser.close();
-            logger.info(`[JOB] Browser closed for NIK: ${userData.nik}`);
-          } catch (e) {
-            logger.warn(
-              `[JOB] Failed to close browser, maybe already closed: ${e.message}`
-            );
-          }
+      // --- PERUBAHAN: Kita HANYA menutup 'page', BUKAN 'browser' ---
+      if (page) {
+        try {
+          await page.close();
+          logger.info(`[JOB] Page closed for NIK: ${userData.nik}`);
+        } catch (e) {
+          logger.warn(
+            `[JOB] Failed to close page, maybe already closed: ${e.message}`
+          );
         }
       }
+      // 'browser' akan ditutup oleh cli.js
+      // --- SELESAI PERUBAHAN ---
     }
   }
 
