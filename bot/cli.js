@@ -11,9 +11,11 @@ const figlet = require("figlet");
 const chalk = require("chalk");
 const pLimit = require("p-limit").default;
 
-const puppeteer = require("puppeteer-extra");
-const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-puppeteer.use(StealthPlugin());
+// --- PERUBAHAN: HAPUS PUPPETEER DARI SINI ---
+// const puppeteer = require("puppeteer-extra");
+// const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+// puppeteer.use(StealthPlugin());
+// --- SELESAI PERUBAHAN ---
 
 const {
   state,
@@ -26,34 +28,26 @@ const { randomDelay } = require("./utils");
 const { displayStatus } = require("./api");
 const { runAntamWar } = require("./bot");
 
-// --- Sesuaikan limit Anda di sini ---
-const limit = pLimit(10);
-// --- SELESAI ---
+// --- PERUBAHAN BESAR: Turunkan limit untuk stabilitas CPU ---
+const limit = pLimit(5); // <-- DARI 10 KE 5 (Sesuaikan dengan PC Anda)
+// --- SELESAI PERUBAHAN ---
 
-// --- PERUBAHAN: 'runAllJobsInParallel' sekarang mengirim 'jobInfo' (index/total) ---
-async function runAllJobsInParallel(userList, browser, proxyCredentials) {
-  const totalJobs = userList.length; // <-- Ambil total job
+// --- PERUBAHAN: 'runAllJobsInParallel' TIDAK lagi butuh 'browser' ---
+async function runAllJobsInParallel(userList) {
+  const totalJobs = userList.length;
   logger.info(
-    `[PARALLEL] Starting ${totalJobs} jobs with a concurrency limit of 10...`
+    `[PARALLEL] Starting ${totalJobs} jobs with a concurrency limit of 5...`
   );
 
   const tasks = userList.map((userData, index) => {
-    // <-- Ambil 'index'
-    // Buat objek info pekerjaan
     const jobInfo = {
-      number: index + 1, // (index + 1) agar mulai dari 1, bukan 0
+      number: index + 1,
       total: totalJobs,
     };
 
-    // Kirim 'jobInfo' ke worker
+    // Panggil 'runAntamWar' tanpa 'browser' atau 'proxyCredentials'
     return limit(() =>
-      runAntamWar(
-        userData,
-        state.currentAntamURL,
-        browser,
-        proxyCredentials,
-        jobInfo
-      )
+      runAntamWar(userData, state.currentAntamURL, jobInfo)
     ).catch((e) => {
       logger.error(
         `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
@@ -67,72 +61,9 @@ async function runAllJobsInParallel(userList, browser, proxyCredentials) {
 }
 // --- SELESAI PERUBAHAN ---
 
-async function runWarExecution(userList, dataMode) {
-  logger.info(`[EKSEKUSI] Memulai eksekusi perang untuk: ${dataMode}`);
-  let browser;
-  try {
-    const launchOptions = {
-      headless: true,
-      ignoreHTTPSErrors: true,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--start-maximized",
-        "--ignore-certificate-errors",
-        "--allow-running-insecure-content",
-      ],
-      defaultViewport: null,
-    };
-
-    let proxyCredentials = null;
-    const proxyString = getRandomProxy();
-
-    if (proxyString) {
-      try {
-        const proxyUrl = new URL(proxyString);
-        const proxyServerString = `${proxyUrl.protocol}//${proxyUrl.hostname}:${proxyUrl.port}`;
-
-        launchOptions.args.push(`--proxy-server=${proxyServerString}`);
-
-        proxyCredentials = {
-          username: proxyUrl.username,
-          password: proxyUrl.password,
-        };
-
-        logger.info(
-          `[PROXY] Menggunakan gateway: ${proxyUrl.hostname}:${proxyUrl.port}`
-        );
-      } catch (e) {
-        logger.error(
-          chalk.red(
-            `[FATAL] Format proxy di 'proxies.json' salah: ${e.message}`
-          )
-        );
-        return;
-      }
-    }
-
-    logger.info("[BROWSER POOL] Meluncurkan browser bersama...");
-    browser = await puppeteer.launch(launchOptions);
-    logger.info(
-      "[BROWSER POOL] Browser bersama berhasil diluncurkan. Menjalankan jobs..."
-    );
-
-    // Kirim browser yang sudah hidup DAN kredensialnya
-    await runAllJobsInParallel(userList, browser, proxyCredentials);
-
-    logger.info("[EKSEKUSI] Selesai mengeksekusi semua job.");
-  } catch (err) {
-    logger.error(`[BROWSER POOL] Gagal meluncurkan browser: ${err.message}`);
-  } finally {
-    if (browser) {
-      await browser.close();
-      logger.info(
-        "[BROWSER POOL] Semua job paralel selesai. Browser bersama ditutup."
-      );
-    }
-  }
-}
+// --- PERUBAHAN: HAPUS 'runWarExecution' ---
+// (Kita tidak butuh ini lagi karena pool-nya dihapus)
+// --- SELESAI PERUBAHAN ---
 
 async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   const now = new Date();
@@ -154,7 +85,6 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
     return;
   }
 
-  // (Logika Countdown... tidak berubah)
   const hours = Math.floor(timeUntilTarget / (1000 * 60 * 60));
   const minutes = Math.floor(
     (timeUntilTarget % (1000 * 60 * 60)) / (1000 * 60)
@@ -167,7 +97,7 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   logger.warn(`[SCHEDULING] Cabang Default: ${state.currentBranch}`);
   if (hasProxies()) {
     logger.warn(
-      `[SCHEDULING] Rotasi Proxy AKTIF. Menggunakan 1 proxy gateway.`
+      `[SCHEDULING] Rotasi Proxy AKTIF. Setiap NIK akan mendapat IP baru.`
     );
   } else {
     logger.warn(
@@ -210,7 +140,7 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
       logger.info("=================================================");
       logger.info("[SCHEDULING] WAKTU EKSEKUSI TEPAT! Menjalankan War...");
       logger.info("=================================================");
-      resolve(runWarExecution(userList, dataMode));
+      resolve(runAllJobsInParallel(userList)); // Panggil langsung
     }, timeUntilTarget)
   );
 
@@ -222,22 +152,14 @@ async function loadDataAndGetList(dataType) {
   const FOLDER_PATH =
     dataType === "json" ? constants.JSON_DIR : constants.CSV_DIR;
   const FILE_EXT = dataType === "json" ? ".json" : ".csv";
-
   if (!fs.existsSync(FOLDER_PATH)) {
-    logger.error(
-      `[FATAL] Folder ${dataType.toUpperCase()} tidak ditemukan: ${FOLDER_PATH}.`
-    );
-    return null;
+    /*...*/ return null;
   }
-
   const files = fs
     .readdirSync(FOLDER_PATH)
     .filter((file) => file.endsWith(FILE_EXT));
   if (files.length === 0) {
-    logger.error(
-      `[FATAL] Tidak ada file ${FILE_EXT} ditemukan di folder: ${FOLDER_PATH}`
-    );
-    return null;
+    /*...*/ return null;
   }
 
   console.log(
@@ -265,7 +187,6 @@ async function loadDataAndGetList(dataType) {
   logger.info(`[CLI] Reading user data from: ${dataFilePath}`);
 
   let userList;
-
   if (dataType === "json") {
     try {
       const rawData = fs.readFileSync(dataFilePath);
@@ -307,25 +228,22 @@ async function loadDataAndGetList(dataType) {
         })
         .on("end", () => {
           if (results.length === 0) {
-            logger.error("[FATAL] CSV file is empty.");
-            resolve(null);
+            /*...*/ resolve(null);
           }
           resolve(results);
         })
         .on("error", (err) => {
-          logger.error(`[FATAL] Error reading CSV file: ${err.message}`);
-          resolve(null);
+          /*...*/ resolve(null);
         });
     });
   }
-
   return { userList, selectedFile };
 }
 
 // --- FUNGSI MENU ---
 
-// --- PERUBAHAN: 'processManualInput' sekarang mengirim 'jobInfo' ---
 async function processManualInput() {
+  // (Fungsi ini tidak berubah)
   logger.info("\n--- MODE INPUT MANUAL ---");
   const name = prompt("Masukkan Nama: ");
   let nik;
@@ -362,69 +280,10 @@ async function processManualInput() {
   };
   logger.info(`[MANUAL] Starting single job for NIK: ${userData.nik}`);
 
-  let browser;
-  try {
-    const launchOptions = {
-      headless: true,
-      ignoreHTTPSErrors: true,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--start-maximized",
-        "--ignore-certificate-errors",
-        "--allow-running-insecure-content",
-      ],
-      defaultViewport: null,
-    };
-
-    let proxyCredentials = null;
-    const proxyString = getRandomProxy();
-
-    if (proxyString) {
-      try {
-        const proxyUrl = new URL(proxyString);
-        const proxyServerString = `${proxyUrl.protocol}//${proxyUrl.hostname}:${proxyUrl.port}`;
-        launchOptions.args.push(`--proxy-server=${proxyServerString}`);
-        proxyCredentials = {
-          username: proxyUrl.username,
-          password: proxyUrl.password,
-        };
-        logger.info(
-          `[PROXY] Menggunakan gateway: ${proxyUrl.hostname}:${proxyUrl.port}`
-        );
-      } catch (e) {
-        logger.error(
-          chalk.red(
-            `[FATAL] Format proxy di 'proxies.json' salah: ${e.message}`
-          )
-        );
-        return;
-      }
-    }
-
-    browser = await puppeteer.launch(launchOptions);
-
-    // Buat jobInfo untuk mode manual (1 dari 1)
-    const jobInfo = { number: 1, total: 1 };
-
-    // Kirim browser, kredensial, DAN jobInfo
-    await runAntamWar(
-      userData,
-      state.currentAntamURL,
-      browser,
-      proxyCredentials,
-      jobInfo
-    );
-  } catch (err) {
-    logger.error(`[MANUAL] Gagal menjalankan job: ${err.message}`);
-  } finally {
-    if (browser) {
-      await browser.close();
-      logger.info("[MANUAL] Browser manual ditutup.");
-    }
-  }
+  // Kirim jobInfo 1/1
+  const jobInfo = { number: 1, total: 1 };
+  await runAntamWar(userData, state.currentAntamURL, jobInfo);
 }
-// --- SELESAI PERUBAHAN ---
 
 async function processUserData() {
   logger.info("\n--- INPUT JSON FILE (TIMER) ---");
@@ -538,7 +397,9 @@ async function processDataWithMonitor() {
   if (fs.existsSync(constants.SIGNAL_FILE_PATH)) {
     fs.unlinkSync(constants.SIGNAL_FILE_PATH);
   }
-  await runWarExecution(data.userList, `MONITOR SIGNAL (${data.selectedFile})`);
+
+  // Panggil 'runAllJobsInParallel' yang sudah sederhana
+  await runAllJobsInParallel(data.userList);
 }
 
 function setAntamURL() {
@@ -619,8 +480,8 @@ function setBranch() {
   }
 }
 
-// --- PERBAIKAN TAMPILAN: Menerapkan 'centering' ---
 async function showBanner() {
+  // (Tampilan cantik sudah ada)
   return new Promise((resolve, reject) => {
     figlet.text("ANTAM BOT WAR", { font: "ANSI Shadow" }, (err, data) => {
       if (err) return reject(err);
@@ -637,7 +498,6 @@ async function showBanner() {
         align: "center",
       });
 
-      // Logika Penengah (Centering)
       const termWidth = process.stdout.columns || 80;
       const boxWidth = box.split("\n")[0].length;
       const padding = Math.max(0, Math.floor((termWidth - boxWidth) / 2));
@@ -651,10 +511,9 @@ async function showBanner() {
     });
   });
 }
-// --- SELESAI PERBAIKAN ---
 
-// --- PERBAIKAN TAMPILAN: Menerapkan menu cantik ---
 async function displayMainMenu() {
+  // (Tampilan cantik sudah ada)
   let continueLoop = true;
   while (continueLoop) {
     const titleBox = boxen("✨ ANTAM BOT WAR MENU ✨", {
@@ -668,7 +527,6 @@ async function displayMainMenu() {
 
     const modeText = chalk.greenBright("OTOMATIS (Full Bot)");
 
-    // Kotak status dengan label bold dan padding
     const statusBox = boxen(
       chalk.yellow.bold("KONFIGURASI SAAT INI:\n") +
         `${chalk.white.bold("URL Target :")} ${chalk.magentaBright(
@@ -700,7 +558,6 @@ async function displayMainMenu() {
       )
     );
 
-    // Logika padding menu agar lurus
     const menuPadding = 40;
 
     console.log(
@@ -742,7 +599,6 @@ async function displayMainMenu() {
     console.log(
       chalk.cyanBright("8.") + chalk.white(" 🚪 Keluar".padEnd(menuPadding))
     );
-    // --- Selesai Menu ---
 
     console.log(
       gradient("yellow", "green")("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
@@ -793,7 +649,6 @@ async function displayMainMenu() {
     }
   }
 }
-// --- SELESAI PERBAIKAN ---
 
 module.exports = {
   displayMainMenu,

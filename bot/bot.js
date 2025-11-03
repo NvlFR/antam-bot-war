@@ -2,20 +2,21 @@
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 const Captcha = require("2captcha");
+const { URL } = require("url"); // <-- Impor URL parser
 const logger = require("./logger");
 const { sendRegistrationResult } = require("./api");
 const { randomDelay, getTodayDateString } = require("./utils");
 const {
   state,
   constants,
-  // Kita tidak lagi butuh getRandomProxy di sini
+  getRandomProxy, // <-- Kita butuh ini lagi
   getRandomUserAgent,
 } = require("./config");
 const chalk = require("chalk");
 
-puppeteer.use(StealthPlugin()); // Terapkan stealth ke puppeteer
+puppeteer.use(StealthPlugin());
 
-// (FungSI handleFormFilling TIDAK BERUBAH SAMA SEKALI)
+// (Fungsi handleFormFilling TIDAK BERUBAH SAMA SEKALI)
 async function handleFormFilling(page, data, antamURL) {
   logger.info("[FORM] Starting form automation...");
   // 1. SCROLL ALAMI
@@ -195,15 +196,14 @@ async function handleFormFilling(page, data, antamURL) {
 }
 // --- SELESAI FUNGSI HANDLEFORMFILLING ---
 
-// --- FUNGSI RUNANTAMWAR (Final - Versi Pool + Auth) ---
-// --- PERUBAHAN 1: Menerima 'jobInfo' ---
+// --- FUNGSI RUNANTAMWAR (Final - Versi Rotasi Proxy + Auth) ---
+// --- HAPUS 'browser', HAPUS 'proxyCredentials', TAMBAHKAN 'jobInfo' ---
 async function runAntamWar(
   userData,
   antamURL,
-  browser,
-  proxyCredentials = null,
-  jobInfo = { number: 1, total: 1 } // <-- INI DIA
+  jobInfo = { number: 1, total: 1 }
 ) {
+  let browser;
   let page;
 
   const now = new Date();
@@ -224,9 +224,7 @@ async function runAntamWar(
   const todayDate = getTodayDateString();
   userData.purchase_date = todayDate;
 
-  // --- PERUBAHAN 2: Buat prefix log ---
   const jobPrefix = `[Job ${jobInfo.number}/${jobInfo.total} | NIK: ${userData.nik}]`;
-  // --- SELESAI PERUBAHAN ---
 
   let registrationResult = {
     status: "FAILED",
@@ -235,7 +233,6 @@ async function runAntamWar(
     war_time: localWarTime,
   };
 
-  // --- PERUBAHAN 3: Ganti semua log di bawah ini ---
   logger.info(chalk.cyanBright(`${jobPrefix} Starting job...`));
   let success = false;
   let attempt = 0;
@@ -246,13 +243,58 @@ async function runAntamWar(
     logger.warn(`${jobPrefix} [RETRY] Attempt ${attempt}/${maxRetries}`);
 
     try {
+      // --- PERUBAHAN BESAR: Logika Proxy & Auth kembali ke sini ---
+      const launchOptions = {
+        headless: true,
+        ignoreHTTPSErrors: true,
+        args: [
+          "--no-sandbox",
+          "--disable-setuid-sandbox",
+          "--start-maximized",
+          "--ignore-certificate-errors",
+          "--allow-running-insecure-content",
+        ],
+        defaultViewport: null,
+      };
+
+      let proxyCredentials = null;
+      const proxyString = getRandomProxy(); // Ambil proxy baru setiap attempt
+
+      if (proxyString) {
+        try {
+          const proxyUrl = new URL(proxyString);
+          const proxyServerString = `${proxyUrl.protocol}//${proxyUrl.hostname}:${proxyUrl.port}`;
+
+          launchOptions.args.push(`--proxy-server=${proxyServerString}`);
+
+          proxyCredentials = {
+            username: proxyUrl.username,
+            password: proxyUrl.password,
+          };
+
+          logger.info(
+            `${jobPrefix} [PROXY] Using gateway: ${proxyUrl.hostname}:${proxyUrl.port}`
+          );
+        } catch (e) {
+          logger.error(
+            chalk.red(
+              `${jobPrefix} [FATAL] Format proxy di 'proxies.json' salah: ${e.message}`
+            )
+          );
+          throw new Error("Proxy format error, stopping job.");
+        }
+      }
+
+      browser = await puppeteer.launch(launchOptions);
       page = await browser.newPage();
       await page.setViewport({ width: 1366, height: 768 });
 
+      // Terapkan Autentikasi Proxy
       if (proxyCredentials) {
         logger.info(`${jobPrefix} [PROXY] Authenticating page...`);
         await page.authenticate(proxyCredentials);
       }
+      // --- SELESAI PERUBAHAN BESAR ---
 
       const userAgent = getRandomUserAgent();
       logger.info(
@@ -342,16 +384,20 @@ async function runAntamWar(
         await randomDelay(3000, 5000);
       }
     } finally {
-      if (page) {
-        try {
-          await page.close();
-          logger.info(`${jobPrefix} [JOB] Page closed.`);
-        } catch (e) {
-          logger.warn(
-            `${jobPrefix} [JOB] Failed to close page, maybe already closed: ${e.message}`
-          );
+      // --- PERUBAHAN: 'browser' ditutup di sini ---
+      if (browser) {
+        if (success || attempt >= maxRetries) {
+          try {
+            await browser.close();
+            logger.info(`${jobPrefix} [JOB] Browser closed.`);
+          } catch (e) {
+            logger.warn(
+              `${jobPrefix} [JOB] Failed to close browser, maybe already closed: ${e.message}`
+            );
+          }
         }
       }
+      // --- SELESAI PERUBAHAN ---
     }
   }
 
