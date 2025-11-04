@@ -11,11 +11,7 @@ const figlet = require("figlet");
 const chalk = require("chalk");
 const pLimit = require("p-limit").default;
 
-// --- PERUBAHAN: HAPUS PUPPETEER DARI SINI ---
-// const puppeteer = require("puppeteer-extra");
-// const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-// puppeteer.use(StealthPlugin());
-// --- SELESAI PERUBAHAN ---
+// --- Hapus 'puppeteer' dari CLI. Ini sudah benar ---
 
 const {
   state,
@@ -28,15 +24,15 @@ const { randomDelay } = require("./utils");
 const { displayStatus } = require("./api");
 const { runAntamWar } = require("./bot");
 
-// --- PERUBAHAN BESAR: Turunkan limit untuk stabilitas CPU ---
-const limit = pLimit(5); // <-- DARI 10 KE 5 (Sesuaikan dengan PC Anda)
+// --- PERUBAHAN BESAR: 'limit' sekarang dibuat secara dinamis ---
+let limit = pLimit(state.concurrencyLimit || 3);
 // --- SELESAI PERUBAHAN ---
 
-// --- PERUBAHAN: 'runAllJobsInParallel' TIDAK lagi butuh 'browser' ---
 async function runAllJobsInParallel(userList) {
   const totalJobs = userList.length;
+  // Gunakan 'state.concurrencyLimit' untuk log yang akurat
   logger.info(
-    `[PARALLEL] Starting ${totalJobs} jobs with a concurrency limit of 5...`
+    `[PARALLEL] Starting ${totalJobs} jobs with a concurrency limit of ${state.concurrencyLimit}...`
   );
 
   const tasks = userList.map((userData, index) => {
@@ -45,7 +41,6 @@ async function runAllJobsInParallel(userList) {
       total: totalJobs,
     };
 
-    // Panggil 'runAntamWar' tanpa 'browser' atau 'proxyCredentials'
     return limit(() =>
       runAntamWar(userData, state.currentAntamURL, jobInfo)
     ).catch((e) => {
@@ -59,11 +54,6 @@ async function runAllJobsInParallel(userList) {
   await Promise.all(tasks);
   logger.info("[PARALLEL] All concurrent jobs completed.");
 }
-// --- SELESAI PERUBAHAN ---
-
-// --- PERUBAHAN: HAPUS 'runWarExecution' ---
-// (Kita tidak butuh ini lagi karena pool-nya dihapus)
-// --- SELESAI PERUBAHAN ---
 
 async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   const now = new Date();
@@ -85,6 +75,7 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
     return;
   }
 
+  // (Logika Countdown... tidak berubah)
   const hours = Math.floor(timeUntilTarget / (1000 * 60 * 60));
   const minutes = Math.floor(
     (timeUntilTarget % (1000 * 60 * 60)) / (1000 * 60)
@@ -140,7 +131,7 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
       logger.info("=================================================");
       logger.info("[SCHEDULING] WAKTU EKSEKUSI TEPAT! Menjalankan War...");
       logger.info("=================================================");
-      resolve(runAllJobsInParallel(userList)); // Panggil langsung
+      resolve(runAllJobsInParallel(userList));
     }, timeUntilTarget)
   );
 
@@ -280,7 +271,6 @@ async function processManualInput() {
   };
   logger.info(`[MANUAL] Starting single job for NIK: ${userData.nik}`);
 
-  // Kirim jobInfo 1/1
   const jobInfo = { number: 1, total: 1 };
   await runAntamWar(userData, state.currentAntamURL, jobInfo);
 }
@@ -398,7 +388,6 @@ async function processDataWithMonitor() {
     fs.unlinkSync(constants.SIGNAL_FILE_PATH);
   }
 
-  // Panggil 'runAllJobsInParallel' yang sudah sederhana
   await runAllJobsInParallel(data.userList);
 }
 
@@ -480,6 +469,42 @@ function setBranch() {
   }
 }
 
+// --- FUNGSI BARU UNTUK KONKURENSI ---
+function setConcurrency() {
+  logger.info("\n--- PENGATURAN KONKURENSI (PLIMIT) ---");
+  console.log(
+    chalk.yellow(`Konkurensi Saat Ini (Job Paralel): ${state.concurrencyLimit}`)
+  );
+  console.log(
+    chalk.gray("Angka ini adalah berapa banyak NIK yang dijalankan BERSAMAAN.")
+  );
+  console.log(
+    chalk.gray("Rekomendasi: 1-5 (tergantung kekuatan CPU & Proxy Anda).")
+  );
+
+  const newLimit = prompt(
+    `Masukkan limit baru (default: ${state.concurrencyLimit}): `
+  );
+  const newLimitNum = parseInt(newLimit.trim());
+
+  if (newLimitNum >= 1 && newLimitNum <= 50) {
+    // Batasi maks 50
+    state.concurrencyLimit = newLimitNum;
+    limit.concurrency = newLimitNum; // Update pLimit yang sedang berjalan
+    logger.info(
+      chalk.greenBright(
+        `[CONFIG] Konkurensi diatur ke: ${state.concurrencyLimit}`
+      )
+    );
+    saveState();
+  } else if (newLimit.trim() === "") {
+    logger.info("[CONFIG] Tidak ada perubahan.");
+  } else {
+    logger.error("[ERROR] Input tidak valid. Harus angka antara 1 dan 50.");
+  }
+}
+// --- SELESAI FUNGSI BARU ---
+
 async function showBanner() {
   // (Tampilan cantik sudah ada)
   return new Promise((resolve, reject) => {
@@ -527,18 +552,22 @@ async function displayMainMenu() {
 
     const modeText = chalk.greenBright("OTOMATIS (Full Bot)");
 
+    // --- PERUBAHAN: Tampilkan Konkurensi ---
     const statusBox = boxen(
       chalk.yellow.bold("KONFIGURASI SAAT INI:\n") +
-        `${chalk.white.bold("URL Target :")} ${chalk.magentaBright(
+        `${chalk.white.bold("URL Target   :")} ${chalk.magentaBright(
           state.currentAntamURL
         )}\n` +
-        `${chalk.white.bold("Cabang     :")} ${chalk.magentaBright(
+        `${chalk.white.bold("Cabang       :")} ${chalk.magentaBright(
           state.currentBranch
         )}\n` +
-        `${chalk.white.bold("Selector   :")} ${chalk.magentaBright(
+        `${chalk.white.bold("Selector     :")} ${chalk.magentaBright(
           state.currentBranchSelector
         )}\n` +
-        `${chalk.white.bold("Mode       :")} ${modeText}`,
+        `${chalk.white.bold("Mode         :")} ${modeText}\n` +
+        `${chalk.white.bold("Konkurensi   :")} ${chalk.magentaBright(
+          state.concurrencyLimit
+        )} (Job Paralel)`,
       {
         padding: 1,
         borderColor: "gray",
@@ -547,6 +576,7 @@ async function displayMainMenu() {
       }
     );
     console.log(statusBox);
+    // --- SELESAI PERUBAHAN ---
 
     console.log(
       chalk.yellow(
@@ -596,14 +626,20 @@ async function displayMainMenu() {
       chalk.cyanBright("7.") +
         chalk.white(" ⚙️ Ganti Cabang (Branch Default)".padEnd(menuPadding))
     );
+    // --- PERUBAHAN: Menu Baru ---
     console.log(
-      chalk.cyanBright("8.") + chalk.white(" 🚪 Keluar".padEnd(menuPadding))
+      chalk.cyanBright("8.") +
+        chalk.white(" 🚀 Ubah Konkurensi (pLimit)".padEnd(menuPadding))
     );
+    console.log(
+      chalk.cyanBright("9.") + chalk.white(" 🚪 Keluar".padEnd(menuPadding))
+    );
+    // --- SELESAI PERUBAHAN ---
 
     console.log(
       gradient("yellow", "green")("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     );
-    const choice = prompt(chalk.bold("Pilih menu (1-8): "));
+    const choice = prompt(chalk.bold("Pilih menu (1-9): "));
     console.log(gradient("cyan", "magenta")("\n⏳ Memproses pilihanmu...\n"));
     await randomDelay(500, 1200);
 
@@ -629,7 +665,10 @@ async function displayMainMenu() {
       case "7":
         setBranch();
         break;
-      case "8":
+      case "8": // <-- CASE BARU
+        setConcurrency();
+        break;
+      case "9": // <-- Exit jadi 9
         console.log(
           gradient(
             "red",
