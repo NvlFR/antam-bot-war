@@ -50,6 +50,8 @@ bot/data/json/users.json
 bot/data/csv/users.csv
 bot/START.signal
 bot/proxies.json
+bot/active_config_1.json
+bot/proxies_1.json
 bot/active_config.json
 bot/test_captcha.js
 bot/test_proxy.js
