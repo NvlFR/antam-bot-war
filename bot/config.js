@@ -25,7 +25,7 @@ const constants = {
   MAX_RETRIES: 5,
 };
 
-// --- STATE (Blok ini telah diperbaiki) ---
+// --- STATE (Blok ini telah diperbaiki untuk 'concurrencyLimit') ---
 let state = {};
 
 try {
@@ -34,19 +34,29 @@ try {
     state = JSON.parse(configData);
     logger.info("[CONFIG] Berhasil memuat 'active_config.json'");
 
-    // --- PERBAIKAN: Validasi key yang mungkin hilang ---
+    // --- Validasi key yang mungkin hilang ---
     if (
       !state.TWO_CAPTCHA_API_KEY ||
       state.TWO_CAPTCHA_API_KEY === "ISI_KUNCI_API_RAHASIA_ANDA_DI_SINI"
     ) {
-      logger.warn(
-        "[CONFIG] TWO_CAPTCHA_API_KEY belum diatur. Solver Captcha nonaktif."
-      );
+      if (state.TWO_CAPTCHA_API_KEY) {
+        // Hanya log jika key-nya placeholder
+        logger.warn(
+          "[CONFIG] TWO_CAPTCHA_API_KEY belum diatur. Fallback ke v3 Gratis."
+        );
+      }
       state.TWO_CAPTCHA_API_KEY = null;
     } else {
-      logger.info("[CONFIG] 2Captcha API Key berhasil dimuat.");
+      logger.info("[CONFIG] 2Captcha API Key (Fallback) berhasil dimuat.");
     }
-    // (Kita hapus 'runMode' karena kita sepakat full-otomatis)
+
+    // --- PERBAIKAN: Tambahkan validasi untuk concurrencyLimit ---
+    if (!state.concurrencyLimit) {
+      logger.warn(
+        "[CONFIG] 'concurrencyLimit' tidak ditemukan, diatur ke default: 1"
+      );
+      state.concurrencyLimit = 1;
+    }
     // --- SELESAI PERBAIKAN ---
   } else {
     logger.warn(
@@ -57,7 +67,8 @@ try {
       currentAntamURL: "https://antrigrahadipta.com/",
       currentBranch: "BUTIK GRAHA DIPTA",
       currentBranchSelector: "GRAHA DIPTA",
-      TWO_CAPTCHA_API_KEY: null, // <-- INI YANG HILANG DARI KODE ANDA
+      TWO_CAPTCHA_API_KEY: null,
+      concurrencyLimit: 1, // <-- Tambahkan ini
     };
     // --- SELESAI PERBAIKAN ---
     fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify(state, null, 2));
@@ -69,9 +80,18 @@ try {
 
 function saveState() {
   try {
-    // Kita pastikan 'runMode' tidak ikut tersimpan jika ada
-    const { runMode, ...stateToSave } = state;
+    // --- PERBAIKAN: Hapus 'runMode' yang sudah tidak ada ---
+    // Simpan semua state yang relevan
+    const stateToSave = {
+      currentAntamURL: state.currentAntamURL,
+      currentBranch: state.currentBranch,
+      currentBranchSelector: state.currentBranchSelector,
+      TWO_CAPTCHA_API_KEY: state.TWO_CAPTCHA_API_KEY,
+      concurrencyLimit: state.concurrencyLimit,
+    };
     fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify(stateToSave, null, 2));
+    // --- SELESAI PERBAIKAN ---
+
     logger.info("[CONFIG] Konfigurasi baru disimpan ke 'active_config.json'.");
   } catch (e) {
     logger.error(`[CONFIG] Gagal menyimpan konfigurasi: ${e.message}`);
