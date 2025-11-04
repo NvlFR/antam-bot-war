@@ -1,31 +1,33 @@
 // bot/bot.js
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-const Captcha = require("2captcha");
-const { URL } = require("url"); // <-- Impor URL parser
+const Captcha = require("2captcha"); // <-- KITA AKTIFKAN LAGI
+const { URL } = require("url");
 const logger = require("./logger");
 const { sendRegistrationResult } = require("./api");
 const { randomDelay, getTodayDateString } = require("./utils");
 const {
   state,
   constants,
-  getRandomProxy, // <-- Kita butuh ini lagi
-  getRandomUserAgent,
+  // (getRandomProxy & getRandomUserAgent tidak dipakai di sini)
 } = require("./config");
 const chalk = require("chalk");
 
-puppeteer.use(StealthPlugin());
+puppeteer.use(StealthPlugin()); // Terapkan stealth ke puppeteer
 
-// (Fungsi handleFormFilling TIDAK BERUBAH SAMA SEKALI)
+// --- TENTUKAN PATH PROFIL ANDA DI SINI ---
+const CHROME_PROFILE_PATH = "/home/novalftr/.config/google-chrome/Profile 1";
+// --- SELESAI ---
+
+// --- FUNGSI HANDLEFORMFILLING (Versi Hibrida Final) ---
 async function handleFormFilling(page, data, antamURL) {
   logger.info("[FORM] Starting form automation...");
-  // 1. SCROLL ALAMI
+  // 1. (Tidak Berubah) Isi Form
   logger.info("[BEHAVIOUR] Simulating initial scroll...");
   await page.evaluate(() => {
-    window.scrollBy(0, 500 + Math.floor(Math.random() * 200));
+    /*...scroll...*/
   });
   await randomDelay(1000, 2000);
-  // 2. MENGISI INPUT UTAMA
   logger.info(`[INPUT] Typing Name: ${data.name}`);
   await page.type("#name", data.name, { delay: randomDelay(50, 150) });
   await randomDelay(300, 700);
@@ -37,14 +39,12 @@ async function handleFormFilling(page, data, antamURL) {
     delay: randomDelay(50, 150),
   });
   await randomDelay(300, 700);
-  // 3. MENGKLIK CHECKBOX
   logger.info("[INPUT] Clicking KTP agreement checkbox (#check)...");
   await page.click("#check");
   await randomDelay(500, 800);
   logger.info("[INPUT] Clicking Stock/Trade agreement checkbox (#check_2)...");
   await page.click("#check_2");
   await randomDelay(500, 1000);
-  // 4. CAPTCHA TEKS
   try {
     const captchaText = await page.$eval("#captcha-box", (el) =>
       el.textContent.trim()
@@ -55,48 +55,88 @@ async function handleFormFilling(page, data, antamURL) {
     });
     await randomDelay(1000, 2000);
   } catch (e) {
-    logger.warn(
-      "[CAPTCHA] Captcha box selector #captcha-box not found. Skipping Captcha input."
-    );
+    /*...abaikan...*/
   }
 
-  // --- LOGIKA RECAPTCHA (Tidak Berubah) ---
+  // --- LOGIKA RECAPTCHA HIBRIDA ---
   let solutionToken = null;
-  if (state.TWO_CAPTCHA_API_KEY && !antamURL.startsWith("file://")) {
+
+  // Cek jika ini BUKAN file mockup
+  if (!antamURL.startsWith("file://")) {
+    let siteKey = null;
     try {
-      logger.warn("[CAPTCHA] Mencoba mengambil reCAPTCHA site-key...");
+      // 1. Ambil Site Key
       const pageHtml = await page.content();
       const siteKeyMatch = pageHtml.match(/grecaptcha.execute\('([^']+)'/);
-      if (!siteKeyMatch || !siteKeyMatch[1]) {
-        throw new Error("Tidak dapat menemukan reCAPTCHA site-key di halaman.");
-      }
-      const siteKey = siteKeyMatch[1];
-      logger.info(
-        `[CAPTCHA] Site-key ditemukan: ${siteKey.substring(0, 10)}...`
-      );
-      const solver = new Captcha.Solver(state.TWO_CAPTCHA_API_KEY);
+      if (!siteKeyMatch)
+        throw new Error("Tidak dapat menemukan site-key reCAPTCHA v3.");
+      siteKey = siteKeyMatch[1];
+      logger.info(`[CAPTCHA] Site-key: ${siteKey.substring(0, 10)}...`);
+
+      // 2. Coba Strategi Gratis (Profil Chrome)
       logger.warn(
-        "[CAPTCHA] Mengirim permintaan ke 2Captcha... Ini mungkin perlu waktu (15-45 detik)..."
+        chalk.yellow(
+          "[CAPTCHA] Mencoba Strategi #1: Token v3 (Gratis) via Profil Chrome..."
+        )
       );
-      const res = await solver.recaptcha(siteKey, antamURL);
-      solutionToken = res.data;
-      logger.info(chalk.greenBright("[CAPTCHA] SOLUSI DITERIMA!"));
+      solutionToken = await page.evaluate((key) => {
+        return new Promise((resolve, reject) => {
+          if (typeof grecaptcha === "undefined")
+            return reject(new Error("grecaptcha is not defined"));
+          grecaptcha.ready(() => {
+            grecaptcha
+              .execute(key, { action: "submit" })
+              .then(resolve)
+              .catch(reject);
+          });
+        });
+      }, siteKey);
+
+      if (!solutionToken)
+        throw new Error("Token v3 (Gratis) gagal didapat (null).");
+
+      logger.info(
+        chalk.greenBright("[CAPTCHA] Token v3 (Gratis) BERHASIL didapat!")
+      );
     } catch (err) {
-      logger.error(
-        `[FATAL CAPTCHA] Gagal menyelesaikan reCAPTCHA: ${err.message}`
-      );
-      return { status: "FAILED_CAPTCHA", ticket_number: null };
+      logger.error(`[CAPTCHA] Token v3 (Gratis) GAGAL: ${err.message}`);
+
+      // 3. JIKA GAGAL, Coba Strategi #2 (Fallback ke 2Captcha Berbayar)
+      if (state.TWO_CAPTCHA_API_KEY) {
+        logger.warn(
+          chalk.cyan(
+            "[CAPTCHA] Mencoba Strategi #2: Fallback ke 2Captcha (Berbayar)..."
+          )
+        );
+        try {
+          const solver = new Captcha.Solver(state.TWO_CAPTCHA_API_KEY);
+          logger.warn(
+            "[CAPTCHA] Mengirim permintaan ke 2Captcha... (Menunggu 15-45d)..."
+          );
+          const res = await solver.recaptcha(siteKey, antamURL);
+          solutionToken = res.data;
+          logger.info(
+            chalk.greenBright(
+              "[CAPTCHA] Token 2Captcha (Berbayar) BERHASIL didapat!"
+            )
+          );
+        } catch (err2) {
+          logger.error(`[FATAL CAPTCHA] 2Captcha GAGAL: ${err2.message}`);
+          return { status: "FAILED_CAPTCHA_ALL", ticket_number: null };
+        }
+      } else {
+        logger.error(
+          "[FATAL CAPTCHA] Token v3 gratis gagal DAN 2Captcha API Key tidak diatur."
+        );
+        return { status: "FAILED_CAPTCHA_V3_ONLY", ticket_number: null };
+      }
     }
-  } else if (!antamURL.startsWith("file://")) {
-    logger.error(
-      "[FATAL CAPTCHA] TWO_CAPTCHA_API_KEY tidak diatur. Tidak bisa melanjutkan."
-    );
-    return { status: "FAILED_CAPTCHA", ticket_number: null };
   } else {
     logger.info("[MOCKUP] Melewatkan solver reCAPTCHA untuk file mockup.");
   }
+  // --- SELESAI LOGIKA HIBRIDA ---
 
-  // --- SUBMIT FORM & WAIT (Tidak Berubah) ---
+  // --- SUBMIT FORM & WAIT ---
   if (solutionToken) {
     logger.info("[FORM] Memasukkan token reCAPTCHA ke dalam form...");
     await page.evaluate((token) => {
@@ -146,7 +186,7 @@ async function handleFormFilling(page, data, antamURL) {
       });
       if (successIndicator) {
         const ticketNumberMatch = successIndicator.match(
-          /Nomor Antrian Anda\s*:?\s*([A-Z0-9]+)/i
+          /Nomor Antrian Anda\s*:?\s*([A-Z09]+)/i
         );
         if (ticketNumberMatch) {
           ticketNumber = ticketNumberMatch[1].trim();
@@ -196,14 +236,14 @@ async function handleFormFilling(page, data, antamURL) {
 }
 // --- SELESAI FUNGSI HANDLEFORMFILLING ---
 
-// --- FUNGSI RUNANTAMWAR (Final - Versi Rotasi Proxy + Auth) ---
-// --- HAPUS 'browser', HAPUS 'proxyCredentials', TAMBAHKAN 'jobInfo' ---
+// --- FUNGSI RUNANTAMWAR (Versi Pool + Auth + Profil) ---
 async function runAntamWar(
   userData,
   antamURL,
+  browser, // <-- Menerima browser
+  proxyCredentials = null,
   jobInfo = { number: 1, total: 1 }
 ) {
-  let browser;
   let page;
 
   const now = new Date();
@@ -236,56 +276,17 @@ async function runAntamWar(
   logger.info(chalk.cyanBright(`${jobPrefix} Starting job...`));
   let success = false;
   let attempt = 0;
+
+  // --- PERBAIKAN: Kembalikan 5x Retry! ---
   const maxRetries = constants.MAX_RETRIES;
+  // --- SELESAI PERBAIKAN ---
 
   while (attempt < maxRetries && !success) {
     attempt++;
     logger.warn(`${jobPrefix} [RETRY] Attempt ${attempt}/${maxRetries}`);
 
     try {
-      // --- PERUBAHAN BESAR: Logika Proxy & Auth kembali ke sini ---
-      const launchOptions = {
-        headless: true,
-        ignoreHTTPSErrors: true,
-        args: [
-          "--no-sandbox",
-          "--disable-setuid-sandbox",
-          "--start-maximized",
-          "--ignore-certificate-errors",
-          "--allow-running-insecure-content",
-        ],
-        defaultViewport: null,
-      };
-
-      let proxyCredentials = null;
-      const proxyString = getRandomProxy(); // Ambil proxy baru setiap attempt
-
-      if (proxyString) {
-        try {
-          const proxyUrl = new URL(proxyString);
-          const proxyServerString = `${proxyUrl.protocol}//${proxyUrl.hostname}:${proxyUrl.port}`;
-
-          launchOptions.args.push(`--proxy-server=${proxyServerString}`);
-
-          proxyCredentials = {
-            username: proxyUrl.username,
-            password: proxyUrl.password,
-          };
-
-          logger.info(
-            `${jobPrefix} [PROXY] Using gateway: ${proxyUrl.hostname}:${proxyUrl.port}`
-          );
-        } catch (e) {
-          logger.error(
-            chalk.red(
-              `${jobPrefix} [FATAL] Format proxy di 'proxies.json' salah: ${e.message}`
-            )
-          );
-          throw new Error("Proxy format error, stopping job.");
-        }
-      }
-
-      browser = await puppeteer.launch(launchOptions);
+      // Hapus launch, hanya buat 'page'
       page = await browser.newPage();
       await page.setViewport({ width: 1366, height: 768 });
 
@@ -294,16 +295,8 @@ async function runAntamWar(
         logger.info(`${jobPrefix} [PROXY] Authenticating page...`);
         await page.authenticate(proxyCredentials);
       }
-      // --- SELESAI PERUBAHAN BESAR ---
 
-      const userAgent = getRandomUserAgent();
-      logger.info(
-        `${jobPrefix} [CONFIG] Using User-Agent: ${userAgent.substring(
-          0,
-          40
-        )}...`
-      );
-      await page.setUserAgent(userAgent);
+      // Hapus set User-Agent (karena pakai profil asli)
 
       logger.info(`${jobPrefix} [RETRY] Navigating to ${antamURL}...`);
       await page.goto(antamURL, {
@@ -354,7 +347,7 @@ async function runAntamWar(
       if (registrationResult.status === "SUCCESS") {
         success = true;
       } else {
-        if (registrationResult.status === "FAILED_CAPTCHA") {
+        if (registrationResult.status.startsWith("FAILED_CAPTCHA")) {
           logger.error(
             `${jobPrefix} [CRITICAL] Captcha failed, stopping retries.`
           );
@@ -384,20 +377,16 @@ async function runAntamWar(
         await randomDelay(3000, 5000);
       }
     } finally {
-      // --- PERUBAHAN: 'browser' ditutup di sini ---
-      if (browser) {
-        if (success || attempt >= maxRetries) {
-          try {
-            await browser.close();
-            logger.info(`${jobPrefix} [JOB] Browser closed.`);
-          } catch (e) {
-            logger.warn(
-              `${jobPrefix} [JOB] Failed to close browser, maybe already closed: ${e.message}`
-            );
-          }
+      if (page) {
+        try {
+          await page.close();
+          logger.info(`${jobPrefix} [JOB] Page closed.`);
+        } catch (e) {
+          logger.warn(
+            `${jobPrefix} [JOB] Failed to close page, maybe already closed: ${e.message}`
+          );
         }
       }
-      // --- SELESAI PERUBAHAN ---
     }
   }
 

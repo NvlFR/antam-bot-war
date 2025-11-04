@@ -11,7 +11,10 @@ const figlet = require("figlet");
 const chalk = require("chalk");
 const pLimit = require("p-limit").default;
 
-// --- Hapus 'puppeteer' dari CLI. Ini sudah benar ---
+// --- Impor puppeteer di CLI (Ini sudah benar) ---
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+puppeteer.use(StealthPlugin());
 
 const {
   state,
@@ -24,15 +27,14 @@ const { randomDelay } = require("./utils");
 const { displayStatus } = require("./api");
 const { runAntamWar } = require("./bot");
 
-// --- PERUBAHAN BESAR: 'limit' sekarang dibuat secara dinamis ---
-let limit = pLimit(state.concurrencyLimit || 3);
+// --- PERUBAHAN: pLimit WAJIB 1 untuk mode Profil Chrome ---
+const limit = pLimit(1);
 // --- SELESAI PERUBAHAN ---
 
-async function runAllJobsInParallel(userList) {
+async function runAllJobsInParallel(userList, browser, proxyCredentials) {
   const totalJobs = userList.length;
-  // Gunakan 'state.concurrencyLimit' untuk log yang akurat
   logger.info(
-    `[PARALLEL] Starting ${totalJobs} jobs with a concurrency limit of ${state.concurrencyLimit}...`
+    `[PARALLEL] Starting ${totalJobs} jobs with a concurrency limit of 1...`
   );
 
   const tasks = userList.map((userData, index) => {
@@ -41,8 +43,15 @@ async function runAllJobsInParallel(userList) {
       total: totalJobs,
     };
 
+    // Kirim 'browser', 'credentials', DAN 'jobInfo'
     return limit(() =>
-      runAntamWar(userData, state.currentAntamURL, jobInfo)
+      runAntamWar(
+        userData,
+        state.currentAntamURL,
+        browser,
+        proxyCredentials,
+        jobInfo
+      )
     ).catch((e) => {
       logger.error(
         `[FATAL PARALLEL] Job for NIK ${userData.nik} failed unexpectedly: ${e.message}`
@@ -55,7 +64,99 @@ async function runAllJobsInParallel(userList) {
   logger.info("[PARALLEL] All concurrent jobs completed.");
 }
 
+// --- PERUBAHAN: 'runWarExecution' untuk mengelola Browser Pool + Profil Chrome ---
+async function runWarExecution(userList, dataMode) {
+  logger.info(`[EKSEKUSI] Memulai eksekusi perang untuk: ${dataMode}`);
+  let browser;
+  try {
+    // --- Ini adalah Konfigurasi Final Anda ---
+    const launchOptions = {
+      headless: false, // Wajib 'false' agar profil dan login Google dimuat
+      ignoreHTTPSErrors: true,
+
+      // 1. Path dari 'chrome://version' Anda
+      executablePath: "/opt/google/chrome/google-chrome",
+
+      // 2. Path Profil dari 'chrome://version' Anda
+      userDataDir: "/home/novalftr/.config/google-chrome/Profile 1",
+
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--start-maximized",
+        "--ignore-certificate-errors",
+        "--allow-running-insecure-content",
+        "--password-store=basic", // <-- INI PERBAIKAN UNTUK LOGIN UBUNTU
+      ],
+      defaultViewport: null,
+    };
+    // --- SELESAI PERUBAHAN ---
+
+    let proxyCredentials = null;
+    const proxyString = getRandomProxy();
+
+    if (proxyString) {
+      try {
+        const proxyUrl = new URL(proxyString);
+        const proxyServerString = `${proxyUrl.protocol}//${proxyUrl.hostname}:${proxyUrl.port}`;
+        launchOptions.args.push(`--proxy-server=${proxyServerString}`);
+        proxyCredentials = {
+          username: proxyUrl.username,
+          password: proxyUrl.password,
+        };
+        logger.info(
+          `[PROXY] Menggunakan gateway: ${proxyUrl.hostname}:${proxyUrl.port}`
+        );
+      } catch (e) {
+        logger.error(
+          chalk.red(
+            `[FATAL] Format proxy di 'proxies.json' salah: ${e.message}`
+          )
+        );
+        return;
+      }
+    }
+
+    logger.info(
+      "[BROWSER POOL] Meluncurkan browser bersama (Menggunakan Profil Chrome 1)..."
+    );
+    logger.warn(
+      chalk.yellowBright(
+        "[PERINGATAN] Pastikan SEMUA jendela Google Chrome Anda sudah ditutup!"
+      )
+    );
+    await randomDelay(3000, 3000);
+
+    browser = await puppeteer.launch(launchOptions);
+    logger.info(
+      "[BROWSER POOL] Browser bersama berhasil diluncurkan. Menjalankan jobs..."
+    );
+
+    await runAllJobsInParallel(userList, browser, proxyCredentials);
+
+    logger.info("[EKSEKUSI] Selesai mengeksekusi semua job.");
+  } catch (err) {
+    logger.error(`[BROWSER POOL] Gagal meluncurkan browser: ${err.message}`);
+    if (err.message.includes("Use a different `userDataDir`")) {
+      logger.error(
+        chalk.redBright(
+          "[FATAL] Google Chrome Anda masih berjalan. TUTUP SEMUA JENDELA CHROME dan coba lagi."
+        )
+      );
+    }
+  } finally {
+    if (browser) {
+      await browser.close();
+      logger.info(
+        "[BROWSER POOL] Semua job paralel selesai. Browser bersama ditutup."
+      );
+    }
+  }
+}
+// --- SELESAI FUNGSI ---
+
 async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
+  // (Fungsi ini tidak berubah)
   const now = new Date();
   const targetTime = new Date(
     now.getFullYear(),
@@ -75,7 +176,6 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
     return;
   }
 
-  // (Logika Countdown... tidak berubah)
   const hours = Math.floor(timeUntilTarget / (1000 * 60 * 60));
   const minutes = Math.floor(
     (timeUntilTarget % (1000 * 60 * 60)) / (1000 * 60)
@@ -88,7 +188,7 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
   logger.warn(`[SCHEDULING] Cabang Default: ${state.currentBranch}`);
   if (hasProxies()) {
     logger.warn(
-      `[SCHEDULING] Rotasi Proxy AKTIF. Setiap NIK akan mendapat IP baru.`
+      `[SCHEDULING] Rotasi Proxy AKTIF. Menggunakan 1 proxy gateway.`
     );
   } else {
     logger.warn(
@@ -131,7 +231,7 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
       logger.info("=================================================");
       logger.info("[SCHEDULING] WAKTU EKSEKUSI TEPAT! Menjalankan War...");
       logger.info("=================================================");
-      resolve(runAllJobsInParallel(userList));
+      resolve(runWarExecution(userList, dataMode));
     }, timeUntilTarget)
   );
 
@@ -234,7 +334,7 @@ async function loadDataAndGetList(dataType) {
 // --- FUNGSI MENU ---
 
 async function processManualInput() {
-  // (Fungsi ini tidak berubah)
+  // (Fungsi ini tidak berubah dari kode Anda sebelumnya)
   logger.info("\n--- MODE INPUT MANUAL ---");
   const name = prompt("Masukkan Nama: ");
   let nik;
@@ -271,8 +371,8 @@ async function processManualInput() {
   };
   logger.info(`[MANUAL] Starting single job for NIK: ${userData.nik}`);
 
-  const jobInfo = { number: 1, total: 1 };
-  await runAntamWar(userData, state.currentAntamURL, jobInfo);
+  // Panggil runWarExecution untuk 1 job
+  await runWarExecution([userData], "Manual Input");
 }
 
 async function processUserData() {
@@ -388,7 +488,7 @@ async function processDataWithMonitor() {
     fs.unlinkSync(constants.SIGNAL_FILE_PATH);
   }
 
-  await runAllJobsInParallel(data.userList);
+  await runWarExecution(data.userList, `MONITOR SIGNAL (${data.selectedFile})`);
 }
 
 function setAntamURL() {
@@ -476,10 +576,14 @@ function setConcurrency() {
     chalk.yellow(`Konkurensi Saat Ini (Job Paralel): ${state.concurrencyLimit}`)
   );
   console.log(
-    chalk.gray("Angka ini adalah berapa banyak NIK yang dijalankan BERSAMAAN.")
+    chalk.gray(
+      "Angka ini adalah berapa banyak TAB yang dibuka BERSAMAAN di 1 browser."
+    )
   );
   console.log(
-    chalk.gray("Rekomendasi: 1-5 (tergantung kekuatan CPU & Proxy Anda).")
+    chalk.gray(
+      "Rekomendasi: 1 (Sangat Aman), 2-3 (Cepat, tapi berisiko diblokir)."
+    )
   );
 
   const newLimit = prompt(
