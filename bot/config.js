@@ -17,12 +17,12 @@ const constants = {
   JSON_DIR: path.join(__dirname, "data", "json"),
   CSV_DIR: path.join(__dirname, "data", "csv"),
   USER_DATA_TEMPLATE: {
-    name: "IRFAN SURACHMAN",
-    nik: "3671110911810002",
-    phone_number: "089518744931",
-    purchase_date: "2025-10-31",
+    name: "ASHARI",
+    nik: "3175032808880014",
+    phone_number: "082125061704",
+    purchase_date: "2025-11-06",
   },
-  MAX_RETRIES: 5,
+  MAX_RETRIES: 8,
 };
 
 // --- STATE (Blok ini telah diperbaiki untuk 'concurrencyLimit') ---
