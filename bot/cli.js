@@ -1,4 +1,3 @@
-// bot/cli.js
 const fs = require("fs");
 const path = require("path");
 const { URL } = require("url");
@@ -11,7 +10,6 @@ const figlet = require("figlet");
 const chalk = require("chalk");
 const pLimit = require("p-limit").default;
 
-// --- Impor puppeteer di CLI (Ini sudah benar) ---
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 puppeteer.use(StealthPlugin());
@@ -27,9 +25,7 @@ const { randomDelay } = require("./utils");
 const { displayStatus } = require("./api");
 const { runAntamWar } = require("./bot");
 
-// --- PERUBAHAN: pLimit WAJIB 1 untuk mode Profil Chrome ---
 const limit = pLimit(1);
-// --- SELESAI PERUBAHAN ---
 
 async function runAllJobsInParallel(userList, browser, proxyCredentials) {
   const totalJobs = userList.length;
@@ -43,7 +39,6 @@ async function runAllJobsInParallel(userList, browser, proxyCredentials) {
       total: totalJobs,
     };
 
-    // Kirim 'browser', 'credentials', DAN 'jobInfo'
     return limit(() =>
       runAntamWar(
         userData,
@@ -64,20 +59,16 @@ async function runAllJobsInParallel(userList, browser, proxyCredentials) {
   logger.info("[PARALLEL] All concurrent jobs completed.");
 }
 
-// --- PERUBAHAN: 'runWarExecution' untuk mengelola Browser Pool + Profil Chrome ---
 async function runWarExecution(userList, dataMode) {
   logger.info(`[EKSEKUSI] Memulai eksekusi perang untuk: ${dataMode}`);
   let browser;
   try {
-    // --- Ini adalah Konfigurasi Final Anda ---
     const launchOptions = {
-      headless: false, // Wajib 'false' agar profil dan login Google dimuat
+      headless: false, 
       ignoreHTTPSErrors: true,
 
-      // 1. Path dari 'chrome://version' Anda
       executablePath: "/opt/google/chrome/google-chrome",
 
-      // 2. Path Profil dari 'chrome://version' Anda
       userDataDir: "/home/novalftr/.config/google-chrome/Profile 1",
 
       args: [
@@ -86,11 +77,10 @@ async function runWarExecution(userList, dataMode) {
         "--start-maximized",
         "--ignore-certificate-errors",
         "--allow-running-insecure-content",
-        "--password-store=basic", // <-- INI PERBAIKAN UNTUK LOGIN UBUNTU
+        "--password-store=basic", 
       ],
       defaultViewport: null,
     };
-    // --- SELESAI PERUBAHAN ---
 
     let proxyCredentials = null;
     const proxyString = getRandomProxy();
@@ -153,10 +143,8 @@ async function runWarExecution(userList, dataMode) {
     }
   }
 }
-// --- SELESAI FUNGSI ---
 
 async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
-  // (Fungsi ini tidak berubah)
   const now = new Date();
   const targetTime = new Date(
     now.getFullYear(),
@@ -239,7 +227,6 @@ async function scheduleAntamWar(userList, targetHour, targetMinute, dataMode) {
 }
 
 async function loadDataAndGetList(dataType) {
-  // (Fungsi ini tidak berubah)
   const FOLDER_PATH =
     dataType === "json" ? constants.JSON_DIR : constants.CSV_DIR;
   const FILE_EXT = dataType === "json" ? ".json" : ".csv";
@@ -331,10 +318,8 @@ async function loadDataAndGetList(dataType) {
   return { userList, selectedFile };
 }
 
-// --- FUNGSI MENU ---
 
 async function processManualInput() {
-  // (Fungsi ini tidak berubah dari kode Anda sebelumnya)
   logger.info("\n--- MODE INPUT MANUAL ---");
   const name = prompt("Masukkan Nama: ");
   let nik;
@@ -371,7 +356,6 @@ async function processManualInput() {
   };
   logger.info(`[MANUAL] Starting single job for NIK: ${userData.nik}`);
 
-  // Panggil runWarExecution untuk 1 job
   await runWarExecution([userData], "Manual Input");
 }
 
@@ -492,7 +476,6 @@ async function processDataWithMonitor() {
 }
 
 function setAntamURL() {
-  // (Fungsi ini tidak berubah)
   logger.info("\n--- PILIH BUTIK ANTAM (URL) ---");
   const butikOptions = [
     "https://antrigrahadipta.com/",
@@ -538,7 +521,6 @@ function setAntamURL() {
 }
 
 function setBranch() {
-  // (Fungsi ini tidak berubah)
   logger.info("\n--- PENGATURAN CABANG (BRANCH) ---");
   console.log(chalk.yellow(`Cabang Default Saat Ini: ${state.currentBranch}`));
   console.log(
@@ -569,7 +551,6 @@ function setBranch() {
   }
 }
 
-// --- FUNGSI BARU UNTUK KONKURENSI ---
 function setConcurrency() {
   logger.info("\n--- PENGATURAN KONKURENSI (PLIMIT) ---");
   console.log(
@@ -594,7 +575,7 @@ function setConcurrency() {
   if (newLimitNum >= 1 && newLimitNum <= 50) {
     // Batasi maks 50
     state.concurrencyLimit = newLimitNum;
-    limit.concurrency = newLimitNum; // Update pLimit yang sedang berjalan
+    limit.concurrency = newLimitNum;
     logger.info(
       chalk.greenBright(
         `[CONFIG] Konkurensi diatur ke: ${state.concurrencyLimit}`
@@ -607,20 +588,24 @@ function setConcurrency() {
     logger.error("[ERROR] Input tidak valid. Harus angka antara 1 dan 50.");
   }
 }
-// --- SELESAI FUNGSI BARU ---
 
 async function showBanner() {
-  // (Tampilan cantik sudah ada)
   return new Promise((resolve, reject) => {
     figlet.text("ANTAM BOT WAR", { font: "ANSI Shadow" }, (err, data) => {
       if (err) return reject(err);
       console.clear();
+
       const banner = gradient("cyan", "yellow").multiline(data);
+
       const subtitle = gradient(
         "yellow",
         "green"
       )("AUTOMATED REGISTRATION BOT");
-      const box = boxen(`${banner}\n${subtitle}`, {
+      const version = gradient("green", "cyan")("v1.1.1"); 
+
+      const combinedText = `${banner}\n${subtitle}\n${version}`;
+
+      const box = boxen(combinedText, {
         padding: 1,
         borderStyle: "round",
         borderColor: "yellow",
@@ -642,7 +627,6 @@ async function showBanner() {
 }
 
 async function displayMainMenu() {
-  // (Tampilan cantik sudah ada)
   let continueLoop = true;
   while (continueLoop) {
     const titleBox = boxen("✨ ANTAM BOT WAR MENU ✨", {
@@ -656,7 +640,6 @@ async function displayMainMenu() {
 
     const modeText = chalk.greenBright("OTOMATIS (Full Bot)");
 
-    // --- PERUBAHAN: Tampilkan Konkurensi ---
     const statusBox = boxen(
       chalk.yellow.bold("KONFIGURASI SAAT INI:\n") +
         `${chalk.white.bold("URL Target   :")} ${chalk.magentaBright(
@@ -680,7 +663,6 @@ async function displayMainMenu() {
       }
     );
     console.log(statusBox);
-    // --- SELESAI PERUBAHAN ---
 
     console.log(
       chalk.yellow(
@@ -730,7 +712,6 @@ async function displayMainMenu() {
       chalk.cyanBright("7.") +
         chalk.white(" ⚙️ Ganti Cabang (Branch Default)".padEnd(menuPadding))
     );
-    // --- PERUBAHAN: Menu Baru ---
     console.log(
       chalk.cyanBright("8.") +
         chalk.white(" 🚀 Ubah Konkurensi (pLimit)".padEnd(menuPadding))
@@ -738,7 +719,6 @@ async function displayMainMenu() {
     console.log(
       chalk.cyanBright("9.") + chalk.white(" 🚪 Keluar".padEnd(menuPadding))
     );
-    // --- SELESAI PERUBAHAN ---
 
     console.log(
       gradient("yellow", "green")("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
@@ -769,10 +749,10 @@ async function displayMainMenu() {
       case "7":
         setBranch();
         break;
-      case "8": // <-- CASE BARU
+      case "8":
         setConcurrency();
         break;
-      case "9": // <-- Exit jadi 9
+      case "9":
         console.log(
           gradient(
             "red",

@@ -7,7 +7,6 @@ const MOCKUP_FILE = path.join(__dirname, "mockup_form.html");
 const LARAVEL_API_URL = "http://127.0.0.1:8000/api";
 const CONFIG_FILE_PATH = path.join(__dirname, "active_config.json");
 
-// --- KONSTANTA (Tidak Berubah) ---
 const constants = {
   MOCKUP_FILE_PATH: MOCKUP_FILE,
   SIGNAL_FILE_PATH: path.join(__dirname, "START.signal"),
@@ -25,7 +24,6 @@ const constants = {
   MAX_RETRIES: 8,
 };
 
-// --- STATE (Blok ini telah diperbaiki untuk 'concurrencyLimit') ---
 let state = {};
 
 try {
@@ -34,13 +32,11 @@ try {
     state = JSON.parse(configData);
     logger.info("[CONFIG] Berhasil memuat 'active_config.json'");
 
-    // --- Validasi key yang mungkin hilang ---
     if (
       !state.TWO_CAPTCHA_API_KEY ||
       state.TWO_CAPTCHA_API_KEY === "ISI_KUNCI_API_RAHASIA_ANDA_DI_SINI"
     ) {
       if (state.TWO_CAPTCHA_API_KEY) {
-        // Hanya log jika key-nya placeholder
         logger.warn(
           "[CONFIG] TWO_CAPTCHA_API_KEY belum diatur. Fallback ke v3 Gratis."
         );
@@ -50,38 +46,31 @@ try {
       logger.info("[CONFIG] 2Captcha API Key (Fallback) berhasil dimuat.");
     }
 
-    // --- PERBAIKAN: Tambahkan validasi untuk concurrencyLimit ---
     if (!state.concurrencyLimit) {
       logger.warn(
         "[CONFIG] 'concurrencyLimit' tidak ditemukan, diatur ke default: 1"
       );
       state.concurrencyLimit = 1;
     }
-    // --- SELESAI PERBAIKAN ---
   } else {
     logger.warn(
       "[CONFIG] 'active_config.json' tidak ditemukan, gunakan default."
     );
-    // --- PERBAIKAN: Default state harus lengkap ---
     state = {
       currentAntamURL: "https://antrigrahadipta.com/",
       currentBranch: "BUTIK GRAHA DIPTA",
       currentBranchSelector: "GRAHA DIPTA",
       TWO_CAPTCHA_API_KEY: null,
-      concurrencyLimit: 1, // <-- Tambahkan ini
+      concurrencyLimit: 1,
     };
-    // --- SELESAI PERBAIKAN ---
     fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify(state, null, 2));
   }
 } catch (e) {
   logger.error(`[CONFIG] Gagal memuat active_config.json: ${e.message}`);
 }
-// --- SELESAI BLOK PERBAIKAN ---
 
 function saveState() {
   try {
-    // --- PERBAIKAN: Hapus 'runMode' yang sudah tidak ada ---
-    // Simpan semua state yang relevan
     const stateToSave = {
       currentAntamURL: state.currentAntamURL,
       currentBranch: state.currentBranch,
@@ -90,7 +79,6 @@ function saveState() {
       concurrencyLimit: state.concurrencyLimit,
     };
     fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify(stateToSave, null, 2));
-    // --- SELESAI PERBAIKAN ---
 
     logger.info("[CONFIG] Konfigurasi baru disimpan ke 'active_config.json'.");
   } catch (e) {
@@ -98,7 +86,6 @@ function saveState() {
   }
 }
 
-// --- DAFTAR USER-AGENT (Tidak Berubah) ---
 const USER_AGENTS = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
@@ -108,7 +95,6 @@ const USER_AGENTS = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0",
 ];
 
-// --- Logika Proxy (Tidak Berubah) ---
 const PROXY_FILE_PATH = path.join(__dirname, "proxies.json");
 let proxyList = [];
 try {
@@ -138,7 +124,6 @@ try {
   logger.error(`[CONFIG] Gagal memuat proxies.json: ${e.message}`);
   proxyList = [];
 }
-// --- (Sisa fungsi getRandomProxy, getRandomUserAgent tidak berubah) ---
 const getRandomProxy = () => {
   if (proxyList.length === 0) return null;
   const index = Math.floor(Math.random() * proxyList.length);

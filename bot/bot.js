@@ -1,7 +1,6 @@
-// bot/bot.js
 const puppeteer = require("puppeteer-extra");
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
-const Captcha = require("2captcha"); // <-- KITA AKTIFKAN LAGI
+const Captcha = require("2captcha");
 const { URL } = require("url");
 const logger = require("./logger");
 const { sendRegistrationResult } = require("./api");
@@ -9,20 +8,15 @@ const { randomDelay, getTodayDateString } = require("./utils");
 const {
   state,
   constants,
-  // (getRandomProxy & getRandomUserAgent tidak dipakai di sini)
 } = require("./config");
 const chalk = require("chalk");
 
-puppeteer.use(StealthPlugin()); // Terapkan stealth ke puppeteer
+puppeteer.use(StealthPlugin()); 
 
-// --- TENTUKAN PATH PROFIL ANDA DI SINI ---
 const CHROME_PROFILE_PATH = "/home/novalftr/.config/google-chrome/Profile 1";
-// --- SELESAI ---
 
-// --- FUNGSI HANDLEFORMFILLING (Versi Hibrida Final) ---
 async function handleFormFilling(page, data, antamURL) {
   logger.info("[FORM] Starting form automation...");
-  // 1. (Tidak Berubah) Isi Form
   logger.info("[BEHAVIOUR] Simulating initial scroll...");
   await page.evaluate(() => {
     /*...scroll...*/
@@ -58,14 +52,11 @@ async function handleFormFilling(page, data, antamURL) {
     /*...abaikan...*/
   }
 
-  // --- LOGIKA RECAPTCHA HIBRIDA ---
   let solutionToken = null;
 
-  // Cek jika ini BUKAN file mockup
   if (!antamURL.startsWith("file://")) {
     let siteKey = null;
     try {
-      // 1. Ambil Site Key
       const pageHtml = await page.content();
       const siteKeyMatch = pageHtml.match(/grecaptcha.execute\('([^']+)'/);
       if (!siteKeyMatch)
@@ -73,7 +64,6 @@ async function handleFormFilling(page, data, antamURL) {
       siteKey = siteKeyMatch[1];
       logger.info(`[CAPTCHA] Site-key: ${siteKey.substring(0, 10)}...`);
 
-      // 2. Coba Strategi Gratis (Profil Chrome)
       logger.warn(
         chalk.yellow(
           "[CAPTCHA] Mencoba Strategi #1: Token v3 (Gratis) via Profil Chrome..."
@@ -101,7 +91,6 @@ async function handleFormFilling(page, data, antamURL) {
     } catch (err) {
       logger.error(`[CAPTCHA] Token v3 (Gratis) GAGAL: ${err.message}`);
 
-      // 3. JIKA GAGAL, Coba Strategi #2 (Fallback ke 2Captcha Berbayar)
       if (state.TWO_CAPTCHA_API_KEY) {
         logger.warn(
           chalk.cyan(
@@ -134,9 +123,7 @@ async function handleFormFilling(page, data, antamURL) {
   } else {
     logger.info("[MOCKUP] Melewatkan solver reCAPTCHA untuk file mockup.");
   }
-  // --- SELESAI LOGIKA HIBRIDA ---
 
-  // --- SUBMIT FORM & WAIT ---
   if (solutionToken) {
     logger.info("[FORM] Memasukkan token reCAPTCHA ke dalam form...");
     await page.evaluate((token) => {
@@ -163,7 +150,6 @@ async function handleFormFilling(page, data, antamURL) {
     "[FORM] Halaman baru terdeteksi setelah submit. Menganalisis hasil..."
   );
 
-  // 6. DETEKSI HASIL (Tidak berubah)
   let ticketNumber = null;
   try {
     ticketNumber = await page.$eval("#ticket-number-display", (el) =>
@@ -203,7 +189,6 @@ async function handleFormFilling(page, data, antamURL) {
   if (ticketNumber) {
     return { status: "SUCCESS", ticket_number: ticketNumber };
   } else {
-    // ... (Sisa logika deteksi FAILED_STOCK, dll. tidak berubah)
     const genericErrorMessage = await page.$eval("body", (el) => el.innerText);
     if (
       genericErrorMessage.includes("STOK TIDAK TERSEDIA") ||
@@ -234,13 +219,11 @@ async function handleFormFilling(page, data, antamURL) {
     return { status: "FAILED_UNKNOWN", ticket_number: null };
   }
 }
-// --- SELESAI FUNGSI HANDLEFORMFILLING ---
 
-// --- FUNGSI RUNANTAMWAR (Versi Pool + Auth + Profil) ---
 async function runAntamWar(
   userData,
   antamURL,
-  browser, // <-- Menerima browser
+  browser, 
   proxyCredentials = null,
   jobInfo = { number: 1, total: 1 }
 ) {
@@ -277,26 +260,21 @@ async function runAntamWar(
   let success = false;
   let attempt = 0;
 
-  // --- PERBAIKAN: Kembalikan 5x Retry! ---
   const maxRetries = constants.MAX_RETRIES;
-  // --- SELESAI PERBAIKAN ---
 
   while (attempt < maxRetries && !success) {
     attempt++;
     logger.warn(`${jobPrefix} [RETRY] Attempt ${attempt}/${maxRetries}`);
 
     try {
-      // Hapus launch, hanya buat 'page'
       page = await browser.newPage();
       await page.setViewport({ width: 1366, height: 768 });
 
-      // Terapkan Autentikasi Proxy
       if (proxyCredentials) {
         logger.info(`${jobPrefix} [PROXY] Authenticating page...`);
         await page.authenticate(proxyCredentials);
       }
 
-      // Hapus set User-Agent (karena pakai profil asli)
 
       logger.info(`${jobPrefix} [RETRY] Navigating to ${antamURL}...`);
       await page.goto(antamURL, {

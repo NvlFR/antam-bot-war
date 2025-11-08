@@ -3,14 +3,11 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs");
 const path = require("path");
-// const prompt = require("prompt-sync")({ sigint: true }); // <-- BARIS INI DIHAPUS
 
-// --- KONFIGURASI ---
 const CONFIG_FILE_PATH = path.join(__dirname, "active_config.json");
 const SIGNAL_FILE = path.join(__dirname, "START.signal");
 
-// --- BACA DARI FILE KONFIGURASI ---
-let TARGET_URL = "https://antrigrahadipta.com/"; // Default jika file gagal
+let TARGET_URL = "https://antrigrahadipta.com/";
 try {
   if (fs.existsSync(CONFIG_FILE_PATH)) {
     const configData = fs.readFileSync(CONFIG_FILE_PATH, "utf8");
@@ -23,11 +20,9 @@ try {
   console.error(`[FATAL] Gagal membaca active_config.json: ${e.message}`);
   process.exit(1);
 }
-// --- SELESAI BACA ---
 
 const LIVE_SELECTOR = "#name";
-const POLLING_INTERVAL_MS = 1500; // 1.5 detik
-// ---------------------
+const POLLING_INTERVAL_MS = 1500; 
 
 const USER_AGENTS = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",

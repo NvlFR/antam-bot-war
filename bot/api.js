@@ -1,4 +1,3 @@
-// bot/api.js
 const axios = require("axios");
 const logger = require("./logger");
 const chalk = require("chalk");
